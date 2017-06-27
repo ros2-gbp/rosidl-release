@@ -16,7 +16,7 @@ tracks:
     last_version: 0.0.0
     name: upstream
     patches: null
-    release_inc: '4'
+    release_inc: '5'
     release_repo_url: git@github.com:nuclearsandwich/rosidl-release
     release_tag: master
     ros_distro: r2b2
