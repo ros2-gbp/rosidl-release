@@ -1,1 +1,1 @@
-{"parent": "release/r2b2/rosidl_typesupport_interface", "base": "f22a17d", "previous": "61712d3", "trim": "", "trimbase": ""}
+{"base": "10fe1b3", "trimbase": "", "trim": "", "parent": "release/r2b2/rosidl_typesupport_interface", "previous": "eb93bcc"}
