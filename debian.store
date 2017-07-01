@@ -1,1 +1,1 @@
-{"base": "89c915d", "trimbase": "", "trim": "", "parent": "debian/r2b2/rosidl_parser", "previous": "730d418"}
+{"parent": "debian/r2b2/rosidl_parser", "base": "b0fff23", "trim": "", "previous": "cc90932", "trimbase": ""}
