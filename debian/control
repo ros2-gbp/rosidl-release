@@ -1,0 +1,12 @@
+Source: ros-r2b3-python-cmake-module
+Section: misc
+Priority: extra
+Maintainer: Esteve Fernandez <esteve@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-r2b3-ament-cmake, ros-r2b3-ament-lint-auto, ros-r2b3-ament-lint-common, ros-r2b3-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-r2b3-python-cmake-module
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, ros-r2b3-ros-workspace
+Description: Provide CMake module with extra functionality for Python.
