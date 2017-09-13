@@ -36,13 +36,13 @@ tracks:
       -i :{release_inc} --os-name debian --os-not-required
     - git-bloom-generate -y rosrpm --prefix release/:{ros_distro} :{ros_distro} -i
       :{release_inc}
-    devel_branch: master
+    devel_branch: release-beta3
     last_version: 0.0.2
     name: upstream
     patches: null
     release_inc: '0'
-    release_repo_url: git@github.com:nuclearsandwich/rosidl-release
-    release_tag: master
+    release_repo_url: git@github.com:ros2-gbp/rosidl-release
+    release_tag: release-beta3
     ros_distro: r2b3
     vcs_type: git
     vcs_uri: https://github.com/ros2/rosidl.git
