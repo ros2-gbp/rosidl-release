@@ -1,0 +1,12 @@
+Source: ros-r2b3-rosidl-cmake
+Section: misc
+Priority: extra
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-r2b3-ament-cmake, ros-r2b3-ament-cmake-python, ros-r2b3-ament-lint-auto, ros-r2b3-ament-lint-common, ros-r2b3-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-r2b3-rosidl-cmake
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-empy, ros-r2b3-ament-cmake, ros-r2b3-rosidl-parser, ros-r2b3-ros-workspace
+Description: The CMake functionality to invoke code generation for ROS interface files.
