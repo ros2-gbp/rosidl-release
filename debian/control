@@ -1,0 +1,12 @@
+Source: ros-r2b3-rosidl-generator-py
+Section: misc
+Priority: extra
+Maintainer: Esteve Fernandez <esteve@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-r2b3-ament-cmake, ros-r2b3-ament-cmake-nose, ros-r2b3-ament-index-python, ros-r2b3-ament-lint-auto, ros-r2b3-ament-lint-common, ros-r2b3-python-cmake-module, ros-r2b3-rmw-implementation, ros-r2b3-rmw-implementation-cmake, ros-r2b3-rosidl-cmake, ros-r2b3-rosidl-generator-c, ros-r2b3-rosidl-parser, ros-r2b3-rosidl-typesupport-c, ros-r2b3-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-r2b3-rosidl-generator-py
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-r2b3-ament-cmake, ros-r2b3-ament-index-python, ros-r2b3-python-cmake-module, ros-r2b3-rmw-implementation, ros-r2b3-rmw-implementation-cmake, ros-r2b3-rosidl-cmake, ros-r2b3-rosidl-generator-c, ros-r2b3-rosidl-parser, ros-r2b3-rosidl-typesupport-c, ros-r2b3-rosidl-typesupport-interface, ros-r2b3-ros-workspace
+Description: Generate the ROS interfaces in Python.
