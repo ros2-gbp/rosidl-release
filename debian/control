@@ -1,0 +1,12 @@
+Source: ros-ardent-rosidl-generator-py
+Section: misc
+Priority: extra
+Maintainer: Esteve Fernandez <esteve@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-ardent-ament-cmake, ros-ardent-ament-cmake-pytest, ros-ardent-ament-index-python, ros-ardent-ament-lint-auto, ros-ardent-ament-lint-common, ros-ardent-python-cmake-module, ros-ardent-rmw-implementation, ros-ardent-rmw-implementation-cmake, ros-ardent-rosidl-cmake, ros-ardent-rosidl-generator-c, ros-ardent-rosidl-parser, ros-ardent-rosidl-typesupport-c, ros-ardent-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-ardent-rosidl-generator-py
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-ardent-ament-cmake, ros-ardent-ament-index-python, ros-ardent-python-cmake-module, ros-ardent-rmw-implementation, ros-ardent-rmw-implementation-cmake, ros-ardent-rosidl-cmake, ros-ardent-rosidl-generator-c, ros-ardent-rosidl-parser, ros-ardent-rosidl-typesupport-c, ros-ardent-rosidl-typesupport-interface, ros-ardent-ros-workspace
+Description: Generate the ROS interfaces in Python.
