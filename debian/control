@@ -1,0 +1,12 @@
+Source: ros-ardent-rosidl-typesupport-interface
+Section: misc
+Priority: extra
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-ardent-ament-cmake, ros-ardent-ament-lint-auto, ros-ardent-ament-lint-common, ros-ardent-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-ardent-rosidl-typesupport-interface
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-ardent-ros-workspace
+Description: The interface for rosidl typesupport packages.
