@@ -1,0 +1,12 @@
+Source: ros-ardent-python-cmake-module
+Section: misc
+Priority: extra
+Maintainer: Mikael Arguedas <mikael@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-ardent-ament-cmake, ros-ardent-ament-lint-auto, ros-ardent-ament-lint-common, ros-ardent-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-ardent-python-cmake-module
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, ros-ardent-ros-workspace
+Description: Provide CMake module with extra functionality for Python.
