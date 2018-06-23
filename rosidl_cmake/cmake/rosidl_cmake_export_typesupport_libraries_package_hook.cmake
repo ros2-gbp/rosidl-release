@@ -1,4 +1,4 @@
-# Copyright 2016 Open Source Robotics Foundation, Inc.
+# Copyright 2018 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# copied from python_cmake_module/python_cmake_module-extras.cmake
-
-list(INSERT CMAKE_MODULE_PATH 0 "${python_cmake_module_DIR}/Modules")
+# generate and register extra file for typesupport libraries
+set(_generated_extra_file
+  "${CMAKE_CURRENT_BINARY_DIR}/rosidl_cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake")
+configure_file(
+  "${rosidl_cmake_DIR}/rosidl_cmake_export_typesupport_libraries-extras.cmake.in"
+  "${_generated_extra_file}"
+  @ONLY
+)
+list(APPEND ${PROJECT_NAME}_CONFIG_EXTRAS "${_generated_extra_file}")

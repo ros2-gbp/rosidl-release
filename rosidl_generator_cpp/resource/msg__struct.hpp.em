@@ -199,7 +199,7 @@ def generate_zero_string(membset, fill_args):
   // field types and members
 @[for field in spec.fields]@
   using _@(field.name)_type =
-      @(msg_type_to_cpp(field.type));
+    @(msg_type_to_cpp(field.type));
   _@(field.name)_type @(field.name);
 @[end for]@
 
@@ -213,44 +213,49 @@ def generate_zero_string(membset, fill_args):
   }
 @[end for]@
 
-  // constants
+  // constant declarations
 @[for constant in spec.constants]@
-@[  if (constant.type in ['byte', 'int8', 'int16', 'int32', 'int64', 'char'])]@
-  enum { @(constant.name) = @(int(constant.value)) };
-@[  elif (constant.type in ['uint8', 'uint16', 'uint32', 'uint64'])]@
-  enum { @(constant.name) = @(int(constant.value))u };
-@[  else]@
+@[if constant.type == 'string']
   static const @(MSG_TYPE_TO_CPP[constant.type]) @(constant.name);
+@[else]@
+  static constexpr @(MSG_TYPE_TO_CPP[constant.type]) @(constant.name) =
+@[if constant.type in ('bool', 'byte', 'int8', 'int16', 'int32', 'int64', 'char')]@
+    @(int(constant.value));
+@[elif constant.type in ('uint8', 'uint16', 'uint32', 'uint64')]@
+    @(int(constant.value))u;
+@[else]@
+    @(constant.value);
 @[  end if]@
+@[end if]@
 @[end for]@
 
   // pointer types
   using RawPtr =
-      @(cpp_full_name)<ContainerAllocator> *;
+    @(cpp_full_name)<ContainerAllocator> *;
   using ConstRawPtr =
-      const @(cpp_full_name)<ContainerAllocator> *;
+    const @(cpp_full_name)<ContainerAllocator> *;
   using SharedPtr =
-      std::shared_ptr<@(cpp_full_name)<ContainerAllocator>>;
+    std::shared_ptr<@(cpp_full_name)<ContainerAllocator>>;
   using ConstSharedPtr =
-      std::shared_ptr<@(cpp_full_name)<ContainerAllocator> const>;
+    std::shared_ptr<@(cpp_full_name)<ContainerAllocator> const>;
 
   template<typename Deleter = std::default_delete<
       @(cpp_full_name)<ContainerAllocator>>>
   using UniquePtrWithDeleter =
-      std::unique_ptr<@(cpp_full_name)<ContainerAllocator>, Deleter>;
+    std::unique_ptr<@(cpp_full_name)<ContainerAllocator>, Deleter>;
 
   using UniquePtr = UniquePtrWithDeleter<>;
 
   template<typename Deleter = std::default_delete<
       @(cpp_full_name)<ContainerAllocator>>>
   using ConstUniquePtrWithDeleter =
-      std::unique_ptr<@(cpp_full_name)<ContainerAllocator> const, Deleter>;
+    std::unique_ptr<@(cpp_full_name)<ContainerAllocator> const, Deleter>;
   using ConstUniquePtr = ConstUniquePtrWithDeleter<>;
 
   using WeakPtr =
-      std::weak_ptr<@(cpp_full_name)<ContainerAllocator>>;
+    std::weak_ptr<@(cpp_full_name)<ContainerAllocator>>;
   using ConstWeakPtr =
-      std::weak_ptr<@(cpp_full_name)<ContainerAllocator> const>;
+    std::weak_ptr<@(cpp_full_name)<ContainerAllocator> const>;
 
   // pointer types similar to ROS 1, use SharedPtr / ConstSharedPtr instead
   // NOTE: Can't use 'using' here because GNU C++ can't parse attributes properly
@@ -282,22 +287,18 @@ def generate_zero_string(membset, fill_args):
 
 // alias to use template instance with default allocator
 using @(spec.base_type.type) =
-    @(cpp_full_name)<std::allocator<void>>;
+  @(cpp_full_name)<std::allocator<void>>;
 
-// constants requiring out of line definition
+// constant definitions
 @[for c in spec.constants]@
-@[  if c.type not in ['byte', 'int8', 'int16', 'int32', 'int64', 'char', 'uint8', 'uint16', 'uint32', 'uint64']]@
+@[if c.type == 'string']@
 template<typename ContainerAllocator>
 const @(MSG_TYPE_TO_CPP[c.type])
-@(spec.base_type.type)_<ContainerAllocator>::@(c.name) =
-@[    if c.type == 'string']@
-  "@(escape_string(c.value))";
-@[    elif c.type == 'bool']@
-  @(int(c.value));
-@[    else]@
-  @(c.value);
-@[    end if]@
-@[  end if]@
+@(spec.base_type.type)_<ContainerAllocator>::@(c.name) = "@(escape_string(c.value))";
+@[ else ]@
+template<typename ContainerAllocator>
+constexpr @(MSG_TYPE_TO_CPP[c.type]) @(spec.base_type.type)_<ContainerAllocator>::@(c.name);
+@[end if]@
 @[end for]@
 
 }  // namespace @(subfolder)

@@ -71,7 +71,7 @@ foreach(dep ${target_dependencies})
   endif()
 endforeach()
 
-set(generator_arguments_file "${CMAKE_BINARY_DIR}/rosidl_typesupport_introspection_cpp__arguments.json")
+set(generator_arguments_file "${CMAKE_CURRENT_BINARY_DIR}/rosidl_typesupport_introspection_cpp__arguments.json")
 rosidl_write_generator_arguments(
   "${generator_arguments_file}"
   PACKAGE_NAME "${PROJECT_NAME}"
@@ -94,7 +94,7 @@ add_custom_command(
 
 set(_target_suffix "__rosidl_typesupport_introspection_cpp")
 
-add_library(${rosidl_generate_interfaces_TARGET}${_target_suffix} SHARED
+add_library(${rosidl_generate_interfaces_TARGET}${_target_suffix} ${rosidl_typesupport_introspection_cpp_LIBRARY_TYPE}
   ${_generated_msg_header_files} ${_generated_msg_source_files}
   ${_generated_srv_header_files} ${_generated_srv_source_files})
 if(rosidl_generate_interfaces_LIBRARY_NAME)

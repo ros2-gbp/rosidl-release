@@ -88,7 +88,7 @@ foreach(dep ${target_dependencies})
   endif()
 endforeach()
 
-set(generator_arguments_file "${CMAKE_BINARY_DIR}/rosidl_generator_c__arguments.json")
+set(generator_arguments_file "${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c__arguments.json")
 rosidl_write_generator_arguments(
   "${generator_arguments_file}"
   PACKAGE_NAME "${PROJECT_NAME}"
@@ -122,7 +122,7 @@ list(APPEND _generated_msg_headers "${_visibility_control_file}")
 
 set(_target_suffix "__rosidl_generator_c")
 
-add_library(${rosidl_generate_interfaces_TARGET}${_target_suffix} SHARED
+add_library(${rosidl_generate_interfaces_TARGET}${_target_suffix} ${rosidl_generator_c_LIBRARY_TYPE}
   ${_generated_msg_headers} ${_generated_msg_sources} ${_generated_srv_headers} ${_generated_srv_sources})
 if(rosidl_generate_interfaces_LIBRARY_NAME)
   set_target_properties(${rosidl_generate_interfaces_TARGET}${_target_suffix}

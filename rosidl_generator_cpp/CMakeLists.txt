@@ -9,6 +9,9 @@ ament_export_dependencies(rosidl_cmake)
 ament_export_dependencies(rosidl_generator_c)
 ament_export_include_directories(include)
 
+ament_index_register_resource("rosidl_generator_packages")
+ament_index_register_resource("rosidl_runtime_packages")
+
 ament_python_install_package(${PROJECT_NAME})
 
 if(BUILD_TESTING)
@@ -40,6 +43,7 @@ if(BUILD_TESTING)
     "msg/String.msg"
     "msg/StringBounded.msg"
     "msg/StringArrayStatic.msg"
+    "msg/StringArrays.msg"
 
     "msg/UnboundedArrayBounded.msg"
     "msg/UnboundedArrayStatic.msg"
@@ -64,8 +68,8 @@ if(BUILD_TESTING)
   rosidl_generate_interfaces(${PROJECT_NAME}
     ${message_files}
     ${srv_files}
-    SKIP_INSTALL
     ADD_LINTER_TESTS
+    SKIP_INSTALL
   )
 
   # Default to C++14
