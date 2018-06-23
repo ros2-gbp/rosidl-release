@@ -1,0 +1,12 @@
+Source: ros-bouncy-rosidl-generator-cpp
+Section: misc
+Priority: extra
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-bouncy-ament-cmake, ros-bouncy-ament-cmake-gtest, ros-bouncy-ament-lint-auto, ros-bouncy-ament-lint-common, ros-bouncy-rosidl-cmake, ros-bouncy-rosidl-generator-c, ros-bouncy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-bouncy-rosidl-generator-cpp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-bouncy-ament-cmake, ros-bouncy-rosidl-cmake, ros-bouncy-rosidl-generator-c, ros-bouncy-rosidl-parser, ros-bouncy-ros-workspace
+Description: Generate the ROS interfaces in C++.
