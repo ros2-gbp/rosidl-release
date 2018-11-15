@@ -18,7 +18,7 @@ find_package(rosidl_typesupport_interface REQUIRED)
 include_directories(include)
 add_library(${PROJECT_NAME}
   "src/message_type_support.c"
-  "src/primitives_array_functions.c"
+  "src/primitives_sequence_functions.c"
   "src/service_type_support.c"
   "src/string_functions.c"
 )
@@ -41,6 +41,12 @@ ament_export_libraries(${PROJECT_NAME})
 ament_index_register_resource("rosidl_generator_packages")
 
 ament_python_install_package(${PROJECT_NAME})
+
+if(BUILD_SHARED_LIBS)
+  set(${PROJECT_NAME}_LIBRARY_TYPE "SHARED")
+else()
+  set(${PROJECT_NAME}_LIBRARY_TYPE "STATIC")
+endif()
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -124,12 +130,6 @@ if(BUILD_TESTING)
   target_link_libraries(test_compilation_c ${PROJECT_NAME} ${PROJECT_NAME}_interfaces__${PROJECT_NAME})
   target_link_libraries(test_interfaces_c ${PROJECT_NAME} ${PROJECT_NAME}_interfaces__${PROJECT_NAME})
   target_link_libraries(test_invalid_initialization_c ${PROJECT_NAME} ${PROJECT_NAME}_interfaces__${PROJECT_NAME})
-endif()
-
-if(BUILD_SHARED_LIBS)
-  set(${PROJECT_NAME}_LIBRARY_TYPE "SHARED")
-else()
-  set(${PROJECT_NAME}_LIBRARY_TYPE "STATIC")
 endif()
 
 ament_package(
