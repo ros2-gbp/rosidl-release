@@ -1,3 +1,35 @@
+## rosidl (crystal) - 0.6.0-0
+
+The packages in the `rosidl` repository were released into the `crystal` distro by running `/usr/bin/bloom-release -r crystal -n rosidl --override-release-repository-push-url git@github.com:ros2-gbp/rosidl-release` on `Thu, 15 Nov 2018 22:09:12 -0000`
+
+These packages were released:
+- `rosidl_actions`
+- `rosidl_adapter`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_parser`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `0.6.0-0`
+
+Versions of tools used:
+
+- bloom version: `0.6.9`
+- catkin_pkg version: `0.4.8`
+- rosdep version: `0.13.0`
+- rosdistro version: `0.7.0`
+- vcstools version: `0.1.40`
+
+
 ## rosidl (bouncy) - 0.5.1-0
 
 The packages in the `rosidl` repository were released into the `bouncy` distro by running `/usr/bin/bloom-release -r bouncy -t bouncy rosidl` on `Fri, 29 Jun 2018 00:03:11 -0000`
