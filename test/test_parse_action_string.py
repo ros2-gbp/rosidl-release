@@ -31,11 +31,13 @@ def test_invalid_action_specification():
 def test_action_implicit_field_collision():
     # uuid collision on send goal service
     with pytest.raises(ImplicitFieldCollision):
-        parse_action_string('pkg', 'Foo', 'bool foo\nstring uuid\n---\nint8 bar\n---\nbool foo')
+        parse_action_string(
+            'pkg', 'Foo', 'bool foo\nstring action_goal_id\n---\nint8 bar\n---\nbool foo')
 
     # status collision on get result service
     with pytest.raises(ImplicitFieldCollision):
-        parse_action_string('pkg', 'Foo', 'bool foo\n---\nint8 bar\nstring status\n---\nbool foo')
+        parse_action_string(
+            'pkg', 'Foo', 'bool foo\n---\nint8 bar\nstring action_status\n---\nbool foo')
 
 
 def test_valid_action_string():
@@ -44,10 +46,9 @@ def test_valid_action_string():
 
 def test_valid_action_string1():
     spec = parse_action_string('pkg', 'Foo', 'bool foo\n---\nint8 bar\n---\nbool foo')
-    services = spec.services
+    goal_service = spec.goal_service
+    result_service = spec.result_service
     feedback_msg = spec.feedback
-    assert len(services) == 2
-    goal_service, result_service = services
     # Goal service checks
     assert goal_service.pkg_name == 'pkg'
     assert goal_service.srv_name == 'Foo_Goal'
@@ -72,8 +73,8 @@ def test_valid_action_string1():
     assert len(result_service.response.constants) == 0
     # Feedback message checks
     assert len(feedback_msg.fields) == 2
-    assert feedback_msg.fields[0].type.type == 'uint8'
-    assert feedback_msg.fields[0].name == 'uuid'
+    assert feedback_msg.fields[0].type.type == 'UUID'
+    assert feedback_msg.fields[0].name == 'action_goal_id'
     assert feedback_msg.fields[1].type.type == 'bool'
     assert feedback_msg.fields[1].name == 'foo'
     assert len(feedback_msg.constants) == 0
@@ -82,10 +83,9 @@ def test_valid_action_string1():
 def test_valid_action_string2():
     spec = parse_action_string(
         'pkg', 'Foo', '#comment---\n \nbool foo\n---\n#comment\n \nint8 bar\n---\nbool foo')
-    services = spec.services
+    goal_service = spec.goal_service
+    result_service = spec.result_service
     feedback_msg = spec.feedback
-    assert len(services) == 2
-    goal_service, result_service = services
     # Goal service checks
     assert goal_service.pkg_name == 'pkg'
     assert goal_service.srv_name == 'Foo_Goal'
@@ -110,8 +110,8 @@ def test_valid_action_string2():
     assert len(result_service.response.constants) == 0
     # Feedback message checks
     assert len(feedback_msg.fields) == 2
-    assert feedback_msg.fields[0].type.type == 'uint8'
-    assert feedback_msg.fields[0].name == 'uuid'
+    assert feedback_msg.fields[0].type.type == 'UUID'
+    assert feedback_msg.fields[0].name == 'action_goal_id'
     assert feedback_msg.fields[1].type.type == 'bool'
     assert feedback_msg.fields[1].name == 'foo'
     assert len(feedback_msg.constants) == 0
@@ -122,10 +122,9 @@ def test_valid_action_string3():
         'pkg',
         'Foo',
         'bool foo\nstring status\n---\nbool FOO=1\nint8 bar\n---\nbool BAR=1\nbool foo')
-    services = spec.services
+    goal_service = spec.goal_service
+    result_service = spec.result_service
     feedback_msg = spec.feedback
-    assert len(services) == 2
-    goal_service, result_service = services
     # Goal service checks
     assert goal_service.pkg_name == 'pkg'
     assert goal_service.srv_name == 'Foo_Goal'
@@ -153,8 +152,8 @@ def test_valid_action_string3():
     assert result_service.response.constants[0].value
     # Feedback message checks
     assert len(feedback_msg.fields) == 2
-    assert feedback_msg.fields[0].type.type == 'uint8'
-    assert feedback_msg.fields[0].name == 'uuid'
+    assert feedback_msg.fields[0].type.type == 'UUID'
+    assert feedback_msg.fields[0].name == 'action_goal_id'
     assert feedback_msg.fields[1].type.type == 'bool'
     assert feedback_msg.fields[1].name == 'foo'
     assert len(feedback_msg.constants) == 1
