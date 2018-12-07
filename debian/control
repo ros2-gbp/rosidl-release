@@ -1,0 +1,12 @@
+Source: ros-crystal-rosidl-adapter
+Section: misc
+Priority: extra
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-crystal-ament-cmake, ros-crystal-ament-cmake-pytest, ros-crystal-ament-lint-auto, ros-crystal-ament-lint-common, ros-crystal-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-crystal-rosidl-adapter
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-empy, ros-crystal-ros-workspace
+Description: API an scripts to parse .msg/.srv/.action files and convert them to .idl.
