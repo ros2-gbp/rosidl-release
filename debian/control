@@ -1,0 +1,12 @@
+Source: ros-crystal-rosidl-typesupport-introspection-c
+Section: misc
+Priority: extra
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-crystal-ament-cmake-ros, ros-crystal-ament-lint-auto, ros-crystal-ament-lint-common, ros-crystal-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-crystal-rosidl-typesupport-introspection-c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-crystal-ament-cmake, ros-crystal-rosidl-cmake, ros-crystal-rosidl-generator-c, ros-crystal-rosidl-parser, ros-crystal-ros-workspace
+Description: Generate the message type support for dynamic message construction in C.
