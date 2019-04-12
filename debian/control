@@ -1,0 +1,12 @@
+Source: ros-dashing-rosidl-cmake
+Section: misc
+Priority: extra
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-dashing-ament-cmake, ros-dashing-ament-cmake-python, ros-dashing-ament-lint-auto, ros-dashing-ament-lint-common, ros-dashing-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-dashing-rosidl-cmake
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-empy, ros-dashing-ament-cmake, ros-dashing-rosidl-adapter, ros-dashing-rosidl-parser, ros-dashing-ros-workspace
+Description: The CMake functionality to invoke code generation for ROS interface files.
