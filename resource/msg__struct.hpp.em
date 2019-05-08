@@ -13,17 +13,24 @@
 @{
 from rosidl_generator_cpp import create_init_alloc_and_member_lists
 from rosidl_generator_cpp import escape_string
+from rosidl_generator_cpp import escape_wstring
 from rosidl_generator_cpp import msg_type_to_cpp
 from rosidl_generator_cpp import MSG_TYPE_TO_CPP
+from rosidl_parser.definition import AbstractNestedType
+from rosidl_parser.definition import AbstractString
+from rosidl_parser.definition import AbstractWString
 from rosidl_parser.definition import ACTION_FEEDBACK_SUFFIX
 from rosidl_parser.definition import ACTION_GOAL_SUFFIX
 from rosidl_parser.definition import ACTION_RESULT_SUFFIX
-from rosidl_parser.definition import BaseString
 from rosidl_parser.definition import BasicType
+from rosidl_parser.definition import BOOLEAN_TYPE
+from rosidl_parser.definition import CHARACTER_TYPES
+from rosidl_parser.definition import INTEGER_TYPES
 from rosidl_parser.definition import NamespacedType
-from rosidl_parser.definition import NestedType
+from rosidl_parser.definition import OCTET_TYPE
+from rosidl_parser.definition import UNSIGNED_INTEGER_TYPES
 
-message_typename = '::'.join(message.structure.type.namespaces + [message.structure.type.name])
+message_typename = '::'.join(message.structure.namespaced_type.namespaced_name())
 }@
 @
 @#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -34,8 +41,8 @@ from rosidl_cmake import convert_camel_case_to_lower_case_underscore
 includes = OrderedDict()
 for member in message.structure.members:
     type_ = member.type
-    if isinstance(type_, NestedType):
-        type_ = type_.basetype
+    if isinstance(type_, AbstractNestedType):
+        type_ = type_.value_type
     if isinstance(type_, NamespacedType):
         if (
             type_.name.endswith(ACTION_GOAL_SUFFIX) or
@@ -72,7 +79,7 @@ for member in message.structure.members:
 
 @{
 deprecated_macro_name = \
-    '__'.join(['DEPRECATED', package_name] + list(interface_path.parents[0].parts) + [message.structure.type.name])
+    '__'.join(['DEPRECATED', package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name])
 }@
 #ifndef _WIN32
 # define @(deprecated_macro_name) __attribute__((deprecated))
@@ -80,16 +87,16 @@ deprecated_macro_name = \
 # define @(deprecated_macro_name) __declspec(deprecated)
 #endif
 
-@[for ns in message.structure.type.namespaces]@
+@[for ns in message.structure.namespaced_type.namespaces]@
 namespace @(ns)
 {
 
 @[end for]@
 // message struct
 template<class ContainerAllocator>
-struct @(message.structure.type.name)_
+struct @(message.structure.namespaced_type.name)_
 {
-  using Type = @(message.structure.type.name)_<ContainerAllocator>;
+  using Type = @(message.structure.namespaced_type.name)_<ContainerAllocator>;
 
 @{
 # The creation of the constructors for messages is a bit complicated.  The goal
@@ -141,7 +148,7 @@ def generate_zero_string(membset, fill_args):
             strlist.append('this->%s = %s;' % (member.name, member.zero_value))
     return strlist
 }@
-  explicit @(message.structure.type.name)_(rosidl_generator_cpp::MessageInitialization _init = rosidl_generator_cpp::MessageInitialization::ALL)
+  explicit @(message.structure.namespaced_type.name)_(rosidl_generator_cpp::MessageInitialization _init = rosidl_generator_cpp::MessageInitialization::ALL)
 @[if init_list]@
   : @(',\n    '.join(init_list))
 @[end if]@
@@ -149,34 +156,49 @@ def generate_zero_string(membset, fill_args):
 @[if not member_list]@
     (void)_init;
 @[end if]@
-@[for membset in member_list]@
-@[ if membset.members[0].default_value is not None]@
+@{
+default_value_members = [m for m in member_list if m.members[0].default_value]
+zero_value_members = [m for m in member_list if m.members[0].zero_value]
+non_defaulted_zero_initialized_members = [
+    m for m in member_list
+    if (m.members[0].zero_value or m.members[0].zero_need_array_override) and not m.members[0].default_value
+]
+}@
+@[if default_value_members]@
     if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
       rosidl_generator_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
     {
-@[  for line in generate_default_string(membset)]@
+@[  for membset in default_value_members]@
+@[    for line in generate_default_string(membset)]@
       @(line)
+@[    end for]@
 @[  end for]@
-@[  if membset.members[0].zero_value is not None]@
+@[  if zero_value_members]@
     } else if (rosidl_generator_cpp::MessageInitialization::ZERO == _init) {
-@[   for line in generate_zero_string(membset, '_init')]@
+@[    for membset in zero_value_members]@
+@[      for line in generate_zero_string(membset, '_init')]@
       @(line)
-@[   end for]@
+@[      end for]@
+@[    end for]@
 @[  end if]@
     }
-@[ elif membset.members[0].zero_value is not None]@
+@[  end if]@
+@[  if non_defaulted_zero_initialized_members]@
     if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
       rosidl_generator_cpp::MessageInitialization::ZERO == _init)
     {
-@[  for line in generate_zero_string(membset, '_init')]@
+@[  for membset in non_defaulted_zero_initialized_members]@
+@[    for line in generate_zero_string(membset, '_init')]@
+@[      if line]@
       @(line)
+@[      end if]@
+@[    end for]@
 @[  end for]@
     }
-@[ end if]@
-@[end for]@
+@[end if]@
   }
 
-  explicit @(message.structure.type.name)_(const ContainerAllocator & _alloc, rosidl_generator_cpp::MessageInitialization _init = rosidl_generator_cpp::MessageInitialization::ALL)
+  explicit @(message.structure.namespaced_type.name)_(const ContainerAllocator & _alloc, rosidl_generator_cpp::MessageInitialization _init = rosidl_generator_cpp::MessageInitialization::ALL)
 @[if alloc_list]@
   : @(',\n    '.join(alloc_list))
 @[end if]@
@@ -187,31 +209,36 @@ def generate_zero_string(membset, fill_args):
 @[if not alloc_list]@
     (void)_alloc;
 @[end if]@
-@[for membset in member_list]@
-@[ if membset.members[0].default_value is not None]@
+@[if default_value_members]@
     if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
       rosidl_generator_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
     {
-@[  for line in generate_default_string(membset)]@
+@[  for membset in default_value_members]@
+@[    for line in generate_default_string(membset)]@
       @(line)
+@[    end for]@
 @[  end for]@
-@[  if membset.members[0].zero_value is not None]@
+@[  if zero_value_members]@
     } else if (rosidl_generator_cpp::MessageInitialization::ZERO == _init) {
-@[   for line in generate_zero_string(membset, '_alloc, _init')]@
+@[    for membset in zero_value_members]@
+@[      for line in generate_zero_string(membset, '_alloc, _init')]@
       @(line)
-@[   end for]@
+@[      end for]@
+@[    end for]@
 @[  end if]@
     }
-@[ elif membset.members[0].zero_value is not None]@
+@[end if]@
+@[if non_defaulted_zero_initialized_members]@
     if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
       rosidl_generator_cpp::MessageInitialization::ZERO == _init)
     {
-@[  for line in generate_zero_string(membset, '_alloc, _init')]@
+@[  for membset in non_defaulted_zero_initialized_members]@
+@[    for line in generate_zero_string(membset, '_alloc, _init')]@
       @(line)
+@[    end for]@
 @[  end for]@
     }
-@[ end if]@
-@[end for]@
+@[end if]@
   }
 
   // field types and members
@@ -232,14 +259,16 @@ def generate_zero_string(membset, fill_args):
 @[end for]@
 
   // constant declarations
-@[for constant in message.constants.values()]@
-@[ if isinstance(constant.type, BaseString)]@
+@[for constant in message.constants]@
+@[ if isinstance(constant.type, AbstractString)]@
   static const @(MSG_TYPE_TO_CPP['string']) @(constant.name);
+@[ elif isinstance(constant.type, AbstractWString)]@
+  static const @(MSG_TYPE_TO_CPP['wstring']) @(constant.name);
 @[ else]@
-  static constexpr @(MSG_TYPE_TO_CPP[constant.type.type]) @(constant.name) =
-@[  if isinstance(constant.type, BasicType) and constant.type.type in ['short', 'unsigned short', 'long', 'unsigned long', 'long long', 'unsigned long long', 'char', 'wchar', 'boolean', 'octet', 'int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64']]@
+  static constexpr @(MSG_TYPE_TO_CPP[constant.type.typename]) @(constant.name) =
+@[  if isinstance(constant.type, BasicType) and constant.type.typename in (*INTEGER_TYPES, *CHARACTER_TYPES, BOOLEAN_TYPE, OCTET_TYPE)]@
     @(int(constant.value))@
-@[   if constant.type.type.startswith('u')]@
+@[   if constant.type.typename in UNSIGNED_INTEGER_TYPES]@
 u@
 @[   end if];
 @[  else]@
@@ -286,7 +315,7 @@ u@
     ConstPtr;
 
   // comparison operators
-  bool operator==(const @(message.structure.type.name)_ & other) const
+  bool operator==(const @(message.structure.namespaced_type.name)_ & other) const
   {
 @[if not message.structure.members]@
     (void)other;
@@ -298,29 +327,33 @@ u@
 @[end for]@
     return true;
   }
-  bool operator!=(const @(message.structure.type.name)_ & other) const
+  bool operator!=(const @(message.structure.namespaced_type.name)_ & other) const
   {
     return !this->operator==(other);
   }
-};  // struct @(message.structure.type.name)_
+};  // struct @(message.structure.namespaced_type.name)_
 
 // alias to use template instance with default allocator
-using @(message.structure.type.name) =
+using @(message.structure.namespaced_type.name) =
   @(message_typename)_<std::allocator<void>>;
 
 // constant definitions
-@[for c in message.constants.values()]@
-@[ if isinstance(c.type, BaseString)]@
+@[for c in message.constants]@
+@[ if isinstance(c.type, AbstractString)]@
 template<typename ContainerAllocator>
 const @(MSG_TYPE_TO_CPP['string'])
-@(message.structure.type.name)_<ContainerAllocator>::@(c.name) = "@(escape_string(c.value))";
+@(message.structure.namespaced_type.name)_<ContainerAllocator>::@(c.name) = "@(escape_string(c.value))";
+@[ elif isinstance(c.type, AbstractWString)]@
+template<typename ContainerAllocator>
+const @(MSG_TYPE_TO_CPP['wstring'])
+@(message.structure.namespaced_type.name)_<ContainerAllocator>::@(c.name) = u"@(escape_wstring(c.value))";
 @[ else ]@
 template<typename ContainerAllocator>
-constexpr @(MSG_TYPE_TO_CPP[c.type.type]) @(message.structure.type.name)_<ContainerAllocator>::@(c.name);
+constexpr @(MSG_TYPE_TO_CPP[c.type.typename]) @(message.structure.namespaced_type.name)_<ContainerAllocator>::@(c.name);
 @[ end if]@
 @[end for]@
 @
-@[for ns in reversed(message.structure.type.namespaces)]@
+@[for ns in reversed(message.structure.namespaced_type.namespaces)]@
 
 }  // namespace @(ns)
 @[end for]@
