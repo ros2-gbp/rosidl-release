@@ -148,7 +148,7 @@ def test_parse_primitive_value_string_string():
     assert value == '"foo'
 
     value = parse_primitive_value_string(
-        Type('string'), '\'foo')
+        Type('string'), "'foo")
     assert value == "'foo"
 
     value = parse_primitive_value_string(
@@ -156,7 +156,7 @@ def test_parse_primitive_value_string_string():
     assert value == '"foo'
 
     value = parse_primitive_value_string(
-        Type('string'), '\'fo\'o')
+        Type('string'), "'fo'o")
     assert value == "'fo'o"
 
     value = parse_primitive_value_string(
@@ -169,6 +169,76 @@ def test_parse_primitive_value_string_string():
 
     value = parse_primitive_value_string(
         Type('string'), r"""'"foo"'""")
+    assert value == '"foo"'
+
+
+def test_parse_primitive_value_wstring_string():
+    value = parse_primitive_value_string(
+        Type('wstring'), 'foo')
+    assert value == 'foo'
+
+    value = parse_primitive_value_string(
+        Type('wstring'), '"foo"')
+    assert value == 'foo'
+
+    value = parse_primitive_value_string(
+        Type('wstring'), "'foo'")
+    assert value == 'foo'
+
+    value = parse_primitive_value_string(
+        Type('wstring'), '"\'foo\'"')
+    assert value == "'foo'"
+
+    value = parse_primitive_value_string(
+        Type('wstring'), '"foo ')
+    assert value == '"foo '
+
+    value = parse_primitive_value_string(
+        Type('wstring<=3'), 'foo')
+    assert value == 'foo'
+
+    with pytest.raises(InvalidValue):
+        parse_primitive_value_string(
+            Type('wstring<=3'), 'foobar')
+
+    with pytest.raises(InvalidValue):
+        parse_primitive_value_string(
+            Type('wstring'), r"""'foo''""")
+
+    with pytest.raises(InvalidValue):
+        parse_primitive_value_string(
+            Type('wstring'), r'''"foo"bar\"baz"''')  # noqa: Q001
+
+    value = parse_primitive_value_string(
+        Type('wstring'), '"foo')
+    assert value == '"foo'
+
+    value = parse_primitive_value_string(
+        Type('wstring'), '"foo')
+    assert value == '"foo'
+
+    value = parse_primitive_value_string(
+        Type('wstring'), "'foo")
+    assert value == "'foo"
+
+    value = parse_primitive_value_string(
+        Type('wstring'), '"foo')
+    assert value == '"foo'
+
+    value = parse_primitive_value_string(
+        Type('wstring'), "'fo'o")
+    assert value == "'fo'o"
+
+    value = parse_primitive_value_string(
+        Type('wstring'), '"fo"o')
+    assert value == '"fo"o'
+
+    value = parse_primitive_value_string(
+        Type('wstring'), r'''"'foo'"''')  # noqa: Q001
+    assert value == "'foo'"
+
+    value = parse_primitive_value_string(
+        Type('wstring'), r"""'"foo"'""")
     assert value == '"foo"'
 
 
