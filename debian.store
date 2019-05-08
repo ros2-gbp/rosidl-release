@@ -1,1 +1,1 @@
-{"trim": "", "base": "2022182", "trimbase": "", "parent": "debian/dashing/rosidl_parser", "previous": "e8d0dce"}
+{"base": "5b07548", "parent": "debian/dashing/rosidl_parser", "previous": "dfdae11", "trim": "", "trimbase": ""}
