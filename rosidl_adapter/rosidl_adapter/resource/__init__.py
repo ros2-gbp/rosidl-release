@@ -23,13 +23,13 @@ def expand_template(template_name, data, output_file):
     content = evaluate_template(template_name, data)
 
     if output_file.exists():
-        existing_content = output_file.read_text()
+        existing_content = output_file.read_text(encoding='utf-8')
         if existing_content == content:
             return
     elif output_file.parent:
         os.makedirs(str(output_file.parent), exist_ok=True)
 
-    output_file.write_text(content)
+    output_file.write_text(content, encoding='utf-8')
 
 
 _interpreter = None
