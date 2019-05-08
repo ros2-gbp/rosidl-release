@@ -17,6 +17,7 @@ find_package(rosidl_typesupport_interface REQUIRED)
 
 include_directories(include)
 add_library(${PROJECT_NAME}
+  "src/message_bounds.c"
   "src/message_type_support.c"
   "src/primitives_sequence_functions.c"
   "src/service_type_support.c"
@@ -88,6 +89,7 @@ if(BUILD_TESTING)
     "msg/Uint8.msg"
     "msg/Various.msg"
     "msg/Wire.msg"
+    "msg/WStrings.msg"
     "srv/AddTwoInts.srv"
   )
 
