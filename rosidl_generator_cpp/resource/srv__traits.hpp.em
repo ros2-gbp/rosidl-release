@@ -14,7 +14,7 @@ TEMPLATE(
 }@
 
 @{
-service_typename = '::'.join(service.structure_type.namespaces + [service.structure_type.name])
+service_typename = '::'.join(service.namespaced_type.namespaced_name())
 }@
 @
 namespace rosidl_generator_traits
