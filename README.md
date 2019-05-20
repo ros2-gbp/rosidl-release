@@ -1,3 +1,34 @@
+## rosidl (dashing) - 0.7.2-1
+
+The packages in the `rosidl` repository were released into the `dashing` distro by running `/home/jacob/.local/bin/bloom-release -r dashing rosidl` on `Mon, 20 May 2019 22:46:30 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_parser`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: https://github.com/ros2-gbp/rosidl-release.git
+- rosdistro version: `0.7.1-1`
+- old version: `0.7.1-1`
+- new version: `0.7.2-1`
+
+Versions of tools used:
+
+- bloom version: `0.8.0`
+- catkin_pkg version: `0.4.12`
+- rosdep version: `0.15.1`
+- rosdistro version: `0.7.4`
+- vcstools version: `0.1.40`
+
+
 ## rosidl (dashing) - 0.7.1-1
 
 The packages in the `rosidl` repository were released into the `dashing` distro by running `/home/jacob/.local/bin/bloom-release -r dashing rosidl` on `Wed, 08 May 2019 23:04:23 -0000`
