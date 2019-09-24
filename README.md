@@ -1,3 +1,34 @@
+## rosidl (eloquent) - 0.8.0-1
+
+The packages in the `rosidl` repository were released into the `eloquent` distro by running `/usr/bin/bloom-release --rosdistro eloquent rosidl` on `Tue, 24 Sep 2019 19:07:58 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_parser`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `0.8.0-1`
+
+Versions of tools used:
+
+- bloom version: `0.8.0`
+- catkin_pkg version: `0.4.12`
+- rosdep version: `0.15.2`
+- rosdistro version: `0.7.4`
+- vcstools version: `0.1.42`
+
+
 ## rosidl (dashing) - 0.7.6-1
 
 The packages in the `rosidl` repository were released into the `dashing` distro by running `/usr/local/bin/bloom-release -r dashing -t dashing rosidl` on `Fri, 06 Sep 2019 17:23:31 -0000`
