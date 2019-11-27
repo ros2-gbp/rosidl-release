@@ -36,7 +36,7 @@ def convert_msg_to_idl(package_dir, package_name, input_file, output_dir):
         'msg': msg,
     }
 
-    expand_template('msg.idl.em', data, output_file, encoding='iso-8859-1')
+    expand_template('msg.idl.em', data, output_file)
     return output_file
 
 

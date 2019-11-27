@@ -191,14 +191,9 @@ class BaseType:
                 self.pkg_name = context_package_name
                 self.type = type_string
             if not is_valid_package_name(self.pkg_name):
-                raise InvalidResourceName(
-                    "'{}' is an invalid package name. It should have the pattern '{}'".format(
-                        self.pkg_name, VALID_PACKAGE_NAME_PATTERN.pattern))
+                raise InvalidResourceName(self.pkg_name)
             if not is_valid_message_name(self.type):
-                raise InvalidResourceName(
-                    "'{}' is an invalid message name. It should have the pattern '{}'".format(
-                        self.type, VALID_MESSAGE_NAME_PATTERN.pattern))
-
+                raise InvalidResourceName(self.type)
             self.string_upper_bound = None
 
     def is_primitive_type(self):
@@ -310,9 +305,7 @@ class Constant:
                             primitive_type)
         self.type = primitive_type
         if not is_valid_constant_name(name):
-            raise NameError(
-                "'{}' is an invalid constant name. It should have the pattern '{}'".format(
-                    name, VALID_CONSTANT_NAME_PATTERN.pattern))
+            raise NameError("the constant name '%s' is not valid" % name)
         self.name = name
         if value_string is None:
             raise ValueError("the constant value must not be 'None'")
@@ -344,9 +337,7 @@ class Field:
                 "the field type '%s' must be a 'Type' instance" % type_)
         self.type = type_
         if not is_valid_field_name(name):
-            raise NameError(
-                "'{}' is an invalid field name. It should have the pattern '{}'".format(
-                    name, VALID_FIELD_NAME_PATTERN.pattern))
+            raise NameError("the field name '%s' is not valid" % name)
         self.name = name
         if default_value_string is None:
             self.default_value = None
@@ -436,7 +427,7 @@ class MessageSpecification:
 def parse_message_file(pkg_name, interface_filename):
     basename = os.path.basename(interface_filename)
     msg_name = os.path.splitext(basename)[0]
-    with open(interface_filename, 'r', encoding='utf-8') as h:
+    with open(interface_filename, 'r') as h:
         return parse_message_string(
             pkg_name, msg_name, h.read())
 
@@ -814,7 +805,7 @@ class ServiceSpecification:
 def parse_service_file(pkg_name, interface_filename):
     basename = os.path.basename(interface_filename)
     srv_name = os.path.splitext(basename)[0]
-    with open(interface_filename, 'r', encoding='utf-8') as h:
+    with open(interface_filename, 'r') as h:
         return parse_service_string(
             pkg_name, srv_name, h.read())
 
@@ -859,7 +850,7 @@ class ActionSpecification:
 def parse_action_file(pkg_name, interface_filename):
     basename = os.path.basename(interface_filename)
     action_name = os.path.splitext(basename)[0]
-    with open(interface_filename, 'r', encoding='utf-8') as h:
+    with open(interface_filename, 'r') as h:
         return parse_action_string(pkg_name, action_name, h.read())
 
 
