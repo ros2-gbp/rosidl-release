@@ -1,0 +1,12 @@
+Source: ros-eloquent-rosidl-cmake
+Section: misc
+Priority: optional
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-eloquent-ament-cmake, ros-eloquent-ament-cmake-python, ros-eloquent-ament-lint-auto, ros-eloquent-ament-lint-common, ros-eloquent-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-eloquent-rosidl-cmake
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-empy, ros-eloquent-ament-cmake, ros-eloquent-rosidl-adapter, ros-eloquent-rosidl-parser, ros-eloquent-ros-workspace
+Description: The CMake functionality to invoke code generation for ROS interface files.
