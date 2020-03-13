@@ -48,10 +48,7 @@ def get_newest_modification_time(target_dependencies):
     return newest_timestamp
 
 
-def generate_files(
-    generator_arguments_file, mapping, additional_context=None,
-    keep_case=False, post_process_callback=None
-):
+def generate_files(generator_arguments_file, mapping, additional_context=None, keep_case=False):
     args = read_generator_arguments(generator_arguments_file)
 
     template_basepath = pathlib.Path(args['template_dir'])
@@ -85,8 +82,7 @@ def generate_files(
                 expand_template(
                     os.path.basename(template_file), data,
                     generated_file, minimum_timestamp=latest_target_timestamp,
-                    template_basepath=template_basepath,
-                    post_process_callback=post_process_callback)
+                    template_basepath=template_basepath)
         except Exception as e:
             print(
                 'Error processing idl file: ' +
@@ -114,7 +110,7 @@ interpreter = None
 
 def expand_template(
     template_name, data, output_file, minimum_timestamp=None,
-    template_basepath=None, post_process_callback=None
+    template_basepath=None
 ):
     # in the legacy API the first argument was the path to the template
     if template_basepath is None:
@@ -159,15 +155,12 @@ def expand_template(
     content = output.getvalue()
     interpreter.shutdown()
 
-    if post_process_callback:
-        content = post_process_callback(content)
-
     # only overwrite file if necessary
     # which is either when the timestamp is too old or when the content is different
     if os.path.exists(output_file):
         timestamp = os.path.getmtime(output_file)
         if minimum_timestamp is None or timestamp > minimum_timestamp:
-            with open(output_file, 'r', encoding='utf-8') as h:
+            with open(output_file, 'r') as h:
                 if h.read() == content:
                     return
     else:
@@ -177,7 +170,7 @@ def expand_template(
         except FileExistsError:
             pass
 
-    with open(output_file, 'w', encoding='utf-8') as h:
+    with open(output_file, 'w') as h:
         h.write(content)
 
 

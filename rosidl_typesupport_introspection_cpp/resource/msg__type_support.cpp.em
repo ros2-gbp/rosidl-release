@@ -49,18 +49,6 @@ namespace @(ns)
 namespace rosidl_typesupport_introspection_cpp
 {
 
-void @(message.structure.namespaced_type.name)_init_function(
-  void * message_memory, rosidl_generator_cpp::MessageInitialization _init)
-{
-  new (message_memory) @('::'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))(_init);
-}
-
-void @(message.structure.namespaced_type.name)_fini_function(void * message_memory)
-{
-  auto typed_message = static_cast<@('::'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name])) *>(message_memory);
-  typed_message->~@(message.structure.namespaced_type.name)();
-}
-
 @[for member in message.structure.members]@
 @{
 def is_vector_bool(member):
@@ -140,11 +128,11 @@ for index, member in enumerate(message.structure.members):
     print('    "%s",  // name' % member.name)
     if isinstance(type_, BasicType):
         # uint8_t type_id_
-        print('    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_%s,  // type' % type_.typename.replace(' ', '_').upper())
+        print('    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_%s,  // type' % type_.typename.upper())
         # size_t string_upper_bound
         print('    0,  // upper bound of string')
         # const rosidl_generator_c::MessageTypeSupportHandle * members_
-        print('    nullptr,  // members of sub message')
+        print('    NULL,  // members of sub message')
     elif isinstance(type_, AbstractGenericString):
         # uint8_t type_id_
         if isinstance(type_, AbstractString):
@@ -156,7 +144,7 @@ for index, member in enumerate(message.structure.members):
         # size_t string_upper_bound
         print('    %u,  // upper bound of string' % (type_.maximum_size if type_.has_maximum_size() else 0))
         # const rosidl_generator_c::MessageTypeSupportHandle * members_
-        print('    nullptr,  // members of sub message')
+        print('    NULL,  // members of sub message')
     else:
         # uint8_t type_id_
         print('    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE,  // type')
@@ -184,7 +172,7 @@ for index, member in enumerate(message.structure.members):
     # void *(void *, size_t) get_function
     print('    %s,  // get(index) function pointer' % ('get_function__%s' % function_suffix if function_suffix else 'nullptr'))
     # void(void *, size_t) resize_function
-    print('    %s  // resize(index) function pointer' % ('resize_function__%s' % function_suffix if function_suffix and isinstance(member.type, AbstractSequence) else 'nullptr'))
+    print('    %s  // resize(index) function pointer' % ('resize_function__%s' % function_suffix if function_suffix and isinstance(member.type, AbstractSequence) else 'NULL'))
 
     if index < len(message.structure.members) - 1:
         print('  },')
@@ -198,9 +186,7 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMembers @(message.st
   "@(message.structure.namespaced_type.name)",  // message name
   @(len(message.structure.members)),  // number of fields
   sizeof(@('::'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))),
-  @(message.structure.namespaced_type.name)_message_member_array,  // message members
-  @(message.structure.namespaced_type.name)_init_function,  // function to initialize message memory (memory has to be allocated)
-  @(message.structure.namespaced_type.name)_fini_function  // function to terminate message instance (will not free memory)
+  @(message.structure.namespaced_type.name)_message_member_array  // message members
 };
 
 static const rosidl_message_type_support_t @(message.structure.namespaced_type.name)_message_type_support_handle = {
