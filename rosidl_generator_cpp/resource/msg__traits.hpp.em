@@ -33,7 +33,7 @@ for member in message.structure.members:
         else:
             typename = type_.name
         member_names = includes.setdefault(
-            '/'.join((type_.namespaces + [convert_camel_case_to_lower_case_underscore(typename)])) + '__traits.hpp', [])
+            '/'.join((type_.namespaces + ['detail', convert_camel_case_to_lower_case_underscore(typename)])) + '__traits.hpp', [])
         member_names.append(member.name)
 }@
 @#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -81,7 +81,7 @@ for member in message.structure.members:
         break
     if isinstance(type_, NamespacedType):
         typename = '::'.join(type_.namespaced_name())
-        fixed_template_strings.add('has_fixed_size<{typename}>::value'.format_map(locals()))
+        fixed_template_strings.add(f'has_fixed_size<{typename}>::value')
 else:
     if fixed_template_strings:
         fixed_template_string = ' && '.join(sorted(fixed_template_strings))
@@ -105,7 +105,7 @@ for member in message.structure.members:
         break
     if isinstance(type_, NamespacedType):
         typename = '::'.join(type_.namespaced_name())
-        bounded_template_strings.add('has_bounded_size<{typename}>::value'.format_map(locals()))
+        bounded_template_strings.add(f'has_bounded_size<{typename}>::value')
 else:
     if bounded_template_strings:
         bounded_template_string = ' && '.join(sorted(bounded_template_strings))
@@ -113,5 +113,9 @@ else:
 template<>
 struct has_bounded_size<@(message_typename)>
   : std::integral_constant<bool, @(bounded_template_string)> {};
+
+template<>
+struct is_message<@(message_typename)>
+  : std::true_type {};
 
 }  // namespace rosidl_generator_traits

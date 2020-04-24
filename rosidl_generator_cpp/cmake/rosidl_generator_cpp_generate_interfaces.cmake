@@ -22,8 +22,9 @@ foreach(_abs_idl_file ${rosidl_generate_interfaces_ABS_IDL_FILES})
 
   list(APPEND _generated_headers
     "${_output_path}/${_parent_folder}/${_header_name}.hpp"
-    "${_output_path}/${_parent_folder}/${_header_name}__struct.hpp"
-    "${_output_path}/${_parent_folder}/${_header_name}__traits.hpp"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__builder.hpp"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__struct.hpp"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__traits.hpp"
   )
 endforeach()
 
@@ -41,12 +42,17 @@ endforeach()
 set(target_dependencies
   "${rosidl_generator_cpp_BIN}"
   ${rosidl_generator_cpp_GENERATOR_FILES}
+  "${rosidl_generator_cpp_TEMPLATE_DIR}/action__builder.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/action__struct.hpp.em"
+  "${rosidl_generator_cpp_TEMPLATE_DIR}/action__traits.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/idl.hpp.em"
+  "${rosidl_generator_cpp_TEMPLATE_DIR}/idl__builder.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/idl__struct.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/idl__traits.hpp.em"
+  "${rosidl_generator_cpp_TEMPLATE_DIR}/msg__builder.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/msg__struct.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/msg__traits.hpp.em"
+  "${rosidl_generator_cpp_TEMPLATE_DIR}/srv__builder.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/srv__struct.hpp.em"
   "${rosidl_generator_cpp_TEMPLATE_DIR}/srv__traits.hpp.em"
   ${rosidl_generate_interfaces_ABS_IDL_FILES}
@@ -92,6 +98,22 @@ add_dependencies(
   ${rosidl_generate_interfaces_TARGET}__cpp
 )
 
+set(_target_suffix "__rosidl_generator_cpp")
+add_library(${rosidl_generate_interfaces_TARGET}${_target_suffix} INTERFACE)
+target_include_directories(${rosidl_generate_interfaces_TARGET}${_target_suffix}
+  INTERFACE
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_cpp>"
+  "$<INSTALL_INTERFACE:include>"
+)
+foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
+  target_link_libraries(
+    ${rosidl_generate_interfaces_TARGET}${_target_suffix} INTERFACE
+    ${${_pkg_name}_TARGETS})
+endforeach()
+target_link_libraries(
+  ${rosidl_generate_interfaces_TARGET}${_target_suffix} INTERFACE
+  ${rosidl_runtime_cpp_TARGETS})
+
 if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
   if(NOT _generated_headers STREQUAL "")
     install(
@@ -101,6 +123,12 @@ if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
     )
   endif()
   ament_export_include_directories(include)
+
+  install(
+    TARGETS ${rosidl_generate_interfaces_TARGET}${_target_suffix}
+    EXPORT ${rosidl_generate_interfaces_TARGET}${_target_suffix}
+  )
+  ament_export_targets(${rosidl_generate_interfaces_TARGET}${_target_suffix})
 endif()
 
 if(BUILD_TESTING AND rosidl_generate_interfaces_ADD_LINTER_TESTS)

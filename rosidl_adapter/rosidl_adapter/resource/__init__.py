@@ -19,17 +19,17 @@ import sys
 import em
 
 
-def expand_template(template_name, data, output_file):
+def expand_template(template_name, data, output_file, encoding='utf-8'):
     content = evaluate_template(template_name, data)
 
     if output_file.exists():
-        existing_content = output_file.read_text(encoding='utf-8')
+        existing_content = output_file.read_text(encoding=encoding)
         if existing_content == content:
             return
     elif output_file.parent:
         os.makedirs(str(output_file.parent), exist_ok=True)
 
-    output_file.write_text(content, encoding='utf-8')
+    output_file.write_text(content, encoding=encoding)
 
 
 _interpreter = None
@@ -62,8 +62,8 @@ def evaluate_template(template_name, data):
         return output.getvalue()
     except Exception as e:  # noqa: F841
         print(
-            "{e.__class__.__name__} processing template '{template_name}'"
-            .format_map(locals()), file=sys.stderr)
+            f"{e.__class__.__name__} processing template '{template_name}'",
+            file=sys.stderr)
         raise
     finally:
         _interpreter.shutdown()
@@ -81,7 +81,7 @@ def _evaluate_template(template_name, **kwargs):
         _interpreter.string(content, template_path, kwargs)
     except Exception as e:  # noqa: F841
         print(
-            "{e.__class__.__name__} processing template '{template_name}': {e}"
-            .format_map(locals()), file=sys.stderr)
+            f"{e.__class__.__name__} processing template '{template_name}': "
+            f'{e}', file=sys.stderr)
         sys.exit(1)
     _interpreter.invoke('afterInclude')

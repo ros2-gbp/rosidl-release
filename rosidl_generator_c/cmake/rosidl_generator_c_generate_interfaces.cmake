@@ -24,12 +24,12 @@ foreach(_abs_idl_file ${rosidl_generate_interfaces_ABS_IDL_FILES})
   string_camel_case_to_lower_case_underscore("${_idl_name}" _header_name)
   list(APPEND _generated_headers
     "${_output_path}/${_parent_folder}/${_header_name}.h"
-    "${_output_path}/${_parent_folder}/${_header_name}__functions.h"
-    "${_output_path}/${_parent_folder}/${_header_name}__struct.h"
-    "${_output_path}/${_parent_folder}/${_header_name}__type_support.h"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__functions.h"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__struct.h"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__type_support.h"
   )
   list(APPEND _generated_sources
-    "${_output_path}/${_parent_folder}/${_header_name}__functions.c"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__functions.c"
   )
 endforeach()
 
@@ -117,15 +117,22 @@ if(WIN32)
 endif()
 target_include_directories(${rosidl_generate_interfaces_TARGET}${_target_suffix}
   PUBLIC
-  ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c>"
+  "$<INSTALL_INTERFACE:include>"
 )
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
   ament_target_dependencies(
     ${rosidl_generate_interfaces_TARGET}${_target_suffix}
     ${_pkg_name})
+  if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
+    ament_export_dependencies(${_pkg_name})
+  endif()
 endforeach()
 ament_target_dependencies(${rosidl_generate_interfaces_TARGET}${_target_suffix}
-  "rosidl_generator_c"
+  "rosidl_runtime_c"
+  "rosidl_typesupport_interface")
+ament_export_dependencies(
+  "rosidl_runtime_c"
   "rosidl_typesupport_interface")
 
 add_dependencies(
@@ -142,8 +149,10 @@ if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
     )
   endif()
   ament_export_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix})
+  ament_export_targets(${rosidl_generate_interfaces_TARGET}${_target_suffix})
   install(
     TARGETS ${rosidl_generate_interfaces_TARGET}${_target_suffix}
+    EXPORT ${rosidl_generate_interfaces_TARGET}${_target_suffix}
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin

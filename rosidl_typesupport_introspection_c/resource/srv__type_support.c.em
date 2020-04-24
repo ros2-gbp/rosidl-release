@@ -15,12 +15,12 @@ TEMPLATE(
 
 @{
 from rosidl_cmake import convert_camel_case_to_lower_case_underscore
-include_parts = [package_name] + list(interface_path.parents[0].parts) + \
-    [convert_camel_case_to_lower_case_underscore(interface_path.stem)]
+include_parts = [package_name] + list(interface_path.parents[0].parts) + [
+    'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
 include_base = '/'.join(include_parts)
 
 header_files = [
-    'rosidl_generator_c/service_type_support_struct.h',
+    'rosidl_runtime_c/service_type_support_struct.h',
     package_name + '/msg/rosidl_typesupport_introspection_c__visibility_control.h',
     include_base + '__rosidl_typesupport_introspection_c.h',
     'rosidl_typesupport_introspection_c/identifier.h',

@@ -19,7 +19,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "rosidl_generator_c/message_type_support_struct.h"
+#include "rosidl_runtime_c/message_initialization.h"
+#include "rosidl_runtime_c/message_type_support_struct.h"
 
 #include "rosidl_typesupport_introspection_c/visibility_control.h"
 
@@ -47,6 +48,8 @@ typedef struct rosidl_typesupport_introspection_c__MessageMembers
   uint32_t member_count_;
   size_t size_of_;
   const rosidl_typesupport_introspection_c__MessageMember * members_;
+  void (* init_function)(void *, enum rosidl_runtime_c__message_initialization);
+  void (* fini_function)(void *);
 } rosidl_typesupport_introspection_c__MessageMembers;
 
 #endif  // ROSIDL_TYPESUPPORT_INTROSPECTION_C__MESSAGE_INTROSPECTION_H_
