@@ -1,1 +1,1 @@
-{"trim": "", "base": "d0a0be7", "trimbase": "", "parent": "debian/foxy/rosidl_cmake", "previous": "a1047e6"}
+{"base": "e6cdaf7", "parent": "debian/foxy/rosidl_cmake", "previous": "8b12f78", "trim": "", "trimbase": ""}
