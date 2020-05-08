@@ -1,4 +1,7 @@
-# rosidl
+# rosidl_generator_c
 
-```rosidl``` is one of the ros_core packages.
-See [documentation](http://docs.ros2.org/latest/developer_overview.html#the-rosidl-repository) for details of this package.
+`rosidl_runtime_c` is a package and provides runtime ROSIDL functionality C.
+
+## Quality Declaration
+
+This package claims to be in the **Quality Level 4** category, see the [Quality Declaration](QUALITY_DECLARATION.md) for more details.
