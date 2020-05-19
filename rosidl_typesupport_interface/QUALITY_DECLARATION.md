@@ -1,6 +1,6 @@
 This document is a declaration of software quality for the `rosidl_typesupport_interface` package, based on the guidelines in [REP-2004](https://www.ros.org/reps/rep-2004.html).
 
-# `rosidl_typesupport_interface` Quality Declaration
+# rosidl_typesupport_interface Quality Declaration
 
 The package `rosidl_typesupport_interface` claims to be in the **Quality Level 4** category.
 
@@ -65,11 +65,11 @@ All pull requests must resolve related documentation changes before merging.
 
 ### Feature Documentation [3.i]
 
-`rosidl_typesupport_interface` does not have any feature documentation and it will need to be added for higher quality levels.
+`rosidl_typesupport_interface` has feature documentation and it is publicly [hosted](README.md).
 
 ### Public API Documentation [3.ii]
 
-`rosidl_typesupport_interface` does not have any API documentation.
+`rosidl_typesupport_interface` has API documentation, but it is not yet publicly hosted.
 
 ### License [3.iii]
 
@@ -89,11 +89,15 @@ Most recent test results can be found [here](https://ci.ros2.org/job/nightly_lin
 
 ### Feature Testing [4.i]
 
-There are currently no public features undergoing tests.
+The features of `rosidl_typesupport_interface` are tested, and their tests are located in the test directory.
+
+Most recent test results can be found [here](https://ci.ros2.org/job/nightly_linux_release/lastBuild/testReport/rosidl_typesupport_interface).
 
 ### Public API Testing [4.ii]
 
-There are currently no tests for the public API.
+The public API of `rosidl_typesupport_interface` is tested, and the tests are located in the test directory.
+
+Most recent test results can be found [here](https://ci.ros2.org/job/nightly_linux_release/lastBuild/testReport/rosidl_typesupport_interface).
 
 ### Coverage [4.iv]
 
