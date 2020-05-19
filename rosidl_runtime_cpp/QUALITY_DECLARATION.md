@@ -1,6 +1,6 @@
 This document is a declaration of software quality for the `rosidl_runtime_cpp` package, based on the guidelines in [REP-2004](https://www.ros.org/reps/rep-2004.html).
 
-# `rosidl_runtime_cpp` Quality Declaration
+# rosidl_runtime_cpp Quality Declaration
 
 The package `rosidl_runtime_cpp` claims to be in the **Quality Level 4** category.
 
@@ -65,11 +65,11 @@ All pull requests must resolve related documentation changes before merging.
 
 ### Feature Documentation [3.i]
 
-`rosidl_runtime_cpp` does not have any feature documentation and it will need to be added for higher quality levels.
+`rosidl_runtime_cpp` has feature documentation and it is publicly [hosted](docs/FEATURES.md).
 
 ### Public API Documentation [3.ii]
 
-`rosidl_runtime_cpp` has some public API documentation.
+`rosidl_runtime_cpp` has documentation of its public API, but it is not yet hosted.
 
 ### License [3.iii]
 
@@ -89,11 +89,13 @@ Most recent test results can be found [here](https://ci.ros2.org/job/nightly_lin
 
 ### Feature Testing [4.i]
 
-There are currently no public features undergoing tests.
+Most of the features provided by this package are declarations of types and functions, and therefore do not require testing.
+The BoundedVector class is tested and the most recent test results can be found [here](https://ci.ros2.org/job/nightly_linux_release/lastBuild/testReport/rosidl_runtime_cpp).
 
 ### Public API Testing [4.ii]
 
-There are currently no tests for the public API.
+Most of the API provided by this package are declarations of types and functions, and therefore do not require testing.
+The BoundedVector class is tested and the most recent test results can be found [here](https://ci.ros2.org/job/nightly_linux_release/lastBuild/testReport/rosidl_runtime_cpp).
 
 ### Coverage [4.iv]
 
