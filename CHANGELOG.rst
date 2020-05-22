@@ -2,6 +2,11 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2020-05-22)
+------------------
+* Clean up BoundedVector (`#487 <https://github.com/ros2/rosidl/issues/487>`_)
+* Contributors: Jonathan Wakely
+
 0.9.2 (2020-05-19)
 ------------------
 * Update API documentation (`#488 <https://github.com/ros2/rosidl/issues/488>`_)
