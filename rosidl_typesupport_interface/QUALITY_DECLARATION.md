@@ -14,7 +14,7 @@ Below are the rationales, notes, and caveats for this claim, organized by each r
 
 ### Version Stability [1.ii]
 
-`rosidl_typesupport_interface` is not yet at a stable version, i.e. `>= 1.0.0`.
+`rosidl_typesupport_interface` is at a stable version, i.e. >= 1.0.0. The current version can be found in its [package.xml](./package.xml), and its change history can be found in its [CHANGELOG](./CHANGELOG.xml).
 
 ### Public API Declaration [1.iii]
 
@@ -140,4 +140,4 @@ Currently nightly results can be seen here:
 
 ## Vulnerability Disclosure Policy [7.i]
 
-This package does not yet have a Vulnerability Disclosure Policy.
+This package conforms to the Vulnerability Disclosure Policy in [REP-2006](https://www.ros.org/reps/rep-2006.html).
