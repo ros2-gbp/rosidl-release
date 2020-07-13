@@ -111,7 +111,7 @@ tracks:
       :{release_inc}
     devel_branch: eloquent
     last_version: 0.8.2
-    name: upstream
+    name: rosidl
     patches: null
     release_inc: '1'
     release_repo_url: git@github.com:ros2-gbp/rosidl-release
@@ -135,7 +135,7 @@ tracks:
       :{release_inc}
     devel_branch: master
     last_version: 1.0.1
-    name: upstream
+    name: rosidl
     patches: null
     release_inc: '1'
     release_repo_url: git@github.com:ros2-gbp/rosidl-release
@@ -207,7 +207,7 @@ tracks:
       :{release_inc}
     devel_branch: master
     last_version: 1.0.1
-    name: upstream
+    name: rosidl
     patches: null
     release_inc: '2'
     release_repo_url: git@github.com:ros2-gbp/rosidl-release
