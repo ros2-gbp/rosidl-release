@@ -1,0 +1,12 @@
+Source: ros-rolling-rosidl-parser
+Section: misc
+Priority: optional
+Maintainer: Dirk Thomas <dthomas@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), python3-pytest, ros-rolling-ament-cmake, ros-rolling-ament-cmake-pytest, ros-rolling-ament-lint-auto, ros-rolling-ament-lint-common, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-rosidl-parser
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-lark, ros-rolling-rosidl-adapter, ros-rolling-ros-workspace
+Description: The parser for ROS interface files.
