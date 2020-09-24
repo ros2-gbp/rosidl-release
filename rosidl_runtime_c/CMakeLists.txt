@@ -7,11 +7,12 @@ if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 11)
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
 find_package(ament_cmake_ros REQUIRED)
+find_package(rcutils REQUIRED)
 find_package(rosidl_typesupport_interface REQUIRED)
 
 add_library(${PROJECT_NAME}
@@ -26,8 +27,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 ament_target_dependencies(${PROJECT_NAME}
+  "rcutils"
   "rosidl_typesupport_interface")
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
   set_target_properties(${PROJECT_NAME} PROPERTIES
     COMPILE_OPTIONS -Wall -Wextra -Wpedantic)
 endif()
@@ -36,7 +38,11 @@ if(WIN32)
     PRIVATE "ROSIDL_GENERATOR_C_BUILDING_DLL")
 endif()
 
-ament_export_dependencies(rosidl_typesupport_interface)
+if(BUILD_TESTING AND NOT RCUTILS_DISABLE_FAULT_INJECTION)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
+endif()
+
+ament_export_dependencies(rcutils rosidl_typesupport_interface)
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 ament_export_targets(${PROJECT_NAME})
@@ -86,12 +92,14 @@ if(BUILD_TESTING)
   if(TARGET test_string_functions)
     target_include_directories(test_string_functions PUBLIC include)
     target_link_libraries(test_string_functions ${PROJECT_NAME})
+    target_compile_definitions(test_string_functions PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
   endif()
 
   ament_add_gtest(test_u16string_functions test/test_u16string_functions.cpp)
   if(TARGET test_u16string_functions)
     target_include_directories(test_u16string_functions PUBLIC include)
     target_link_libraries(test_u16string_functions ${PROJECT_NAME})
+    target_compile_definitions(test_u16string_functions PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
   endif()
 endif()
 
