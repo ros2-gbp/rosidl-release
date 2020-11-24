@@ -1,0 +1,12 @@
+Source: ros-dashing-rosidl-generator-c
+Section: misc
+Priority: optional
+Maintainer: William Woodall <william@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-dashing-ament-cmake-gtest, ros-dashing-ament-cmake-ros, ros-dashing-ament-lint-auto, ros-dashing-ament-lint-common, ros-dashing-rosidl-cmake, ros-dashing-rosidl-typesupport-interface, ros-dashing-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-dashing-rosidl-generator-c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-dashing-ament-cmake, ros-dashing-rosidl-cmake, ros-dashing-rosidl-parser, ros-dashing-rosidl-typesupport-interface, ros-dashing-ros-workspace
+Description: Generate the ROS interfaces in C.
