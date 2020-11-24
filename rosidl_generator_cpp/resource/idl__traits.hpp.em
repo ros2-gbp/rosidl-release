@@ -12,8 +12,8 @@
 @#######################################################################
 @{
 from rosidl_cmake import convert_camel_case_to_lower_case_underscore
-include_parts = [package_name] + list(interface_path.parents[0].parts) + [
-    'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
+include_parts = [package_name] + list(interface_path.parents[0].parts) + \
+    [convert_camel_case_to_lower_case_underscore(interface_path.stem)]
 include_base = '/'.join(include_parts)
 header_guard_variable = '__'.join([x.upper() for x in include_parts]) + \
     '__TRAITS_HPP_'
@@ -25,10 +25,8 @@ include_directives = set()
 #define @(header_guard_variable)
 
 #include "@(include_base)__struct.hpp"
+#include <rosidl_generator_cpp/traits.hpp>
 #include <stdint.h>
-#include <rosidl_runtime_cpp/traits.hpp>
-#include <sstream>
-#include <string>
 #include <type_traits>
 
 @#######################################################################
@@ -72,9 +70,44 @@ from rosidl_parser.definition import Action
 @[for action in content.get_elements_of_type(Action)]@
 @{
 TEMPLATE(
-    'action__traits.hpp.em',
+    'msg__traits.hpp.em',
     package_name=package_name, interface_path=interface_path,
-    action=action, include_directives=include_directives)
+    message=action.goal, include_directives=include_directives)
+}@
+
+@{
+TEMPLATE(
+    'msg__traits.hpp.em',
+    package_name=package_name, interface_path=interface_path,
+    message=action.result, include_directives=include_directives)
+}@
+
+@{
+TEMPLATE(
+    'msg__traits.hpp.em',
+    package_name=package_name, interface_path=interface_path,
+    message=action.feedback, include_directives=include_directives)
+}@
+
+@{
+TEMPLATE(
+    'srv__traits.hpp.em',
+    package_name=package_name, interface_path=interface_path,
+    service=action.send_goal_service, include_directives=include_directives)
+}@
+
+@{
+TEMPLATE(
+    'srv__traits.hpp.em',
+    package_name=package_name, interface_path=interface_path,
+    service=action.get_result_service, include_directives=include_directives)
+}@
+
+@{
+TEMPLATE(
+    'msg__traits.hpp.em',
+    package_name=package_name, interface_path=interface_path,
+    message=action.feedback_message, include_directives=include_directives)
 }@
 
 @[end for]@

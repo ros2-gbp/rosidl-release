@@ -15,7 +15,6 @@ TEMPLATE(
 
 @{
 service_typename = '::'.join(service.namespaced_type.namespaced_name())
-service_fully_qualified_name = '/'.join(service.namespaced_type.namespaced_name())
 }@
 @
 namespace rosidl_generator_traits
@@ -25,12 +24,6 @@ template<>
 inline const char * data_type<@(service_typename)>()
 {
   return "@(service_typename)";
-}
-
-template<>
-inline const char * name<@(service_typename)>()
-{
-  return "@(service_fully_qualified_name)";
 }
 
 template<>
@@ -50,24 +43,6 @@ struct has_bounded_size<@(service_typename)>
     has_bounded_size<@(service_typename)_Request>::value &&
     has_bounded_size<@(service_typename)_Response>::value
   >
-{
-};
-
-template<>
-struct is_service<@(service_typename)>
-  : std::true_type
-{
-};
-
-template<>
-struct is_service_request<@(service_typename)_Request>
-  : std::true_type
-{
-};
-
-template<>
-struct is_service_response<@(service_typename)_Response>
-  : std::true_type
 {
 };
 

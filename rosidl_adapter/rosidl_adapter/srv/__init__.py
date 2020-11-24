@@ -22,19 +22,19 @@ def convert_srv_to_idl(package_dir, package_name, input_file, output_dir):
     assert input_file.suffix == '.srv'
 
     abs_input_file = package_dir / input_file
-    print(f'Reading input file: {abs_input_file}')
+    print('Reading input file: {abs_input_file}'.format_map(locals()))
     abs_input_file = package_dir / input_file
     content = abs_input_file.read_text(encoding='utf-8')
     srv = parse_service_string(package_name, input_file.stem, content)
 
     output_file = output_dir / input_file.with_suffix('.idl').name
     abs_output_file = output_file.absolute()
-    print(f'Writing output file: {abs_output_file}')
+    print('Writing output file: {abs_output_file}'.format_map(locals()))
     data = {
         'pkg_name': package_name,
         'relative_input_file': input_file,
         'srv': srv,
     }
 
-    expand_template('srv.idl.em', data, output_file, encoding='iso-8859-1')
+    expand_template('srv.idl.em', data, output_file)
     return output_file

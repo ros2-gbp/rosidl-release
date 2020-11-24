@@ -6,17 +6,57 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 
 ament_export_dependencies(rosidl_cmake)
+ament_export_dependencies(rosidl_generator_c)
+ament_export_include_directories(include)
 
 ament_index_register_resource("rosidl_generator_packages")
+ament_index_register_resource("rosidl_runtime_packages")
 
 ament_python_install_package(${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  find_package(rosidl_runtime_c REQUIRED)
-  find_package(rosidl_runtime_cpp REQUIRED)
-  find_package(test_interface_files REQUIRED)
+  find_package(rosidl_generator_c REQUIRED)
   ament_lint_auto_find_test_dependencies()
+
+  set(message_files
+    "msg/BoundedArrayBounded.msg"
+    "msg/BoundedArrayStatic.msg"
+    "msg/BoundedArrayUnbounded.msg"
+
+    "msg/Empty.msg"
+
+    "msg/FieldsWithSameTypeSomeDefaults.msg"
+
+    "msg/PrimitiveStaticArrays.msg"
+
+    "msg/PrimitivesBounded.msg"
+    "msg/PrimitivesConstants.msg"
+    "msg/PrimitivesDefault.msg"
+    "msg/PrimitivesStatic.msg"
+    "msg/PrimitivesUnbounded.msg"
+
+    "msg/StaticArrayBounded.msg"
+    "msg/StaticArrayStatic.msg"
+    "msg/StaticArrayUnbounded.msg"
+
+    "msg/String.msg"
+    "msg/StringBounded.msg"
+    "msg/StringArrayStatic.msg"
+    "msg/StringArrays.msg"
+
+    "msg/UnboundedArrayBounded.msg"
+    "msg/UnboundedArrayStatic.msg"
+    "msg/UnboundedArrayUnbounded.msg"
+
+    "msg/Various.msg"
+
+    "msg/WString.msg"
+  )
+
+  set(srv_files
+    "srv/ComplexTypeZeroFill.srv"
+  )
 
   include(cmake/register_cpp.cmake)
   set(rosidl_generator_cpp_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -28,8 +68,8 @@ if(BUILD_TESTING)
   )
 
   rosidl_generate_interfaces(${PROJECT_NAME}
-    ${test_interface_files_MSG_FILES}
-    ${test_interface_files_SRV_FILES}
+    ${message_files}
+    ${srv_files}
     ADD_LINTER_TESTS
     SKIP_INSTALL
   )
@@ -43,80 +83,28 @@ if(BUILD_TESTING)
     add_compile_options(-Wall -Wextra -Wpedantic)
   endif()
 
-  ament_add_gtest(test_msg_builder test/test_msg_builder.cpp)
-  if(TARGET test_msg_builder)
-    add_dependencies(test_msg_builder ${PROJECT_NAME})
-    target_include_directories(test_msg_builder PUBLIC
-      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME})
-    ament_target_dependencies(test_msg_builder
-      rosidl_runtime_cpp
-      rosidl_runtime_c)
-  endif()
+  include_directories(include
+    ${rosidl_generator_c_INCLUDE_DIRS})
+
+  ament_add_gtest(test_bounded_vector test/test_bounded_vector.cpp)
   ament_add_gtest(test_msg_initialization test/test_msg_initialization.cpp)
   if(TARGET test_msg_initialization)
     add_dependencies(test_msg_initialization ${PROJECT_NAME})
-    ament_target_dependencies(test_msg_initialization
-      rosidl_runtime_cpp
-      rosidl_runtime_c)
-    target_include_directories(test_msg_initialization PUBLIC
-      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-    )
   endif()
   ament_add_gtest(test_srv_initialization test/test_srv_initialization.cpp)
   if(TARGET test_srv_initialization)
     add_dependencies(test_srv_initialization ${PROJECT_NAME})
-    ament_target_dependencies(test_srv_initialization
-      rosidl_runtime_cpp
-      rosidl_runtime_c)
-    target_include_directories(test_srv_initialization PUBLIC
-      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-    )
   endif()
   ament_add_gtest(test_interfaces_cpp test/test_interfaces.cpp)
   if(TARGET test_interfaces_cpp)
     add_dependencies(test_interfaces_cpp ${PROJECT_NAME})
-    ament_target_dependencies(test_interfaces_cpp
-      rosidl_runtime_cpp
-      rosidl_runtime_c)
-    target_include_directories(test_interfaces_cpp PUBLIC
-      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-    )
   endif()
   ament_add_gtest(test_msg_datatype test/test_msg_datatype.cpp)
   if(TARGET test_msg_datatype)
     add_dependencies(test_msg_datatype ${PROJECT_NAME})
-    ament_target_dependencies(test_msg_datatype
-      rosidl_runtime_cpp
-      rosidl_runtime_c)
-    target_include_directories(test_msg_datatype PUBLIC
-      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-    )
   endif()
-  ament_add_gtest(test_name test/test_name.cpp)
-  if(TARGET test_name)
-    add_dependencies(test_name ${PROJECT_NAME})
-    ament_target_dependencies(test_name
-      rosidl_runtime_cpp
-      rosidl_runtime_c)
-    target_include_directories(test_name PUBLIC
-      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-    )
-  endif()
-  if(MSVC)
-    # https://developercommunity.visualstudio.com/content/problem/919371/c2017-illegal-escape-sequence-when-using-in-a-raw.html
-    set_source_files_properties(
-      test/test_traits.cpp PROPERTIES COMPILE_FLAGS "/Zc:preprocessor")
-  endif()
-  ament_add_gtest(test_traits test/test_traits.cpp)
-  if(TARGET test_traits)
-    add_dependencies(test_traits ${PROJECT_NAME})
-    ament_target_dependencies(test_traits
-      rosidl_runtime_cpp
-      rosidl_runtime_c)
-    target_include_directories(test_traits PUBLIC
-      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-    )
-  endif()
+  # include the built files directly, instead of their install location
+  include_directories("${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}")
 endif()
 
 ament_package(
@@ -130,4 +118,8 @@ install(
 install(
   DIRECTORY cmake resource
   DESTINATION share/${PROJECT_NAME}
+)
+install(
+  DIRECTORY include/
+  DESTINATION include
 )

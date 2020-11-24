@@ -31,24 +31,10 @@ from rosidl_parser.definition import UnboundedSequence
 def generate_cpp(generator_arguments_file):
     mapping = {
         'idl.hpp.em': '%s.hpp',
-        'idl__builder.hpp.em': 'detail/%s__builder.hpp',
-        'idl__struct.hpp.em': 'detail/%s__struct.hpp',
-        'idl__traits.hpp.em': 'detail/%s__traits.hpp',
+        'idl__struct.hpp.em': '%s__struct.hpp',
+        'idl__traits.hpp.em': '%s__traits.hpp',
     }
-    generate_files(
-        generator_arguments_file, mapping,
-        post_process_callback=prefix_with_bom_if_necessary)
-
-
-def prefix_with_bom_if_necessary(content):
-    try:
-        content.encode('ASCII')
-    except UnicodeError:
-        prefix = '\ufeff' + \
-            '// NOLINT: This file starts with a BOM ' + \
-            'since it contain non-ASCII characters\n'
-        content = prefix + content
-    return content
+    generate_files(generator_arguments_file, mapping)
 
 
 MSG_TYPE_TO_CPP = {
@@ -121,7 +107,7 @@ def msg_type_to_cpp(type_):
                  'rebind<%s>::other>') % (cpp_type, cpp_type)
         elif isinstance(type_, BoundedSequence):
             return \
-                ('rosidl_runtime_cpp::BoundedVector<%s, %u, typename ContainerAllocator::' +
+                ('rosidl_generator_cpp::BoundedVector<%s, %u, typename ContainerAllocator::' +
                  'template rebind<%s>::other>') % (cpp_type, type_.maximum_size, cpp_type)
         else:
             assert isinstance(type_, Array)
@@ -195,7 +181,7 @@ def primitive_value_to_cpp(type_, value):
     if type_.typename in [
         'short', 'unsigned short',
         'char', 'wchar',
-        'double', 'long double',
+        'double',
         'octet',
         'int8', 'uint8',
         'int16', 'uint16',

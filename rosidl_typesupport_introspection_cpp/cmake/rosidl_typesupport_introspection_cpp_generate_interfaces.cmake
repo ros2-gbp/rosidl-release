@@ -12,12 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if(NOT rosidl_generator_c_FOUND)
-  message(FATAL_ERROR
-    "'rosidl_generator_cpp' not found when executing "
-    "'rosidl_typesupport_introspection_cpp' extension.")
-endif()
-
 set(_output_path
   "${CMAKE_CURRENT_BINARY_DIR}/rosidl_typesupport_introspection_cpp/${PROJECT_NAME}")
 set(_generated_header_files "")
@@ -28,9 +22,9 @@ foreach(_abs_idl_file ${rosidl_generate_interfaces_ABS_IDL_FILES})
   get_filename_component(_idl_name "${_abs_idl_file}" NAME_WE)
   string_camel_case_to_lower_case_underscore("${_idl_name}" _header_name)
   list(APPEND _generated_header_files
-    "${_output_path}/${_parent_folder}/detail/${_header_name}__rosidl_typesupport_introspection_cpp.hpp")
+    "${_output_path}/${_parent_folder}/${_header_name}__rosidl_typesupport_introspection_cpp.hpp")
   list(APPEND _generated_source_files
-    "${_output_path}/${_parent_folder}/detail/${_header_name}__type_support.cpp")
+    "${_output_path}/${_parent_folder}/${_header_name}__type_support.cpp")
 endforeach()
 
 set(_dependency_files "")
@@ -101,19 +95,15 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 target_include_directories(${rosidl_generate_interfaces_TARGET}${_target_suffix}
   PUBLIC
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_cpp>"
+  ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_cpp
 )
 ament_target_dependencies(${rosidl_generate_interfaces_TARGET}${_target_suffix}
-  "rosidl_runtime_c"
   "rosidl_typesupport_interface"
   "rosidl_typesupport_introspection_cpp")
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
   ament_target_dependencies(
     ${rosidl_generate_interfaces_TARGET}${_target_suffix}
     ${_pkg_name})
-  target_link_libraries(
-    ${rosidl_generate_interfaces_TARGET}${_target_suffix}
-    ${${_pkg_name}_TARGETS${_target_suffix}})
 endforeach()
 
 add_dependencies(
@@ -135,14 +125,11 @@ if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
   endif()
   install(
     TARGETS ${rosidl_generate_interfaces_TARGET}${_target_suffix}
-    EXPORT ${rosidl_generate_interfaces_TARGET}${_target_suffix}
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
   )
-  rosidl_export_typesupport_targets(${_target_suffix}
-    ${rosidl_generate_interfaces_TARGET}${_target_suffix})
-  ament_export_targets(${rosidl_generate_interfaces_TARGET}${_target_suffix})
+  ament_export_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix})
 endif()
 
 if(BUILD_TESTING AND rosidl_generate_interfaces_ADD_LINTER_TESTS)

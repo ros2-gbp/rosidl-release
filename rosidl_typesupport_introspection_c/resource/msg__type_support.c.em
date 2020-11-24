@@ -12,8 +12,8 @@ from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import NamespacedType
 
-include_parts = [package_name] + list(interface_path.parents[0].parts) + [
-    'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
+include_parts = [package_name] + list(interface_path.parents[0].parts) + \
+    [convert_camel_case_to_lower_case_underscore(interface_path.stem)]
 include_base = '/'.join(include_parts)
 
 header_files = [
@@ -23,7 +23,6 @@ header_files = [
     'rosidl_typesupport_introspection_c/field_types.h',
     'rosidl_typesupport_introspection_c/identifier.h',
     'rosidl_typesupport_introspection_c/message_introspection.h',
-    include_base + '__functions.h',
     include_base + '__struct.h',
 ]
 
@@ -51,27 +50,36 @@ includes = OrderedDict()
 for member in message.structure.members:
     if isinstance(member.type, AbstractSequence) and isinstance(member.type.value_type, BasicType):
         member_names = includes.setdefault(
-            'rosidl_runtime_c/primitives_sequence_functions.h', [])
+            'rosidl_generator_c/primitives_sequence_functions.h', [])
         member_names.append(member.name)
         continue
     type_ = member.type
     if isinstance(type_, AbstractNestedType):
         type_ = type_.value_type
     if isinstance(type_, AbstractString):
-        member_names = includes.setdefault('rosidl_runtime_c/string_functions.h', [])
+        member_names = includes.setdefault('rosidl_generator_c/string_functions.h', [])
         member_names.append(member.name)
     elif isinstance(type_, AbstractWString):
         member_names = includes.setdefault(
-            'rosidl_runtime_c/u16string_functions.h', [])
+            'rosidl_generator_c/u16string_functions.h', [])
         member_names.append(member.name)
     elif isinstance(type_, NamespacedType):
         include_prefix = idl_structure_type_to_c_include_prefix(type_)
+        if include_prefix.endswith('__request'):
+            include_prefix = include_prefix[:-9]
+        elif include_prefix.endswith('__response'):
+            include_prefix = include_prefix[:-10]
+        if include_prefix.endswith('__goal'):
+            include_prefix = include_prefix[:-6]
+        elif include_prefix.endswith('__result'):
+            include_prefix = include_prefix[:-8]
+        elif include_prefix.endswith('__feedback'):
+            include_prefix = include_prefix[:-10]
         member_names = includes.setdefault(
             include_prefix + '.h', [])
         member_names.append(member.name)
-        include_prefix_detail = idl_structure_type_to_c_include_prefix(type_, 'detail')
         member_names = includes.setdefault(
-            include_prefix_detail + '__rosidl_typesupport_introspection_c.h', [])
+            include_prefix + '__rosidl_typesupport_introspection_c.h', [])
         member_names.append(member.name)
 }@
 @#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -104,20 +112,6 @@ extern "C"
 @#######################################################################
 @# define callback functions
 @#######################################################################
-void @(function_prefix)__@(message.structure.namespaced_type.name)_init_function(
-  void * message_memory, enum rosidl_runtime_c__message_initialization _init)
-{
-  // TODO(karsten1987): initializers are not yet implemented for typesupport c
-  // see https://github.com/ros2/ros2/issues/397
-  (void) _init;
-  @('__'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))__init(message_memory);
-}
-
-void @(function_prefix)__@(message.structure.namespaced_type.name)_fini_function(void * message_memory)
-{
-  @('__'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))__fini(message_memory);
-}
-
 @[for member in message.structure.members]@
 @[  if isinstance(member.type, AbstractNestedType) and isinstance(member.type.value_type, NamespacedType)]@
 size_t @(function_prefix)__size_function__@(member.type.value_type.name)__@(member.name)(
@@ -137,9 +131,9 @@ const void * @(function_prefix)__get_const_function__@(member.type.value_type.na
   const void * untyped_member, size_t index)
 {
 @[    if isinstance(member.type, Array)]@
-  const @('__'.join(member.type.value_type.namespaced_name())) * member =
-    (const @('__'.join(member.type.value_type.namespaced_name())) *)(untyped_member);
-  return &member[index];
+  const @('__'.join(member.type.value_type.namespaced_name())) ** member =
+    (const @('__'.join(member.type.value_type.namespaced_name())) **)(untyped_member);
+  return &(*member)[index];
 @[    else]@
   const @('__'.join(member.type.value_type.namespaced_name()))__Sequence * member =
     (const @('__'.join(member.type.value_type.namespaced_name()))__Sequence *)(untyped_member);
@@ -151,9 +145,9 @@ void * @(function_prefix)__get_function__@(member.type.value_type.name)__@(membe
   void * untyped_member, size_t index)
 {
 @[    if isinstance(member.type, Array)]@
-  @('__'.join(member.type.value_type.namespaced_name())) * member =
-    (@('__'.join(member.type.value_type.namespaced_name())) *)(untyped_member);
-  return &member[index];
+  @('__'.join(member.type.value_type.namespaced_name())) ** member =
+    (@('__'.join(member.type.value_type.namespaced_name())) **)(untyped_member);
+  return &(*member)[index];
 @[    else]@
   @('__'.join(member.type.value_type.namespaced_name()))__Sequence * member =
     (@('__'.join(member.type.value_type.namespaced_name()))__Sequence *)(untyped_member);
@@ -187,7 +181,7 @@ for index, member in enumerate(message.structure.members):
     print('    "%s",  // name' % member.name)
     if isinstance(type_, BasicType):
         # uint8_t type_id_
-        print('    rosidl_typesupport_introspection_c__ROS_TYPE_%s,  // type' % type_.typename.replace(' ', '_').upper())
+        print('    rosidl_typesupport_introspection_c__ROS_TYPE_%s,  // type' % type_.typename.upper())
         # size_t string_upper_bound
         print('    0,  // upper bound of string')
         # const rosidl_generator_c::MessageTypeSupportHandle * members_
@@ -245,9 +239,7 @@ static const rosidl_typesupport_introspection_c__MessageMembers @(function_prefi
   "@(message.structure.namespaced_type.name)",  // message name
   @(len(message.structure.members)),  // number of fields
   sizeof(@('__'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))),
-  @(function_prefix)__@(message.structure.namespaced_type.name)_message_member_array,  // message members
-  @(function_prefix)__@(message.structure.namespaced_type.name)_init_function,  // function to initialize message memory (memory has to be allocated)
-  @(function_prefix)__@(message.structure.namespaced_type.name)_fini_function  // function to terminate message instance (will not free memory)
+  @(function_prefix)__@(message.structure.namespaced_type.name)_message_member_array  // message members
 };
 
 // this is not const since it must be initialized on first access

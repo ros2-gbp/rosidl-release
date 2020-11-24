@@ -29,4 +29,5 @@ def convert_to_idl(package_dir, package_name, interface_file, output_dir):
         return convert_action_to_idl(
             package_dir, package_name, interface_file, output_dir / 'action')
 
-    assert False, f"Unsupported interface type '{interface_file.suffix}'"
+    assert False, "Unsupported interface type '{interface_file.suffix}'" \
+        .format_map(locals())

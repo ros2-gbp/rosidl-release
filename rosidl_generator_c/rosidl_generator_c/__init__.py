@@ -29,25 +29,12 @@ from rosidl_parser.definition import OCTET_TYPE
 def generate_c(generator_arguments_file):
     mapping = {
         'idl.h.em': '%s.h',
-        'idl__functions.c.em': 'detail/%s__functions.c',
-        'idl__functions.h.em': 'detail/%s__functions.h',
-        'idl__struct.h.em': 'detail/%s__struct.h',
-        'idl__type_support.h.em': 'detail/%s__type_support.h',
+        'idl__functions.c.em': '%s__functions.c',
+        'idl__functions.h.em': '%s__functions.h',
+        'idl__struct.h.em': '%s__struct.h',
+        'idl__type_support.h.em': '%s__type_support.h',
     }
-    generate_files(
-        generator_arguments_file, mapping,
-        post_process_callback=prefix_with_bom_if_necessary)
-
-
-def prefix_with_bom_if_necessary(content):
-    try:
-        content.encode('ASCII')
-    except UnicodeError:
-        prefix = '\ufeff' + \
-            '// NOLINT: This file starts with a BOM ' + \
-            'since it contain non-ASCII characters\n'
-        content = prefix + content
-    return content
+    generate_files(generator_arguments_file, mapping)
 
 
 BASIC_IDL_TYPES_TO_C = {
@@ -69,25 +56,10 @@ BASIC_IDL_TYPES_TO_C = {
 }
 
 
-def idl_structure_type_to_c_include_prefix(namespaced_type, subdirectory=None):
-    parts = [
+def idl_structure_type_to_c_include_prefix(namespaced_type):
+    return '/'.join(
         convert_camel_case_to_lower_case_underscore(x)
-        for x in (namespaced_type.namespaced_name())]
-    if subdirectory is not None:
-        parts[-1:-1] = [subdirectory]
-    include_prefix = '/'.join(parts)
-    # Strip service or action suffixes
-    if include_prefix.endswith('__request'):
-        include_prefix = include_prefix[:-9]
-    elif include_prefix.endswith('__response'):
-        include_prefix = include_prefix[:-10]
-    if include_prefix.endswith('__goal'):
-        include_prefix = include_prefix[:-6]
-    elif include_prefix.endswith('__result'):
-        include_prefix = include_prefix[:-8]
-    elif include_prefix.endswith('__feedback'):
-        include_prefix = include_prefix[:-10]
-    return include_prefix
+        for x in (namespaced_type.namespaced_name()))
 
 
 def idl_structure_type_to_c_typename(namespaced_type):
@@ -127,7 +99,7 @@ def idl_type_to_c(type_):
         assert False, 'The array size is part of the variable'
     if isinstance(type_, AbstractSequence):
         if isinstance(type_.value_type, BasicType):
-            c_type = 'rosidl_runtime_c__' + type_.value_type.typename.replace(' ', '_')
+            c_type = 'rosidl_generator_c__' + type_.value_type.typename.replace(' ', '_')
         else:
             c_type = basetype_to_c(type_.value_type)
         c_type += '__Sequence'
@@ -139,9 +111,9 @@ def basetype_to_c(basetype):
     if isinstance(basetype, BasicType):
         return BASIC_IDL_TYPES_TO_C[basetype.typename]
     if isinstance(basetype, AbstractString):
-        return 'rosidl_runtime_c__String'
+        return 'rosidl_generator_c__String'
     if isinstance(basetype, AbstractWString):
-        return 'rosidl_runtime_c__U16String'
+        return 'rosidl_generator_c__U16String'
     if isinstance(basetype, NamespacedType):
         return idl_structure_type_to_c_typename(basetype)
     assert False, str(basetype)
@@ -182,26 +154,26 @@ def basic_value_to_c(type_, value):
         # Specifically, MSVC is not happy in this case
         if -2147483648 == value:
             return '({0}l - 1)'.format(value + 1)
-        return f'{value}l'
+        return '{value}l'.format_map(locals())
 
     if type_.typename == 'uint32':
-        return f'{value}ul'
+        return '{value}ul'.format_map(locals())
 
     if type_.typename == 'int64':
         # Handle edge case for INT64_MIN
         # See https://en.cppreference.com/w/cpp/language/integer_literal
         if -9223372036854775808 == value:
             return '({0}ll - 1)'.format(value + 1)
-        return f'{value}ll'
+        return '{value}ll'.format_map(locals())
 
     if type_.typename == 'uint64':
-        return f'{value}ull'
+        return '{value}ull'.format_map(locals())
 
     if 'float' == type_.typename:
-        return f'{value}f'
+        return '{value}f'.format_map(locals())
 
     if 'double' == type_.typename:
-        return f'{value}l'
+        return '{value}l'.format_map(locals())
 
     assert False, "unknown basic type '%s'" % type_
 

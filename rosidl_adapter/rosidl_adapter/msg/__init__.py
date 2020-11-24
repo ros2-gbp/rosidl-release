@@ -22,21 +22,21 @@ def convert_msg_to_idl(package_dir, package_name, input_file, output_dir):
     assert input_file.suffix == '.msg'
 
     abs_input_file = package_dir / input_file
-    print(f'Reading input file: {abs_input_file}')
+    print('Reading input file: {abs_input_file}'.format_map(locals()))
     abs_input_file = package_dir / input_file
     content = abs_input_file.read_text(encoding='utf-8')
     msg = parse_message_string(package_name, input_file.stem, content)
 
     output_file = output_dir / input_file.with_suffix('.idl').name
     abs_output_file = output_file.absolute()
-    print(f'Writing output file: {abs_output_file}')
+    print('Writing output file: {abs_output_file}'.format_map(locals()))
     data = {
         'pkg_name': package_name,
         'relative_input_file': input_file,
         'msg': msg,
     }
 
-    expand_template('msg.idl.em', data, output_file, encoding='iso-8859-1')
+    expand_template('msg.idl.em', data, output_file)
     return output_file
 
 
@@ -89,7 +89,7 @@ def string_to_idl_wstring_literal(string):
 def get_include_file(base_type):
     if base_type.is_primitive_type():
         return None
-    return f'{base_type.pkg_name}/msg/{base_type.type}.idl'
+    return '{base_type.pkg_name}/msg/{base_type.type}.idl'.format_map(locals())
 
 
 def get_idl_type(type_):
@@ -101,17 +101,18 @@ def get_idl_type(type_):
             identifier in ('string', 'wstring') and
             type_.string_upper_bound is not None
         ):
-            identifier += f'<{type_.string_upper_bound}>'
+            identifier += '<{type_.string_upper_bound}>'.format_map(locals())
     else:
-        identifier = f'{type_.pkg_name}::msg::{type_.type}'
+        identifier = '{type_.pkg_name}::msg::{type_.type}' \
+            .format_map(locals())
 
     if isinstance(type_, str) or not type_.is_array:
         return identifier
 
     if type_.is_fixed_size_array():
-        return f'{identifier}[{type_.array_size}]'
+        return '{identifier}[{type_.array_size}]'.format_map(locals())
 
     if not type_.is_upper_bound:
-        return f'sequence<{identifier}>'
+        return 'sequence<{identifier}>'.format_map(locals())
 
-    return f'sequence<{identifier}, {type_.array_size}>'
+    return 'sequence<{identifier}, {type_.array_size}>'.format_map(locals())

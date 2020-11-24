@@ -29,22 +29,31 @@ includes = OrderedDict()
 for member in message.structure.members:
     if isinstance(member.type, AbstractSequence) and isinstance(member.type.value_type, BasicType):
         member_names = includes.setdefault(
-            'rosidl_runtime_c/primitives_sequence_functions.h', [])
+            'rosidl_generator_c/primitives_sequence_functions.h', [])
         member_names.append(member.name)
         continue
     type_ = member.type
     if isinstance(type_, AbstractNestedType):
         type_ = type_.value_type
     if isinstance(type_, AbstractString):
-        member_names = includes.setdefault('rosidl_runtime_c/string_functions.h', [])
+        member_names = includes.setdefault('rosidl_generator_c/string_functions.h', [])
         member_names.append(member.name)
     elif isinstance(type_, AbstractWString):
         member_names = includes.setdefault(
-            'rosidl_runtime_c/u16string_functions.h', [])
+            'rosidl_generator_c/u16string_functions.h', [])
         member_names.append(member.name)
     elif isinstance(type_, NamespacedType):
-        include_prefix = idl_structure_type_to_c_include_prefix(
-          type_, 'detail')
+        include_prefix = idl_structure_type_to_c_include_prefix(type_)
+        if include_prefix.endswith('__request'):
+            include_prefix = include_prefix[:-9]
+        elif include_prefix.endswith('__response'):
+            include_prefix = include_prefix[:-10]
+        if include_prefix.endswith('__goal'):
+            include_prefix = include_prefix[:-6]
+        elif include_prefix.endswith('__result'):
+            include_prefix = include_prefix[:-8]
+        elif include_prefix.endswith('__feedback'):
+            include_prefix = include_prefix[:-10]
         member_names = includes.setdefault(
             include_prefix + '__functions.h', [])
         member_names.append(member.name)
