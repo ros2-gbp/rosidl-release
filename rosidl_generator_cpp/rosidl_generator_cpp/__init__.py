@@ -34,7 +34,20 @@ def generate_cpp(generator_arguments_file):
         'idl__struct.hpp.em': '%s__struct.hpp',
         'idl__traits.hpp.em': '%s__traits.hpp',
     }
-    generate_files(generator_arguments_file, mapping)
+    generate_files(
+        generator_arguments_file, mapping,
+        post_process_callback=prefix_with_bom_if_necessary)
+
+
+def prefix_with_bom_if_necessary(content):
+    try:
+        content.encode('ASCII')
+    except UnicodeError:
+        prefix = '\ufeff' + \
+            '// NOLINT: This file starts with a BOM ' + \
+            'since it contain non-ASCII characters\n'
+        content = prefix + content
+    return content
 
 
 MSG_TYPE_TO_CPP = {
@@ -181,7 +194,7 @@ def primitive_value_to_cpp(type_, value):
     if type_.typename in [
         'short', 'unsigned short',
         'char', 'wchar',
-        'double',
+        'double', 'long double',
         'octet',
         'int8', 'uint8',
         'int16', 'uint16',
