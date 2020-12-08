@@ -25,10 +25,8 @@ include_directives = set()
 #define @(header_guard_variable)
 
 #include "@(include_base)__struct.hpp"
-#include <stdint.h>
 #include <rosidl_runtime_cpp/traits.hpp>
-#include <sstream>
-#include <string>
+#include <stdint.h>
 #include <type_traits>
 
 @#######################################################################

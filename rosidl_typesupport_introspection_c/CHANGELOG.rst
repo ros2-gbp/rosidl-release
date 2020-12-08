@@ -2,19 +2,8 @@
 Changelog for package rosidl_typesupport_introspection_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.0.2 (2020-12-08)
+1.2.0 (2020-12-08)
 ------------------
-* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
-* Contributors: Chris Lalancette
-
-2.0.1 (2020-09-28)
-------------------
-
-2.0.0 (2020-09-24)
-------------------
-* Fix get_function and get_const_function semantics for arrays (`#531 <https://github.com/ros2/rosidl/issues/531>`_)
-* Fix the declared language for a few packages (`#530 <https://github.com/ros2/rosidl/issues/530>`_)
-* Contributors: Ivan Santiago Paunovic, Scott K Logan
 
 1.1.0 (2020-08-17)
 ------------------
