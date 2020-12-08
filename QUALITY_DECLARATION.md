@@ -2,9 +2,9 @@ This document is a declaration of software quality for the `rosidl_typesupport_i
 
 # rosidl_typesupport_interface Quality Declaration
 
-The package `rosidl_typesupport_interface` claims to be in the **Quality Level 2** category.
+The package `rosidl_typesupport_interface` claims to be in the **Quality Level 1** category.
 
-Below are the rationales, notes, and caveats for this claim, organized by each requirement listed in the [Package Requirements for Quality Level 4 in REP-2004](https://www.ros.org/reps/rep-2004.html).
+Below are the rationales, notes, and caveats for this claim, organized by each requirement listed in the [Package Requirements for Quality Level 1 in REP-2004](https://www.ros.org/reps/rep-2004.html).
 
 ## Version Policy [1]
 
@@ -69,7 +69,7 @@ All pull requests must resolve related documentation changes before merging.
 
 ### Public API Documentation [3.ii]
 
-`rosidl_typesupport_interface` has API documentation, but it is not yet publicly hosted.
+`rosidl_typesupport_interface` has API documentation, hosted [here](http://docs.ros2.org/foxy/api/rosidl_typesupport_interface/index.html).
 
 ### License [3.iii]
 
@@ -99,7 +99,7 @@ The public API of `rosidl_typesupport_interface` is tested, and the tests are lo
 
 Most recent test results can be found [here](https://ci.ros2.org/job/nightly_linux_release/lastBuild/testReport/rosidl_typesupport_interface).
 
-### Coverage [4.iv]
+### Coverage [4.iii]
 
 `rosidl_typesupport_interface` follows the recommendations for ROS Core packages in the [ROS 2 Developer Guide](https://index.ros.org/doc/ros2/Contributing/Developer-Guide/#code-coverage), and opts to use line coverage instead of branch coverage.
 
@@ -116,7 +116,9 @@ The unit test of all its macros can be found in the test directory.
 
 ### Performance [4.iv]
 
-`rosidl_typesupport_interface` does not currently have performance tests.
+`rosidl_typesupport_interface` does not have performance tests because this package contains simple interface macros that define the naming convention for typesupport symbols.
+These macros do not introduce any runtime overhead when used.
+Therefore it has been decided that this package does not need performance tests to qualify for Quality Level 1.
 
 ### Linters and Static Analysis [4.v]
 
