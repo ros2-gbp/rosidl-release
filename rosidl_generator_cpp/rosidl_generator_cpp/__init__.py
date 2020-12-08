@@ -31,8 +31,9 @@ from rosidl_parser.definition import UnboundedSequence
 def generate_cpp(generator_arguments_file):
     mapping = {
         'idl.hpp.em': '%s.hpp',
-        'idl__struct.hpp.em': '%s__struct.hpp',
-        'idl__traits.hpp.em': '%s__traits.hpp',
+        'idl__builder.hpp.em': 'detail/%s__builder.hpp',
+        'idl__struct.hpp.em': 'detail/%s__struct.hpp',
+        'idl__traits.hpp.em': 'detail/%s__traits.hpp',
     }
     generate_files(
         generator_arguments_file, mapping,
@@ -120,7 +121,7 @@ def msg_type_to_cpp(type_):
                  'rebind<%s>::other>') % (cpp_type, cpp_type)
         elif isinstance(type_, BoundedSequence):
             return \
-                ('rosidl_generator_cpp::BoundedVector<%s, %u, typename ContainerAllocator::' +
+                ('rosidl_runtime_cpp::BoundedVector<%s, %u, typename ContainerAllocator::' +
                  'template rebind<%s>::other>') % (cpp_type, type_.maximum_size, cpp_type)
         else:
             assert isinstance(type_, Array)

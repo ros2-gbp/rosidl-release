@@ -77,7 +77,7 @@ TEST(Test_msg_initialization, no_arg_constructor) {
 
 TEST(Test_msg_initialization, all_constructor) {
   rosidl_generator_cpp::msg::Defaults def(
-    rosidl_generator_cpp::MessageInitialization::ALL);
+    rosidl_runtime_cpp::MessageInitialization::ALL);
   ASSERT_TRUE(def.bool_value);
   ASSERT_EQ(50, def.byte_value);
   ASSERT_EQ(100, def.char_value);
@@ -109,7 +109,7 @@ TEST(Test_msg_initialization, all_constructor) {
 
 TEST(Test_msg_initialization, zero_constructor) {
   rosidl_generator_cpp::msg::Defaults def(
-    rosidl_generator_cpp::MessageInitialization::ZERO);
+    rosidl_runtime_cpp::MessageInitialization::ZERO);
   ASSERT_FALSE(def.bool_value);
   ASSERT_EQ(0, def.byte_value);
   ASSERT_EQ(0, def.char_value);
@@ -141,7 +141,7 @@ TEST(Test_msg_initialization, zero_constructor) {
 
 TEST(Test_msg_initialization, defaults_only_constructor) {
   rosidl_generator_cpp::msg::Defaults def(
-    rosidl_generator_cpp::MessageInitialization::DEFAULTS_ONLY);
+    rosidl_runtime_cpp::MessageInitialization::DEFAULTS_ONLY);
   ASSERT_TRUE(def.bool_value);
   ASSERT_EQ(50, def.byte_value);
   ASSERT_EQ(100, def.char_value);
@@ -175,11 +175,11 @@ TEST(Test_msg_initialization, defaults_only_constructor) {
 // it does no initialization.
 TEST(Test_msg_initialization, skip_constructor) {
   char * memory = new char[sizeof(rosidl_generator_cpp::msg::BoundedSequences)];
-  ASSERT_NE(memory, nullptr);
+
   std::memset(memory, 0xfe, sizeof(rosidl_generator_cpp::msg::BoundedSequences));
   rosidl_generator_cpp::msg::BoundedSequences * bounded =
     new(memory) rosidl_generator_cpp::msg::BoundedSequences(
-    rosidl_generator_cpp::MessageInitialization::SKIP);
+    rosidl_runtime_cpp::MessageInitialization::SKIP);
 
   // ensures that the memory gets freed even if an ASSERT is raised
   SCOPE_EXIT(bounded->~BoundedSequences_(); delete[] memory);
@@ -188,16 +188,20 @@ TEST(Test_msg_initialization, skip_constructor) {
   #  pragma GCC diagnostic push
   #  pragma GCC diagnostic ignored "-Wstrict-aliasing"
   #endif
-  ASSERT_TRUE(std::all_of(bounded->float32_values_default.begin(),
-    bounded->float32_values_default.end(), [](float i) {
-      uint32_t float32_bit_pattern = *reinterpret_cast<uint32_t *>(&i);
-      return 0xfefefefe == float32_bit_pattern;
-    }));
-  ASSERT_TRUE(std::all_of(bounded->float64_values_default.begin(),
-    bounded->float64_values_default.end(), [](double i) {
-      uint64_t float64_bit_pattern = *reinterpret_cast<uint64_t *>(&i);
-      return 0xfefefefefefefefe == float64_bit_pattern;
-    }));
+  ASSERT_TRUE(
+    std::all_of(
+      bounded->float32_values_default.begin(),
+      bounded->float32_values_default.end(), [](float i) {
+        uint32_t float32_bit_pattern = *reinterpret_cast<uint32_t *>(&i);
+        return 0xfefefefe == float32_bit_pattern;
+      }));
+  ASSERT_TRUE(
+    std::all_of(
+      bounded->float64_values_default.begin(),
+      bounded->float64_values_default.end(), [](double i) {
+        uint64_t float64_bit_pattern = *reinterpret_cast<uint64_t *>(&i);
+        return 0xfefefefefefefefe == float64_bit_pattern;
+      }));
 
   #ifndef _WIN32
   #  pragma GCC diagnostic pop
@@ -205,8 +209,10 @@ TEST(Test_msg_initialization, skip_constructor) {
   ASSERT_EQ(0UL, bounded->float64_values_default.size());
   ASSERT_EQ(0UL, bounded->float32_values_default.size());
   ASSERT_EQ(0UL, bounded->float32_values.size());
-  ASSERT_TRUE(std::all_of(bounded->string_values_default.begin(),
-    bounded->string_values_default.end(), [](std::string i) {
-      return "" == i;
-    }));
+  ASSERT_TRUE(
+    std::all_of(
+      bounded->string_values_default.begin(),
+      bounded->string_values_default.end(), [](std::string i) {
+        return "" == i;
+      }));
 }

@@ -14,6 +14,7 @@ from rosidl_parser.definition import ACTION_RESULT_SUFFIX
 from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import BOOLEAN_TYPE
 from rosidl_parser.definition import CHARACTER_TYPES
+from rosidl_parser.definition import EMPTY_STRUCTURE_REQUIRED_MEMBER_NAME
 from rosidl_parser.definition import INTEGER_TYPES
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import OCTET_TYPE
@@ -45,7 +46,7 @@ for member in message.structure.members:
         else:
             typename = type_.name
         member_names = includes.setdefault(
-            '/'.join((type_.namespaces + [convert_camel_case_to_lower_case_underscore(typename)])) + '__struct.hpp', [])
+            '/'.join((type_.namespaces + ['detail', convert_camel_case_to_lower_case_underscore(typename)])) + '__struct.hpp', [])
         member_names.append(member.name)
 }@
 @#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -140,7 +141,7 @@ def generate_zero_string(membset, fill_args):
             strlist.append('this->%s = %s;' % (member.name, member.zero_value))
     return strlist
 }@
-  explicit @(message.structure.namespaced_type.name)_(rosidl_generator_cpp::MessageInitialization _init = rosidl_generator_cpp::MessageInitialization::ALL)
+  explicit @(message.structure.namespaced_type.name)_(rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
 @[if init_list]@
   : @(',\n    '.join(init_list))
 @[end if]@
@@ -157,8 +158,8 @@ non_defaulted_zero_initialized_members = [
 ]
 }@
 @[if default_value_members]@
-    if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
-      rosidl_generator_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
     {
 @[  for membset in default_value_members]@
 @[    for line in generate_default_string(membset)]@
@@ -166,7 +167,7 @@ non_defaulted_zero_initialized_members = [
 @[    end for]@
 @[  end for]@
 @[  if zero_value_members]@
-    } else if (rosidl_generator_cpp::MessageInitialization::ZERO == _init) {
+    } else if (rosidl_runtime_cpp::MessageInitialization::ZERO == _init) {
 @[    for membset in zero_value_members]@
 @[      for line in generate_zero_string(membset, '_init')]@
       @(line)
@@ -176,8 +177,8 @@ non_defaulted_zero_initialized_members = [
     }
 @[  end if]@
 @[  if non_defaulted_zero_initialized_members]@
-    if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
-      rosidl_generator_cpp::MessageInitialization::ZERO == _init)
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
 @[  for membset in non_defaulted_zero_initialized_members]@
 @[    for line in generate_zero_string(membset, '_init')]@
@@ -190,7 +191,7 @@ non_defaulted_zero_initialized_members = [
 @[end if]@
   }
 
-  explicit @(message.structure.namespaced_type.name)_(const ContainerAllocator & _alloc, rosidl_generator_cpp::MessageInitialization _init = rosidl_generator_cpp::MessageInitialization::ALL)
+  explicit @(message.structure.namespaced_type.name)_(const ContainerAllocator & _alloc, rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
 @[if alloc_list]@
   : @(',\n    '.join(alloc_list))
 @[end if]@
@@ -202,8 +203,8 @@ non_defaulted_zero_initialized_members = [
     (void)_alloc;
 @[end if]@
 @[if default_value_members]@
-    if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
-      rosidl_generator_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
     {
 @[  for membset in default_value_members]@
 @[    for line in generate_default_string(membset)]@
@@ -211,7 +212,7 @@ non_defaulted_zero_initialized_members = [
 @[    end for]@
 @[  end for]@
 @[  if zero_value_members]@
-    } else if (rosidl_generator_cpp::MessageInitialization::ZERO == _init) {
+    } else if (rosidl_runtime_cpp::MessageInitialization::ZERO == _init) {
 @[    for membset in zero_value_members]@
 @[      for line in generate_zero_string(membset, '_alloc, _init')]@
       @(line)
@@ -221,8 +222,8 @@ non_defaulted_zero_initialized_members = [
     }
 @[end if]@
 @[if non_defaulted_zero_initialized_members]@
-    if (rosidl_generator_cpp::MessageInitialization::ALL == _init ||
-      rosidl_generator_cpp::MessageInitialization::ZERO == _init)
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
 @[  for membset in non_defaulted_zero_initialized_members]@
 @[    for line in generate_zero_string(membset, '_alloc, _init')]@
@@ -240,15 +241,17 @@ non_defaulted_zero_initialized_members = [
   _@(member.name)_type @(member.name);
 @[end for]@
 
+@[if len(message.structure.members) != 1 or message.structure.members[0].name != EMPTY_STRUCTURE_REQUIRED_MEMBER_NAME]@
   // setters for named parameter idiom
-@[for member in message.structure.members]@
+@[  for member in message.structure.members]@
   Type & set__@(member.name)(
     const @(msg_type_to_cpp(member.type)) & _arg)
   {
     this->@(member.name) = _arg;
     return *this;
   }
-@[end for]@
+@[  end for]@
+@[end if]@
 
   // constant declarations
 @[for constant in message.constants]@

@@ -12,8 +12,8 @@
 @#######################################################################
 @{
 from rosidl_cmake import convert_camel_case_to_lower_case_underscore
-include_parts = [package_name] + list(interface_path.parents[0].parts) + \
-    [convert_camel_case_to_lower_case_underscore(interface_path.stem)]
+include_parts = [package_name] + list(interface_path.parents[0].parts) + [
+    'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
 header_guard_variable = '__'.join([x.upper() for x in include_parts]) + \
     '__STRUCT_HPP_'
 
@@ -23,8 +23,8 @@ include_directives = set()
 #ifndef @(header_guard_variable)
 #define @(header_guard_variable)
 
-#include <rosidl_generator_cpp/bounded_vector.hpp>
-#include <rosidl_generator_cpp/message_initialization.hpp>
+#include <rosidl_runtime_cpp/bounded_vector.hpp>
+#include <rosidl_runtime_cpp/message_initialization.hpp>
 #include <algorithm>
 #include <array>
 #include <memory>

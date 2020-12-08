@@ -60,6 +60,7 @@ def generate_files(
             'Could not find template: ' + template_filename
 
     latest_target_timestamp = get_newest_modification_time(args['target_dependencies'])
+    generated_files = []
 
     for idl_tuple in args.get('idl_tuples', []):
         idl_parts = idl_tuple.rsplit(':', 1)
@@ -75,6 +76,7 @@ def generate_files(
                 generated_file = os.path.join(
                     args['output_dir'], str(idl_rel_path.parent),
                     generated_filename % idl_stem)
+                generated_files.append(generated_file)
                 data = {
                     'package_name': args['package_name'],
                     'interface_path': idl_rel_path,
@@ -93,7 +95,7 @@ def generate_files(
                 str(locator.get_absolute_path()), file=sys.stderr)
             raise(e)
 
-    return 0
+    return generated_files
 
 
 template_prefix_path = []
@@ -105,8 +107,7 @@ def get_template_path(template_name):
         template_path = basepath / template_name
         if template_path.exists():
             return template_path
-    raise RuntimeError(
-        "Failed to find template '{template_name}'".format_map(locals()))
+    raise RuntimeError(f"Failed to find template '{template_name}'")
 
 
 interpreter = None
@@ -150,8 +151,8 @@ def expand_template(
     except Exception as e:  # noqa: F841
         if os.path.exists(output_file):
             os.remove(output_file)
-        print("{e.__class__.__name__} when expanding '{template_name}' into "
-              "'{output_file}': {e}".format_map(locals()), file=sys.stderr)
+        print(f"{e.__class__.__name__} when expanding '{template_name}' into "
+              f"'{output_file}': {e}", file=sys.stderr)
         raise
     finally:
         template_prefix_path.pop()
@@ -196,7 +197,7 @@ def _expand_template(template_name, **kwargs):
     try:
         interpreter.string(content, str(template_path), kwargs)
     except Exception as e:  # noqa: F841
-        print("{e.__class__.__name__} in template '{template_path}': {e}"
-              .format_map(locals()), file=sys.stderr)
+        print(f"{e.__class__.__name__} in template '{template_path}': {e}",
+              file=sys.stderr)
         raise
     interpreter.invoke('afterInclude')

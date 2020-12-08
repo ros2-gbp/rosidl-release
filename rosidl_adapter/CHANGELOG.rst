@@ -2,8 +2,39 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.8.3 (2020-12-04)
+2.0.2 (2020-12-08)
 ------------------
+* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
+* Contributors: Chris Lalancette
+
+2.0.1 (2020-09-28)
+------------------
+
+2.0.0 (2020-09-24)
+------------------
+
+1.1.0 (2020-08-17)
+------------------
+* Refactor regex for valid package/field names (`#508 <https://github.com/ros2/rosidl/issues/508>`_)
+* Add pytest.ini so tests succeed locally (`#502 <https://github.com/ros2/rosidl/issues/502>`_)
+* Contributors: Chris Lalancette, Dirk Thomas
+
+1.0.1 (2020-06-03)
+------------------
+
+1.0.0 (2020-05-22)
+------------------
+
+0.9.2 (2020-05-19)
+------------------
+
+0.9.1 (2020-05-08)
+------------------
+
+0.9.0 (2020-04-24)
+------------------
+* Use f-string (`#436 <https://github.com/ros2/rosidl/issues/436>`_)
+* Contributors: Dirk Thomas
 
 0.8.2 (2020-01-17)
 ------------------

@@ -11,8 +11,8 @@ from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import NamespacedType
 from rosidl_cmake import convert_camel_case_to_lower_case_underscore
 
-include_parts = [package_name] + list(interface_path.parents[0].parts) + \
-    [convert_camel_case_to_lower_case_underscore(interface_path.stem)]
+include_parts = [package_name] + list(interface_path.parents[0].parts) + [
+    'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
 include_base = '/'.join(include_parts)
 
 header_files = [
@@ -20,7 +20,7 @@ header_files = [
     'cstddef',  # providing offsetof()
     'string',
     'vector',
-    'rosidl_generator_c/message_type_support_struct.h',
+    'rosidl_runtime_c/message_type_support_struct.h',
     'rosidl_typesupport_cpp/message_type_support.hpp',
     'rosidl_typesupport_interface/macros.h',
     include_base + '__struct.hpp',
@@ -50,7 +50,7 @@ namespace rosidl_typesupport_introspection_cpp
 {
 
 void @(message.structure.namespaced_type.name)_init_function(
-  void * message_memory, rosidl_generator_cpp::MessageInitialization _init)
+  void * message_memory, rosidl_runtime_cpp::MessageInitialization _init)
 {
   new (message_memory) @('::'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))(_init);
 }
