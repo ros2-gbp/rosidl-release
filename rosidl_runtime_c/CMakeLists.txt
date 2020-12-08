@@ -12,6 +12,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake_ros REQUIRED)
+find_package(rcutils REQUIRED)
 find_package(rosidl_typesupport_interface REQUIRED)
 
 add_library(${PROJECT_NAME}
@@ -26,6 +27,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 ament_target_dependencies(${PROJECT_NAME}
+  "rcutils"
   "rosidl_typesupport_interface")
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -36,7 +38,11 @@ if(WIN32)
     PRIVATE "ROSIDL_GENERATOR_C_BUILDING_DLL")
 endif()
 
-ament_export_dependencies(rosidl_typesupport_interface)
+if(BUILD_TESTING AND NOT RCUTILS_DISABLE_FAULT_INJECTION)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
+endif()
+
+ament_export_dependencies(rcutils rosidl_typesupport_interface)
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 ament_export_targets(${PROJECT_NAME})
@@ -45,6 +51,9 @@ ament_index_register_resource("rosidl_runtime_packages")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
+  find_package(performance_test_fixture REQUIRED)
+  # Give cppcheck hints about macro definitions coming from outside this package
+  get_target_property(ament_cmake_cppcheck_ADDITIONAL_INCLUDE_DIRS performance_test_fixture::performance_test_fixture INTERFACE_INCLUDE_DIRECTORIES)
   ament_lint_auto_find_test_dependencies()
 
   # For gtest
@@ -86,12 +95,20 @@ if(BUILD_TESTING)
   if(TARGET test_string_functions)
     target_include_directories(test_string_functions PUBLIC include)
     target_link_libraries(test_string_functions ${PROJECT_NAME})
+    target_compile_definitions(test_string_functions PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
   endif()
 
   ament_add_gtest(test_u16string_functions test/test_u16string_functions.cpp)
   if(TARGET test_u16string_functions)
     target_include_directories(test_u16string_functions PUBLIC include)
     target_link_libraries(test_u16string_functions ${PROJECT_NAME})
+    target_compile_definitions(test_u16string_functions PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
+  endif()
+
+  add_performance_test(benchmark_string_conversion test/benchmark/benchmark_string_conversion.cpp)
+  if(TARGET benchmark_string_conversion)
+    target_include_directories(benchmark_string_conversion PUBLIC include)
+    target_link_libraries(benchmark_string_conversion ${PROJECT_NAME})
   endif()
 endif()
 
