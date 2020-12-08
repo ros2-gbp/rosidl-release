@@ -2,7 +2,7 @@ This document is a declaration of software quality for the `rosidl_runtime_cpp` 
 
 # rosidl_runtime_cpp Quality Declaration
 
-The package `rosidl_runtime_cpp` claims to be in the **Quality Level 2** category.
+The package `rosidl_runtime_cpp` claims to be in the **Quality Level 1** category.
 
 Below are the rationales, notes, and caveats for this claim, organized by each requirement listed in the [Package Requirements for Quality Level 4 in REP-2004](https://www.ros.org/reps/rep-2004.html).
 
@@ -69,7 +69,7 @@ All pull requests must resolve related documentation changes before merging.
 
 ### Public API Documentation [3.ii]
 
-`rosidl_runtime_cpp` has documentation of its public API, but it is not yet hosted.
+`rosidl_runtime_cpp` has documentation of its public API, hosted [here](http://docs.ros2.org/foxy/api/rosidl_runtime_cpp/index.html).
 
 ### License [3.iii]
 
@@ -97,7 +97,7 @@ The BoundedVector class is tested and the most recent test results can be found 
 Most of the API provided by this package are declarations of types and functions, and therefore do not require testing.
 The BoundedVector class is tested and the most recent test results can be found [here](https://ci.ros2.org/job/nightly_linux_release/lastBuild/testReport/rosidl_runtime_cpp).
 
-### Coverage [4.iv]
+### Coverage [4.iii]
 
 `rosidl_runtime_cpp` follows the recommendations for ROS Core packages in the [ROS 2 Developer Guide](https://index.ros.org/doc/ros2/Contributing/Developer-Guide/#code-coverage), and opts to use line coverage instead of branch coverage.
 
@@ -114,7 +114,8 @@ A summary of how these statistics are calculated can be found in the [ROS 2 On-b
 
 ### Performance [4.iv]
 
-`rosidl_runtime_cpp` does not currently have performance tests.
+Most of the features provided by this package are declarations of types and functions, and therefore do not require testing.
+The BoundedVector class is benchmarked and the most recent test results can be found [here](http://build.ros2.org/view/Fci/job/Fci__benchmark_ubuntu_focal_amd64/BenchmarkTable/).
 
 ### Linters and Static Analysis [4.v]
 
