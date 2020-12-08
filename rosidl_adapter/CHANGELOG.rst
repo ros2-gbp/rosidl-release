@@ -2,6 +2,11 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.2 (2020-12-08)
+------------------
+* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
+* Contributors: Chris Lalancette
+
 2.0.1 (2020-09-28)
 ------------------
 
