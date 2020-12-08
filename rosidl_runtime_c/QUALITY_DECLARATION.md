@@ -2,7 +2,7 @@ This document is a declaration of software quality for the `rosidl_runtime_c` pa
 
 # rosidl_runtime_c Quality Declaration
 
-The package `rosidl_runtime_c` claims to be in the **Quality Level 2** category.
+The package `rosidl_runtime_c` claims to be in the **Quality Level 1** category.
 
 Below are the rationales, notes, and caveats for this claim, organized by each requirement listed in the [Package Requirements for Quality Level 2 in REP-2004](https://www.ros.org/reps/rep-2004.html).
 
@@ -69,7 +69,7 @@ All pull requests must resolve related documentation changes before merging.
 
 ### Public API Documentation [3.ii]
 
-`rosidl_runtime_c` has documentation of its public API, but it is not yet hosted.
+`rosidl_runtime_c` has documentation of its public API, hosted [here](http://docs.ros2.org/foxy/api/rosidl_runtime_c/index.html).
 
 ### License [3.iii]
 
@@ -99,7 +99,7 @@ Most of the public API of `rosidl_runtime_c` is tested, and the tests are locate
 
 Most recent test results can be found [here](https://ci.ros2.org/job/nightly_linux_release/lastBuild/testReport/rosidl_runtime_c).
 
-### Coverage [4.iv]
+### Coverage [4.iii]
 
 `rosidl_runtime_c` follows the recommendations for ROS Core packages in the [ROS 2 Developer Guide](https://index.ros.org/doc/ros2/Contributing/Developer-Guide/#code-coverage), and opts to use line coverage instead of branch coverage.
 
@@ -116,7 +116,8 @@ A description of how coverage statistics are summarized from this page, can be f
 
 ### Performance [4.iv]
 
-`rosidl_runtime_c` does not currently have performance tests.
+Most of the features provided by this package are declarations of types and functions, and therefore do not require testing.
+The BoundedVector class is benchmarked and the most recent test results can be found [here](http://build.ros2.org/view/Fci/job/Fci__benchmark_ubuntu_focal_amd64/BenchmarkTable/).
 
 ### Linters and Static Analysis [4.v]
 
@@ -137,7 +138,7 @@ It also has several test dependencies, which do not affect the resulting quality
 
 The `rosidl_typesupport_interface` package provides several macros to define the rosidl C typesupport interface.
 
-It is **Quality Level 2**, see its [Quality Declaration document](../rosidl_typesupport_interface/QUALITY_DECLARATION.md).
+It is **Quality Level 1**, see its [Quality Declaration document](../rosidl_typesupport_interface/QUALITY_DECLARATION.md).
 
 ### Direct Runtime Non-ROS Dependencies [5.iii]
 
