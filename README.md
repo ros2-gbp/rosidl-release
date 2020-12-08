@@ -1,3 +1,36 @@
+## rosidl (foxy) - 1.2.0-1
+
+The packages in the `rosidl` repository were released into the `foxy` distro by running `/usr/bin/bloom-release -r foxy rosidl` on `Tue, 08 Dec 2020 20:55:22 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_parser`
+- `rosidl_runtime_c`
+- `rosidl_runtime_cpp`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: https://github.com/ros2-gbp/rosidl-release.git
+- rosdistro version: `1.1.0-1`
+- old version: `1.1.0-1`
+- new version: `1.2.0-1`
+
+Versions of tools used:
+
+- bloom version: `0.10.0`
+- catkin_pkg version: `0.4.23`
+- rosdep version: `0.20.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## rosidl (rolling) - 2.0.2-1
 
 The packages in the `rosidl` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --track rolling --rosdistro rolling rosidl` on `Tue, 08 Dec 2020 15:18:19 -0000`
