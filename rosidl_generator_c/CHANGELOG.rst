@@ -2,6 +2,9 @@
 Changelog for package rosidl_generator_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.3 (2021-01-25)
+------------------
+
 2.0.2 (2020-12-08)
 ------------------
 * Strip action service suffixes from C include prefix (`#538 <https://github.com/ros2/rosidl/issues/538>`_)
