@@ -2,10 +2,22 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2020-12-08)
+2.0.3 (2021-01-25)
 ------------------
-* Fix parsing of small floats (`#554 <https://github.com/ros2/rosidl/issues/554>`_)
-* Contributors: Chris Lalancette
+
+2.0.2 (2020-12-08)
+------------------
+* Update and add package.xml descriptions to README (`#553 <https://github.com/ros2/rosidl/issues/553>`_)
+* Finish support for fixed-point literals.
+* Fix parsing of small floats.
+* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
+* Contributors: Chris Lalancette, Shane Loretz
+
+2.0.1 (2020-09-28)
+------------------
+
+2.0.0 (2020-09-24)
+------------------
 
 1.1.0 (2020-08-17)
 ------------------

@@ -2,14 +2,29 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2020-12-08)
+2.0.3 (2021-01-25)
 ------------------
-* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_) (`#547 <https://github.com/ros2/rosidl/issues/547>`_)
-* Update QD links for Foxy
+* Fix typo of package name in README heading (`#561 <https://github.com/ros2/rosidl/issues/561>`_)
+* Contributors: Tully Foote
+
+2.0.2 (2020-12-08)
+------------------
+* Update and add package.xml descriptions to README (`#553 <https://github.com/ros2/rosidl/issues/553>`_)
+* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_)
+* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
+* Contributors: Chris Lalancette, Louise Poubel, Shane Loretz
+
+2.0.1 (2020-09-28)
+------------------
 * QD: Add links to hosted API docs (`#533 <https://github.com/ros2/rosidl/issues/533>`_)
 * Updated Quality Level to 1 (`#532 <https://github.com/ros2/rosidl/issues/532>`_)
 * Add benchmarks for rosidl_runtime\_* packages (`#521 <https://github.com/ros2/rosidl/issues/521>`_)
 * Contributors: Alejandro Hernández Cordero, Louise Poubel, Scott K Logan
+
+2.0.0 (2020-09-24)
+------------------
+* Add to_yaml() function for C++ messages (`#527 <https://github.com/ros2/rosidl/issues/527>`_)
+* Contributors: Devin Bonnie, Dirk Thomas
 
 1.1.0 (2020-08-17)
 ------------------

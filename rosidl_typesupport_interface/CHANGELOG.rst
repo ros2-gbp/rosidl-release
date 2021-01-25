@@ -2,12 +2,24 @@
 Changelog for package rosidl_typesupport_interface
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2020-12-08)
+2.0.3 (2021-01-25)
 ------------------
-* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_) (`#547 <https://github.com/ros2/rosidl/issues/547>`_)
+
+2.0.2 (2020-12-08)
+------------------
+* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_)
+* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
+* Contributors: Chris Lalancette, Louise Poubel
+
+2.0.1 (2020-09-28)
+------------------
 * QD: Add links to hosted API docs (`#533 <https://github.com/ros2/rosidl/issues/533>`_)
+* Contributors: Louise Poubel
+
+2.0.0 (2020-09-24)
+------------------
 * Update Quality Declaration to QL 1 for rosidl_typesupport_interface (`#519 <https://github.com/ros2/rosidl/issues/519>`_)
-* Contributors: Louise Poubel, Stephen Brawner
+* Contributors: brawner
 
 1.1.0 (2020-08-17)
 ------------------
