@@ -2,6 +2,11 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.0 (2021-03-09)
+------------------
+* Switch to std::allocator_traits. (`#564 <https://github.com/ros2/rosidl/issues/564>`_)
+* Contributors: Chris Lalancette
+
 2.0.3 (2021-01-25)
 ------------------
 
