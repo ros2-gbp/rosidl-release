@@ -2,6 +2,11 @@
 Changelog for package rosidl_generator_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.0 (2021-03-18)
+------------------
+* Expose C code generation via rosidl generate CLI (`#569 <https://github.com/ros2/rosidl/issues/569>`_)
+* Contributors: Michel Hidalgo
+
 2.1.0 (2021-03-09)
 ------------------
 
