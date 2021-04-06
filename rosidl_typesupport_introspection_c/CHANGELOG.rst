@@ -2,6 +2,9 @@
 Changelog for package rosidl_typesupport_introspection_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2021-04-06)
+------------------
+
 2.2.0 (2021-03-18)
 ------------------
 * Expose C introspection typesupport generation via rosidl generate CLI (`#572 <https://github.com/ros2/rosidl/issues/572>`_)
