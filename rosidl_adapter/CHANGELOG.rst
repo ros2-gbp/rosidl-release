@@ -2,6 +2,9 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2021-04-06)
+------------------
+
 2.2.0 (2021-03-18)
 ------------------
 * Expose .msg/.srv/.action to .idl conversion via rosidl translate CLI (`#576 <https://github.com/ros2/rosidl/issues/576>`_)
