@@ -2,6 +2,9 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2021-04-06)
+------------------
+
 2.2.0 (2021-03-18)
 ------------------
 * Expose C++ code generation via rosidl generate CLI (`#570 <https://github.com/ros2/rosidl/issues/570>`_)
