@@ -2,35 +2,17 @@
 Changelog for package rosidl_typesupport_interface
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.1 (2021-04-06)
+1.2.1 (2021-04-14)
 ------------------
-* updating quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#581 <https://github.com/ros2/rosidl/issues/581>`_)
-* Contributors: shonigmann
+* Update quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#582 <https://github.com/ros2/rosidl/issues/582>`_)
+* Contributors: Simon Honigmann
 
-2.2.0 (2021-03-18)
+1.2.0 (2020-12-08)
 ------------------
-
-2.1.0 (2021-03-09)
-------------------
-
-2.0.3 (2021-01-25)
-------------------
-
-2.0.2 (2020-12-08)
-------------------
-* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_)
-* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
-* Contributors: Chris Lalancette, Louise Poubel
-
-2.0.1 (2020-09-28)
-------------------
+* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_) (`#547 <https://github.com/ros2/rosidl/issues/547>`_)
 * QD: Add links to hosted API docs (`#533 <https://github.com/ros2/rosidl/issues/533>`_)
-* Contributors: Louise Poubel
-
-2.0.0 (2020-09-24)
-------------------
 * Update Quality Declaration to QL 1 for rosidl_typesupport_interface (`#519 <https://github.com/ros2/rosidl/issues/519>`_)
-* Contributors: brawner
+* Contributors: Louise Poubel, Stephen Brawner
 
 1.1.0 (2020-08-17)
 ------------------

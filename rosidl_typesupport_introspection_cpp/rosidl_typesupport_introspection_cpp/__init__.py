@@ -21,4 +21,4 @@ def generate_cpp(generator_arguments_file):
         'detail/%s__rosidl_typesupport_introspection_cpp.hpp',
         'idl__type_support.cpp.em': 'detail/%s__type_support.cpp',
     }
-    return generate_files(generator_arguments_file, mapping)
+    generate_files(generator_arguments_file, mapping)

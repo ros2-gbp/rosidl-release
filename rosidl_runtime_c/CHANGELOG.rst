@@ -2,42 +2,21 @@
 Changelog for package rosidl_runtime_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.1 (2021-04-06)
+1.2.1 (2021-04-14)
 ------------------
-* updating quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#581 <https://github.com/ros2/rosidl/issues/581>`_)
-* Contributors: shonigmann
+* Update quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#582 <https://github.com/ros2/rosidl/issues/582>`_)
+* Contributors: Simon Honigmann
 
-2.2.0 (2021-03-18)
+1.2.0 (2020-12-08)
 ------------------
-
-2.1.0 (2021-03-09)
-------------------
-* Shorten some excessively long lines of CMake (`#571 <https://github.com/ros2/rosidl/issues/571>`_)
-* Contributors: Scott K Logan
-
-2.0.3 (2021-01-25)
-------------------
-
-2.0.2 (2020-12-08)
-------------------
-* Update and add package.xml descriptions to README (`#553 <https://github.com/ros2/rosidl/issues/553>`_)
-* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_)
-* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
-* Contributors: Chris Lalancette, Louise Poubel, Shane Loretz
-
-2.0.1 (2020-09-28)
-------------------
-* Add rcutils dependency. (`#534 <https://github.com/ros2/rosidl/issues/534>`_)
+* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_) (`#547 <https://github.com/ros2/rosidl/issues/547>`_)
+* Update QD links for Foxy
 * QD: Add links to hosted API docs (`#533 <https://github.com/ros2/rosidl/issues/533>`_)
 * Updated Quality Level to 1 (`#532 <https://github.com/ros2/rosidl/issues/532>`_)
 * Add benchmarks for rosidl_runtime\_* packages (`#521 <https://github.com/ros2/rosidl/issues/521>`_)
-* Contributors: Alejandro Hernández Cordero, Chris Lalancette, Louise Poubel, Scott K Logan
-
-2.0.0 (2020-09-24)
-------------------
-* Fix the declared language for a few packages (`#530 <https://github.com/ros2/rosidl/issues/530>`_)
+* Add rcutils dependency (`#534 <https://github.com/ros2/rosidl/issues/534>`_)
 * Add fault injection macros and test (`#509 <https://github.com/ros2/rosidl/issues/509>`_)
-* Contributors: Scott K Logan, brawner
+* Contributors: Alejandro Hernández Cordero, Chris Lalancette, Louise Poubel, Scott K Logan, Stephen Brawner
 
 1.1.0 (2020-08-17)
 ------------------

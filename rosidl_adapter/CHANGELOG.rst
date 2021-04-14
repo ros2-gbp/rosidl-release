@@ -2,33 +2,14 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.1 (2021-04-06)
+1.2.1 (2021-04-14)
 ------------------
-
-2.2.0 (2021-03-18)
-------------------
-* Expose .msg/.srv/.action to .idl conversion via rosidl translate CLI (`#576 <https://github.com/ros2/rosidl/issues/576>`_)
-* Contributors: Michel Hidalgo
-
-2.1.0 (2021-03-09)
-------------------
-* Support hex constants in msg files (`#559 <https://github.com/ros2/rosidl/issues/559>`_)
+* Hex constants and tab as whitespace support (`#568 <https://github.com/ros2/rosidl/issues/568>`_)
+  * Treat \t as whitespace (`#557 <https://github.com/ros2/rosidl/issues/557>`_)
+  * Support hex constants in msg files (`#559 <https://github.com/ros2/rosidl/issues/559>`_)
 * Contributors: Dereck Wonnacott
 
-2.0.3 (2021-01-25)
-------------------
-* Treat \t as whitespace (`#557 <https://github.com/ros2/rosidl/issues/557>`_)
-* Contributors: Dereck Wonnacott
-
-2.0.2 (2020-12-08)
-------------------
-* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
-* Contributors: Chris Lalancette
-
-2.0.1 (2020-09-28)
-------------------
-
-2.0.0 (2020-09-24)
+1.2.0 (2020-12-08)
 ------------------
 
 1.1.0 (2020-08-17)
