@@ -1,1 +1,1 @@
-{"base": "ba5cc746", "parent": "debian/rolling/rosidl_generator_c", "previous": "5ff046ff", "trim": "", "trimbase": ""}
+{"trim": "", "base": "3a494dcb", "trimbase": "", "parent": "debian/rolling/rosidl_generator_c", "previous": "0e10eda3"}
