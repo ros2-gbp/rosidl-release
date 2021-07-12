@@ -2,6 +2,9 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.0 (2021-07-12)
+------------------
+
 2.3.0 (2021-06-11)
 ------------------
 * Fix escaping in string literals (`#595 <https://github.com/ros2/rosidl/issues/595>`_)
