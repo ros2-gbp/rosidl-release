@@ -2,6 +2,11 @@
 Changelog for package rosidl_generator_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.0 (2021-07-12)
+------------------
+* Bundle and ensure the exportation of rosidl generated targets (`#601 <https://github.com/ros2/rosidl/issues/601>`_)
+* Contributors: Michel Hidalgo
+
 2.3.0 (2021-06-11)
 ------------------
 * Fix a cpplint allocator regression. (`#590 <https://github.com/ros2/rosidl/issues/590>`_)
