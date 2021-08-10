@@ -2,6 +2,9 @@
 Changelog for package rosidl_cli
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.5.0 (2021-08-10)
+------------------
+
 2.4.0 (2021-07-12)
 ------------------
 * Support passing keyword arguments to rosidl CLI extensions (`#597 <https://github.com/ros2/rosidl/issues/597>`_)
