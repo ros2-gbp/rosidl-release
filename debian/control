@@ -1,0 +1,12 @@
+Source: ros-humble-rosidl-typesupport-introspection-cpp
+Section: misc
+Priority: optional
+Maintainer: Michel Hidalgo <michel@ekumenlabs.com>
+Build-Depends: debhelper (>= 9.0.0), ros-humble-ament-cmake-ros, ros-humble-ament-lint-auto <!nocheck>, ros-humble-ament-lint-common <!nocheck>, ros-humble-rosidl-runtime-cpp, ros-humble-rosidl-typesupport-introspection-c, ros-humble-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-humble-rosidl-typesupport-introspection-cpp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, ros-humble-ament-cmake, ros-humble-ament-index-python, ros-humble-rosidl-cli, ros-humble-rosidl-cmake, ros-humble-rosidl-parser, ros-humble-rosidl-runtime-c, ros-humble-rosidl-runtime-cpp, ros-humble-rosidl-typesupport-interface, ros-humble-rosidl-typesupport-introspection-c, ros-humble-ros-workspace
+Description: Generate the message type support for dynamic message construction in C++.
