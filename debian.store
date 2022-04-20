@@ -1,1 +1,1 @@
-{"base": "aea833d6", "parent": "debian/rolling/rosidl_typesupport_interface", "previous": "269ae24a", "trim": "", "trimbase": ""}
+{"base": "cb3255c0", "parent": "debian/humble/rosidl_typesupport_interface", "previous": "095a0e14", "trim": "", "trimbase": ""}
