@@ -1,1 +1,1 @@
-{"base": "c9fb70f2", "parent": "debian/rolling/rosidl_cli", "previous": "75c8e540", "trim": "", "trimbase": ""}
+{"base": "e0b02729", "parent": "debian/humble/rosidl_cli", "previous": "114ac9a4", "trim": "", "trimbase": ""}
