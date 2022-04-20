@@ -1,1 +1,1 @@
-{"base": "9abb6aa8", "parent": "debian/rolling/rosidl_adapter", "previous": "2ba0facb", "trim": "", "trimbase": ""}
+{"base": "617f3eb6", "parent": "debian/humble/rosidl_adapter", "previous": "2f3adc59", "trim": "", "trimbase": ""}
