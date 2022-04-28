@@ -12,7 +12,6 @@ from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import AbstractSequence
 from rosidl_parser.definition import UnboundedSequence
 
-message_namespace = '::'.join(message.structure.namespaced_type.namespaces)
 message_typename = '::'.join(message.structure.namespaced_type.namespaced_name())
 message_fully_qualified_name = '/'.join(message.structure.namespaced_type.namespaced_name())
 }@
@@ -61,75 +60,11 @@ for member in message.structure.members:
 @[end if]@
 @#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 @
-@[for ns in message.structure.namespaced_type.namespaces]@
-namespace @(ns)
+namespace rosidl_generator_traits
 {
 
-@[end for]@
-inline void to_flow_style_yaml(
-  const @(message.structure.namespaced_type.name) & msg,
-  std::ostream & out)
-{
-@[if len(message.structure.members) == 1 and message.structure.members[0].name == EMPTY_STRUCTURE_REQUIRED_MEMBER_NAME]@
-  (void)msg;
-  out << "null";
-@[else]@
-  out << "{";
-@[  for i, member in enumerate(message.structure.members)]@
-@[    if i]@
-
-@[    end if]@
-  // member: @(member.name)
-  {
-@[    if isinstance(member.type, BasicType)]@
-    out << "@(member.name): ";
-@[      if member.type.typename in ('octet', 'char', 'wchar')]@
-    rosidl_generator_traits::character_value_to_yaml(msg.@(member.name), out);
-@[      else]@
-    rosidl_generator_traits::value_to_yaml(msg.@(member.name), out);
-@[      end if]@
-@[    elif isinstance(member.type, AbstractGenericString)]@
-    out << "@(member.name): ";
-    rosidl_generator_traits::value_to_yaml(msg.@(member.name), out);
-@[    elif isinstance(member.type, NamespacedType)]@
-    out << "@(member.name): ";
-    to_flow_style_yaml(msg.@(member.name), out);
-@[    elif isinstance(member.type, (AbstractSequence, Array))]@
-    if (msg.@(member.name).size() == 0) {
-      out << "@(member.name): []";
-    } else {
-      out << "@(member.name): [";
-      size_t pending_items = msg.@(member.name).size();
-      for (auto item : msg.@(member.name)) {
-@[      if isinstance(member.type.value_type, BasicType)]@
-@[        if member.type.value_type.typename in ('octet', 'char', 'wchar')]@
-        rosidl_generator_traits::character_value_to_yaml(item, out);
-@[        else]@
-        rosidl_generator_traits::value_to_yaml(item, out);
-@[        end if]@
-@[      elif isinstance(member.type.value_type, AbstractGenericString)]@
-        rosidl_generator_traits::value_to_yaml(item, out);
-@[      elif isinstance(member.type.value_type, NamespacedType)]@
-        to_flow_style_yaml(item, out);
-@[      end if]@
-        if (--pending_items > 0) {
-          out << ", ";
-        }
-      }
-      out << "]";
-    }
-@[    end if]@
-@[    if i < len(message.structure.members) - 1]@
-    out << ", ";
-@[    end if]@
-  }
-@[  end for]@
-  out << "}";
-@[end if]@
-}  // NOLINT(readability/fn_size)
-
-inline void to_block_style_yaml(
-  const @(message.structure.namespaced_type.name) & msg,
+inline void to_yaml(
+  const @(message_typename) & msg,
   std::ostream & out, size_t indentation = 0)
 {
 @[if len(message.structure.members) == 1 and message.structure.members[0].name == EMPTY_STRUCTURE_REQUIRED_MEMBER_NAME]@
@@ -149,18 +84,18 @@ inline void to_block_style_yaml(
 @[    if isinstance(member.type, BasicType)]@
     out << "@(member.name): ";
 @[      if member.type.typename in ('octet', 'char', 'wchar')]@
-    rosidl_generator_traits::character_value_to_yaml(msg.@(member.name), out);
+    character_value_to_yaml(msg.@(member.name), out);
 @[      else]@
-    rosidl_generator_traits::value_to_yaml(msg.@(member.name), out);
+    value_to_yaml(msg.@(member.name), out);
 @[      end if]@
     out << "\n";
 @[    elif isinstance(member.type, AbstractGenericString)]@
     out << "@(member.name): ";
-    rosidl_generator_traits::value_to_yaml(msg.@(member.name), out);
+    value_to_yaml(msg.@(member.name), out);
     out << "\n";
 @[    elif isinstance(member.type, NamespacedType)]@
     out << "@(member.name):\n";
-    to_block_style_yaml(msg.@(member.name), out, indentation + 2);
+    to_yaml(msg.@(member.name), out, indentation + 2);
 @[    elif isinstance(member.type, (AbstractSequence, Array))]@
     if (msg.@(member.name).size() == 0) {
       out << "@(member.name): []\n";
@@ -173,18 +108,18 @@ inline void to_block_style_yaml(
 @[      if isinstance(member.type.value_type, BasicType)]@
         out << "- ";
 @[        if member.type.value_type.typename in ('octet', 'char', 'wchar')]@
-        rosidl_generator_traits::character_value_to_yaml(item, out);
+        character_value_to_yaml(item, out);
 @[        else]@
-        rosidl_generator_traits::value_to_yaml(item, out);
+        value_to_yaml(item, out);
 @[        end if]@
         out << "\n";
 @[      elif isinstance(member.type.value_type, AbstractGenericString)]@
         out << "- ";
-        rosidl_generator_traits::value_to_yaml(item, out);
+        value_to_yaml(item, out);
         out << "\n";
 @[      elif isinstance(member.type.value_type, NamespacedType)]@
         out << "-\n";
-        to_block_style_yaml(item, out, indentation + 2);
+        to_yaml(item, out, indentation + 2);
 @[      end if]@
       }
     }
@@ -194,36 +129,11 @@ inline void to_block_style_yaml(
 @[end if]@
 }  // NOLINT(readability/fn_size)
 
-inline std::string to_yaml(const @(message.structure.namespaced_type.name) & msg, bool use_flow_style = false)
-{
-  std::ostringstream out;
-  if (use_flow_style) {
-    to_flow_style_yaml(msg, out);
-  } else {
-    to_block_style_yaml(msg, out);
-  }
-  return out.str();
-}
-@[for ns in reversed(message.structure.namespaced_type.namespaces)]@
-
-}  // namespace @(ns)
-@[end for]@
-
-namespace rosidl_generator_traits
-{
-
-[[deprecated("use @(message_namespace)::to_block_style_yaml() instead")]]
-inline void to_yaml(
-  const @(message_typename) & msg,
-  std::ostream & out, size_t indentation = 0)
-{
-  @(message_namespace)::to_block_style_yaml(msg, out, indentation);
-}
-
-[[deprecated("use @(message_namespace)::to_yaml() instead")]]
 inline std::string to_yaml(const @(message_typename) & msg)
 {
-  return @(message_namespace)::to_yaml(msg);
+  std::ostringstream out;
+  to_yaml(msg, out);
+  return out.str();
 }
 
 template<>

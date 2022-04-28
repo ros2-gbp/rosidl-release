@@ -40,16 +40,6 @@ else:
 @[if msg.constants]@
     module @(msg.msg_name)_Constants {
 @[  for constant in msg.constants]@
-@[    if constant.annotations.get('comment', [])]@
-      @@verbatim (language="comment", text=
-@[      for i, line in enumerate(constant.annotations['comment'])]@
-        @(string_to_idl_string_literal(line))@
-@[        if i < len(constant.annotations.get('comment')) - 1]@
- "\n"@
-@[        end if]@
-@[      end for]@
-)
-@[    end if]@
       const @(get_idl_type(constant.type)) @(constant.name) = @(to_idl_literal(get_idl_type(constant.type), constant.value));
 @[  end for]@
     };
@@ -68,14 +58,14 @@ else:
     struct @(msg.msg_name) {
 @[if msg.fields]@
 @[  for i, field in enumerate(msg.fields)]@
-@[    if i > 0]@
+@[if i > 0]@
 
-@[    end if]@
+@[end if]@
 @[    if field.annotations.get('comment', [])]@
       @@verbatim (language="comment", text=@
-@[      for j, line in enumerate(field.annotations['comment'])]
+@[      for i, line in enumerate(field.annotations['comment'])]
         @(string_to_idl_string_literal(line))@
-@[        if j < len(field.annotations.get('comment')) - 1]@
+@[        if i < len(field.annotations.get('comment')) - 1]@
  "\n"@
 @[        end if]@
 @[      end for]@

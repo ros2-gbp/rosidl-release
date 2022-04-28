@@ -13,11 +13,8 @@
 # limitations under the License.
 
 import logging
-import re
 
 from rosidl_cli.entry_points import load_entry_points
-
-import yaml
 
 
 logger = logging.getLogger(__name__)
@@ -34,65 +31,26 @@ class Extension:
         return self.__name
 
 
-SPECS_PATTERN = re.compile(r'^(\w+)(?:\[(.+)\])?$')
-
-
-def parse_extension_specification(spec):
-    """
-    Parse extension specification.
-
-    :param str spec: specification string in
-      'name[key0: value0, ...]' or 'name' format.
-      Key-value pairs are parsed as YAML dictionaries.
-    :returns: a tuple of specification name and
-      keyword arguments, if any, as a dict.
-    """
-    match = SPECS_PATTERN.match(spec)
-    if not match:
-        raise ValueError(f'{spec} is not a valid spec')
-    name = match.group(1)
-    kwargs = match.group(2)
-    if kwargs is not None:
-        try:
-            kwargs = yaml.safe_load('{' + kwargs + '}')
-        except Exception as e:
-            raise ValueError(
-                f'{spec} is not a valid spec'
-            ) from e
-    else:
-        kwargs = {}
-    return name, kwargs
-
-
-def load_extensions(group_name, *, specs=None, strict=False):
+def load_extensions(group_name, *, strict=False, **kwargs):
     """
     Load extensions for a specific group.
 
+    See :py:function:`load_entry_points` for further reference on
+    additional keyword arguments.
+
     :param str group_name: the name of the extension group
-    :param list specs: an optional collection of extension specs
-      (see :py:function:`parse_extension_specification` for spec format)
     :param bool strict: whether to raise or warn on error
     :returns: a list of :py:class:`Extension` instances
     :rtype: list
     """
     extensions = []
-
-    if specs is not None:
-        kwargs = dict(map(
-            parse_extension_specification, specs))
-        specs = list(kwargs.keys())
-    else:
-        kwargs = {}
-
     for name, factory in load_entry_points(
-        group_name, specs=specs, strict=strict
+        group_name, strict=strict, **kwargs
     ).items():
         try:
-            extensions.append(factory(name, **kwargs.get(name, {})))
+            extensions.append(factory(name))
         except Exception as e:
-            msg = f"Failed to instantiate extension '{name}' "
-            which = kwargs.get(name, 'default')
-            msg += f"with '{which}' arguments: {e}"
+            msg = f"Failed to instantiate extension '{name}': {e}"
             if strict:
                 raise RuntimeError(msg)
             logger.warning(msg)

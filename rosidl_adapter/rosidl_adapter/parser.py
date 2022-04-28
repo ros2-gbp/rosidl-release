@@ -15,7 +15,6 @@
 import os
 import re
 import sys
-import textwrap
 
 PACKAGE_NAME_MESSAGE_TYPE_SEPARATOR = '/'
 COMMENT_DELIMITER = '#'
@@ -448,43 +447,40 @@ def parse_message_file(pkg_name, interface_filename):
             pkg_name, msg_name, h.read())
 
 
-def extract_file_level_comments(message_string):
-    lines = message_string.splitlines()
-    index = next(
-        (i for i, v in enumerate(lines) if not v.startswith(COMMENT_DELIMITER)), -1)
-    if index != -1:
-        file_level_comments = lines[:index]
-        file_content = lines[index:]
-    else:
-        file_level_comments = lines[:]
-        file_content = []
-    file_level_comments = [line.lstrip(COMMENT_DELIMITER) for line in file_level_comments]
-    return file_level_comments, file_content
-
-
 def parse_message_string(pkg_name, msg_name, message_string):
+    file_level_ended = False
+    message_comments = []
     fields = []
     constants = []
     last_element = None  # either a field or a constant
-    # replace tabs with spaces
-    message_string = message_string.replace('\t', ' ')
 
     current_comments = []
-    message_comments, lines = extract_file_level_comments(message_string)
+    lines = message_string.splitlines()
     for line in lines:
         line = line.rstrip()
+
+        # replace tabs with spaces
+        line = line.replace('\t', ' ')
 
         # ignore empty lines
         if not line:
             # file-level comments stop at the first empty line
+            file_level_ended = True
             continue
 
         index = line.find(COMMENT_DELIMITER)
 
+        # file-level comment line
+        if index == 0 and not file_level_ended:
+            message_comments.append(line[len(COMMENT_DELIMITER):])
+            continue
+
+        file_level_ended = True
+
         # comment
         comment = None
         if index >= 0:
-            comment = line[index:].lstrip(COMMENT_DELIMITER)
+            comment = line[index + len(COMMENT_DELIMITER):]
             line = line[:index]
 
         if comment is not None:
@@ -584,9 +580,6 @@ def process_comments(instance):
                 length -= 1
                 continue
             i += 1
-        if lines:
-            text = '\n'.join(lines)
-            instance.annotations['comment'] = textwrap.dedent(text).split('\n')
 
 
 def parse_value_string(type_, value_string):
@@ -887,17 +880,14 @@ def parse_action_file(pkg_name, interface_filename):
 
 
 def parse_action_string(pkg_name, action_name, action_string):
-    lines = action_string.splitlines()
-    separator_indices = [
-        index for index, line in enumerate(lines) if line == ACTION_REQUEST_RESPONSE_SEPARATOR]
-    if len(separator_indices) != 2:
+    action_blocks = re.split(
+        '^' + ACTION_REQUEST_RESPONSE_SEPARATOR + '$', action_string, flags=re.MULTILINE)
+    if len(action_blocks) != 3:
         raise InvalidActionSpecification(
             "Number of '%s' separators nonconformant with action definition" %
             ACTION_REQUEST_RESPONSE_SEPARATOR)
 
-    goal_string = '\n'.join(lines[:separator_indices[0]])
-    result_string = '\n'.join(lines[separator_indices[0] + 1:separator_indices[1]])
-    feedback_string = '\n'.join(lines[separator_indices[1] + 1:])
+    goal_string, result_string, feedback_string = action_blocks
 
     goal_message = parse_message_string(
         pkg_name, action_name + ACTION_GOAL_SUFFIX, goal_string)
