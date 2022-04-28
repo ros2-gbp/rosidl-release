@@ -1,0 +1,12 @@
+Source: ros-galactic-rosidl-runtime-c
+Section: misc
+Priority: optional
+Maintainer: Chris Lalancette <clalancette@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-galactic-ament-cmake-ros, ros-galactic-ament-lint-auto <!nocheck>, ros-galactic-ament-lint-common <!nocheck>, ros-galactic-performance-test-fixture <!nocheck>, ros-galactic-rcutils, ros-galactic-rosidl-typesupport-interface, ros-galactic-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-galactic-rosidl-runtime-c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-galactic-ament-cmake, ros-galactic-rcutils, ros-galactic-rosidl-typesupport-interface, ros-galactic-ros-workspace
+Description: Provides definitions, initialization and finalization functions, and macros for getting and working with rosidl typesupport types in C.
