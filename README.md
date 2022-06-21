@@ -1,3 +1,40 @@
+## rosidl (rolling) - 3.2.1-1
+
+The packages in the `rosidl` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling --track rolling rosidl` on `Tue, 21 Jun 2022 23:35:03 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cli`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_parser`
+- `rosidl_runtime_c`
+- `rosidl_runtime_cpp`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+These packages were explicitly ignored:
+- `rosidl_typesupport_introspection_tests`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: https://github.com/ros2-gbp/rosidl-release.git
+- rosdistro version: `3.2.0-1`
+- old version: `3.2.0-1`
+- new version: `3.2.1-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.1`
+- catkin_pkg version: `0.5.2`
+- rosdep version: `0.21.0`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## rosidl (rolling) - 3.2.0-1
 
 The packages in the `rosidl` repository were released into the `rolling` distro by running `/usr/local/bin/bloom-release --non-interactive -r rolling rosidl` on `Wed, 04 May 2022 19:58:43 -0000`
