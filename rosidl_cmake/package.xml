@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="2">
   <name>rosidl_cmake</name>
-  <version>3.2.1</version>
+  <version>3.3.0</version>
   <description>The CMake functionality to invoke code generation for ROS interface files.</description>
   <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
   <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
@@ -16,8 +16,8 @@
   <buildtool_export_depend>ament_cmake</buildtool_export_depend>
   <buildtool_export_depend>python3-empy</buildtool_export_depend>
 
-  <exec_depend>rosidl_adapter</exec_depend>
-  <exec_depend>rosidl_parser</exec_depend>
+  <!-- Forwarding Python module -->
+  <exec_depend>rosidl_pycommon</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
