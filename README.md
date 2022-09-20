@@ -1,11 +1,4 @@
-# rosidl_generator_cpp
+# rosidl
 
-`rosidl_runtime_cpp` is a package generates and provides runtime ROSIDL interfaces files in C++.
-
-## Features
-
-The features provided by `rosidl_runtime_cpp` are documented in its [feature documentation](docs/FEATURES.md).
-
-## Quality Declaration
-
-This package claims to be in the **Quality Level 1** category, see the [Quality Declaration](QUALITY_DECLARATION.md) for more details.
+```rosidl``` is one of the ros_core packages.
+See [documentation](http://docs.ros2.org/latest/developer_overview.html#the-rosidl-repository) for details of this package.
