@@ -2,82 +2,19 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.3.0 (2022-09-08)
+1.3.0 (2022-09-20)
 ------------------
-* Add action2idl script (`#654 <https://github.com/ros2/rosidl/issues/654>`_)
-* Contributors: John Daktylidis
+* Fix escaping in string literals (`#595 <https://github.com/ros2/rosidl/issues/595>`_) (`#618 <https://github.com/ros2/rosidl/issues/618>`_)
+* Contributors: Ivan Santiago Paunovic, Jacob Perron
 
-3.2.1 (2022-06-21)
+1.2.1 (2021-04-14)
 ------------------
-
-3.2.0 (2022-05-04)
-------------------
-
-3.1.3 (2022-04-08)
-------------------
-
-3.1.2 (2022-04-05)
-------------------
-
-3.1.1 (2022-03-28)
-------------------
-
-3.1.0 (2022-03-01)
-------------------
-* rename nested loop index (`#643 <https://github.com/ros2/rosidl/issues/643>`_)
-* Contributors: ibnHatab
-
-3.0.1 (2022-01-13)
-------------------
-* Fix how comments in action interfaces are processed (`#632 <https://github.com/ros2/rosidl/issues/632>`_)
-* Pass comments in ros interface constants to the .idl generated files (`#630 <https://github.com/ros2/rosidl/issues/630>`_)
-* Contributors: Ivan Santiago Paunovic
-
-3.0.0 (2021-11-05)
-------------------
-* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
-* Make rosidl packages use FindPython3 instead of FindPythonInterp (`#612 <https://github.com/ros2/rosidl/issues/612>`_)
-* Contributors: Michel Hidalgo, Shane Loretz
-
-2.5.0 (2021-08-10)
-------------------
-
-2.4.0 (2021-07-12)
-------------------
-
-2.3.0 (2021-06-11)
-------------------
-* Fix escaping in string literals (`#595 <https://github.com/ros2/rosidl/issues/595>`_)
-* Ignore multiple ``#`` characters and dedent comments (`#594 <https://github.com/ros2/rosidl/issues/594>`_)
-* Contributors: Ivan Santiago Paunovic
-
-2.2.1 (2021-04-06)
-------------------
-
-2.2.0 (2021-03-18)
-------------------
-* Expose .msg/.srv/.action to .idl conversion via rosidl translate CLI (`#576 <https://github.com/ros2/rosidl/issues/576>`_)
-* Contributors: Michel Hidalgo
-
-2.1.0 (2021-03-09)
-------------------
-* Support hex constants in msg files (`#559 <https://github.com/ros2/rosidl/issues/559>`_)
+* Hex constants and tab as whitespace support (`#568 <https://github.com/ros2/rosidl/issues/568>`_)
+  * Treat \t as whitespace (`#557 <https://github.com/ros2/rosidl/issues/557>`_)
+  * Support hex constants in msg files (`#559 <https://github.com/ros2/rosidl/issues/559>`_)
 * Contributors: Dereck Wonnacott
 
-2.0.3 (2021-01-25)
-------------------
-* Treat \t as whitespace (`#557 <https://github.com/ros2/rosidl/issues/557>`_)
-* Contributors: Dereck Wonnacott
-
-2.0.2 (2020-12-08)
-------------------
-* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
-* Contributors: Chris Lalancette
-
-2.0.1 (2020-09-28)
-------------------
-
-2.0.0 (2020-09-24)
+1.2.0 (2020-12-08)
 ------------------
 
 1.1.0 (2020-08-17)

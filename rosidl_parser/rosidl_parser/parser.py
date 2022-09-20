@@ -85,7 +85,7 @@ def parse_idl_string(idl_string, png_file=None):
 def get_ast_from_idl_string(idl_string):
     global _parser
     if _parser is None:
-        _parser = Lark(grammar, start='specification', maybe_placeholders=False)
+        _parser = Lark(grammar, start='specification')
     return _parser.parse(idl_string)
 
 
@@ -103,18 +103,16 @@ def extract_content_from_ast(tree):
     constants = {}
     const_dcls = tree.find_data('const_dcl')
     for const_dcl in const_dcls:
-        annotations = get_annotations(const_dcl)
         const_type = next(const_dcl.find_data('const_type'))
+        const_expr = next(const_dcl.find_data('const_expr'))
         module_identifiers = get_module_identifier_values(tree, const_dcl)
         module_comments = constants.setdefault(
             module_identifiers[-1], [])
-        value = get_const_expr_value(const_dcl.children[-1])
-        constant = Constant(
-            get_child_identifier_value(const_dcl),
+        value = get_const_expr_value(const_expr)
+        module_comments.append(Constant(
+            get_first_identifier_value(const_dcl),
             get_abstract_type_from_const_expr(const_type, value),
-            value)
-        constant.annotations = annotations
-        module_comments.append(constant)
+            value))
 
     typedefs = {}
     typedef_dcls = tree.find_data('typedef_dcl')
@@ -559,12 +557,6 @@ def get_const_expr_value(const_expr):
                 value = -value
             return value
 
-        if child.data == 'fixed_pt_literal':
-            value = get_fixed_pt_literal_value(child)
-            if negate_value:
-                value = -value
-            return value
-
         if child.data == 'boolean_literal':
             assert len(child.children) == 1
             child = child.children[0]
@@ -598,16 +590,6 @@ def get_floating_pt_literal_value(floating_pt_literal):
             value += child.value
         else:
             assert False, 'Unsupported tree: ' + str(floating_pt_literal)
-    return float(value)
-
-
-def get_fixed_pt_literal_value(fixed_pt_literal):
-    value = ''
-    for child in fixed_pt_literal.children:
-        if isinstance(child, Token):
-            value += child.value
-        else:
-            assert False, 'Unsupported tree: ' + str(fixed_pt_literal)
     return float(value)
 
 

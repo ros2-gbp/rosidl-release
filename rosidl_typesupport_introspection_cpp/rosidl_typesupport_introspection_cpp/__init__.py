@@ -12,20 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from rosidl_pycommon import generate_files
+from rosidl_cmake import generate_files
 
 
-def generate_cpp(generator_arguments_file: str):
-    """
-    Generate the C++ implementation of the type support.
-
-    :param generator_arguments_file: The path to the file containing the
-        arguments for the generator.
-    :type generator_arguments_file: str
-    """
+def generate_cpp(generator_arguments_file):
     mapping = {
         'idl__rosidl_typesupport_introspection_cpp.hpp.em':
         'detail/%s__rosidl_typesupport_introspection_cpp.hpp',
         'idl__type_support.cpp.em': 'detail/%s__type_support.cpp',
     }
-    return generate_files(generator_arguments_file, mapping)
+    generate_files(generator_arguments_file, mapping)
