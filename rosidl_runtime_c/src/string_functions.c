@@ -19,6 +19,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <rcutils/allocator.h>
 #include "rcutils/macros.h"
 
 bool
@@ -29,7 +30,8 @@ rosidl_runtime_c__String__init(rosidl_runtime_c__String * str)
   if (!str) {
     return false;
   }
-  str->data = malloc(1);
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  str->data = allocator.allocate(1, allocator.state);
   if (!str->data) {
     return false;
   }
@@ -53,7 +55,8 @@ rosidl_runtime_c__String__fini(rosidl_runtime_c__String * str)
         "Exiting.\n");
       exit(-1);
     }
-    free(str->data);
+    rcutils_allocator_t allocator = rcutils_get_default_allocator();
+    allocator.deallocate(str->data, allocator.state);
     str->data = NULL;
     str->size = 0;
     str->capacity = 0;
@@ -75,6 +78,20 @@ rosidl_runtime_c__String__fini(rosidl_runtime_c__String * str)
 }
 
 bool
+rosidl_runtime_c__String__are_equal(
+  const rosidl_runtime_c__String * lhs,
+  const rosidl_runtime_c__String * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  if (lhs->size != rhs->size) {
+    return false;
+  }
+  return memcmp(lhs->data, rhs->data, lhs->size) == 0;
+}
+
+bool
 rosidl_runtime_c__String__assignn(
   rosidl_runtime_c__String * str, const char * value, size_t n)
 {
@@ -89,7 +106,8 @@ rosidl_runtime_c__String__assignn(
   if (n == SIZE_MAX) {
     return false;
   }
-  char * data = realloc(str->data, n + 1);
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  char * data = allocator.reallocate(str->data, n + 1, allocator.state);
   if (!data) {
     return false;
   }
@@ -114,6 +132,18 @@ rosidl_runtime_c__String__assign(
 }
 
 bool
+rosidl_runtime_c__String__copy(
+  const rosidl_runtime_c__String * input,
+  rosidl_runtime_c__String * output)
+{
+  if (!input) {
+    return false;
+  }
+  return rosidl_runtime_c__String__assignn(
+    output, input->data, input->size);
+}
+
+bool
 rosidl_runtime_c__String__Sequence__init(
   rosidl_runtime_c__String__Sequence * sequence, size_t size)
 {
@@ -124,7 +154,9 @@ rosidl_runtime_c__String__Sequence__init(
   }
   rosidl_runtime_c__String * data = NULL;
   if (size) {
-    data = (rosidl_runtime_c__String *)calloc(size, sizeof(rosidl_runtime_c__String));
+    rcutils_allocator_t allocator = rcutils_get_default_allocator();
+    data = (rosidl_runtime_c__String *)allocator.zero_allocate(
+      size, sizeof(rosidl_runtime_c__String), allocator.state);
     if (!data) {
       return false;
     }
@@ -135,7 +167,7 @@ rosidl_runtime_c__String__Sequence__init(
         for (; i-- > 0; ) {
           rosidl_runtime_c__String__fini(&data[i]);
         }
-        free(data);
+        allocator.deallocate(data, allocator.state);
         return false;
       }
     }
@@ -160,7 +192,8 @@ rosidl_runtime_c__String__Sequence__fini(
     for (size_t i = 0; i < sequence->capacity; ++i) {
       rosidl_runtime_c__String__fini(&sequence->data[i]);
     }
-    free(sequence->data);
+    rcutils_allocator_t allocator = rcutils_get_default_allocator();
+    allocator.deallocate(sequence->data, allocator.state);
     sequence->data = NULL;
     sequence->size = 0;
     sequence->capacity = 0;
@@ -171,17 +204,80 @@ rosidl_runtime_c__String__Sequence__fini(
   }
 }
 
+bool
+rosidl_runtime_c__String__Sequence__are_equal(
+  const rosidl_runtime_c__String__Sequence * lhs,
+  const rosidl_runtime_c__String__Sequence * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  if (lhs->size != rhs->size) {
+    return false;
+  }
+  for (size_t i = 0; i < lhs->size; ++i) {
+    if (!rosidl_runtime_c__String__are_equal(
+        &(lhs->data[i]), &(rhs->data[i])))
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool
+rosidl_runtime_c__String__Sequence__copy(
+  const rosidl_runtime_c__String__Sequence * input,
+  rosidl_runtime_c__String__Sequence * output)
+{
+  if (!input || !output) {
+    return false;
+  }
+  if (output->capacity < input->size) {
+    const size_t allocation_size =
+      input->size * sizeof(rosidl_runtime_c__String);
+    rosidl_runtime_c__String * data =
+      (rosidl_runtime_c__String *)realloc(output->data, allocation_size);
+    if (!data) {
+      return false;
+    }
+    for (size_t i = output->capacity; i < input->size; ++i) {
+      if (!rosidl_runtime_c__String__init(&data[i])) {
+        /* free currently allocated and return false */
+        for (; i-- > output->capacity; ) {
+          rosidl_runtime_c__String__fini(&data[i]);
+        }
+        free(data);
+        return false;
+      }
+    }
+    output->data = data;
+    output->capacity = input->size;
+  }
+  output->size = input->size;
+  for (size_t i = 0; i < input->size; ++i) {
+    if (!rosidl_runtime_c__String__copy(
+        &(input->data[i]), &(output->data[i])))
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
 rosidl_runtime_c__String__Sequence *
 rosidl_runtime_c__String__Sequence__create(size_t size)
 {
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   rosidl_runtime_c__String__Sequence * sequence =
-    (rosidl_runtime_c__String__Sequence *)malloc(sizeof(rosidl_runtime_c__String__Sequence));
+    (rosidl_runtime_c__String__Sequence *)allocator.allocate(
+    sizeof(rosidl_runtime_c__String__Sequence), allocator.state);
   if (!sequence) {
     return NULL;
   }
   bool success = rosidl_runtime_c__String__Sequence__init(sequence, size);
   if (!success) {
-    free(sequence);
+    allocator.deallocate(sequence, allocator.state);
     return NULL;
   }
   return sequence;
@@ -194,5 +290,6 @@ rosidl_runtime_c__String__Sequence__destroy(
   if (sequence) {
     rosidl_runtime_c__String__Sequence__fini(sequence);
   }
-  free(sequence);
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  allocator.deallocate(sequence, allocator.state);
 }

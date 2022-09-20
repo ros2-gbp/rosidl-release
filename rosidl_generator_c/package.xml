@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>rosidl_generator_c</name>
-  <version>1.2.1</version>
+  <version>1.3.0</version>
   <description>Generate the ROS interfaces in C.</description>
   <maintainer email="william@osrfoundation.org">William Woodall</maintainer>
   <license>Apache License 2.0</license>
@@ -14,8 +14,10 @@
   <buildtool_export_depend>rosidl_cmake</buildtool_export_depend>
 
   <build_export_depend>rosidl_typesupport_interface</build_export_depend>
+  <build_export_depend>rcutils</build_export_depend>
 
   <exec_depend>rosidl_parser</exec_depend>
+  <exec_depend>rcutils</exec_depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_lint_auto</test_depend>
