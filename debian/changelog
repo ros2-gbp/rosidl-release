@@ -1,9 +1,0 @@
-ros-rolling-rosidl-pycommon (3.3.0-1bullseye) bullseye; urgency=high
-
-  * Move rosidl_cmake Python module to a new package rosidl_pycommon (#696 <https://github.com/ros2/rosidl/issues/696>)
-    Deprecate the Python module in rosidl_cmake and move the implementation to the new package rosidl_pycommon.
-  * Contributors: Jacob Perron
-
- -- Michel Hidalgo <michel@ekumenlabs.com>  Thu, 08 Sep 2022 07:00:00 -0000
-
-
