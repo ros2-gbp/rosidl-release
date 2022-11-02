@@ -2,28 +2,96 @@
 Changelog for package rosidl_runtime_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.0 (2022-09-20)
+3.3.1 (2022-11-02)
 ------------------
-* Use rcutils allocators in rosidl_generator_c (`#584 <https://github.com/ros2/rosidl/issues/584>`_)
-* Implement equality operator function for C messages. (`#648 <https://github.com/ros2/rosidl/issues/648>`_) (`#667 <https://github.com/ros2/rosidl/issues/667>`_)
-* Implement copy function for C messages (`#650 <https://github.com/ros2/rosidl/issues/650>`_) (`#667 <https://github.com/ros2/rosidl/issues/667>`_)
-* Contributors: Michel Hidalgo, Nikolai Morin, Pablo Garrido
 
-1.2.1 (2021-04-14)
+3.3.0 (2022-09-08)
 ------------------
-* Update quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#582 <https://github.com/ros2/rosidl/issues/582>`_)
-* Contributors: Simon Honigmann
 
-1.2.0 (2020-12-08)
+3.2.1 (2022-06-21)
 ------------------
-* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_) (`#547 <https://github.com/ros2/rosidl/issues/547>`_)
-* Update QD links for Foxy
+
+3.2.0 (2022-05-04)
+------------------
+
+3.1.3 (2022-04-08)
+------------------
+
+3.1.2 (2022-04-05)
+------------------
+* Fix error handling when copying C sequence messages (`#671 <https://github.com/ros2/rosidl/issues/671>`_)
+* Contributors: Michel Hidalgo
+
+3.1.1 (2022-03-28)
+------------------
+* Set the output size unconditionally when copying sequences (`#669 <https://github.com/ros2/rosidl/issues/669>`_)
+* Contributors: Nikolai Morin
+
+3.1.0 (2022-03-01)
+------------------
+* De-duplicate Quality Level from README and QUALITY_DECLARATION (`#661 <https://github.com/ros2/rosidl/issues/661>`_)
+* Install headers to include/${PROJECT_NAME} (`#658 <https://github.com/ros2/rosidl/issues/658>`_)
+* Implement copy function for C messages (`#650 <https://github.com/ros2/rosidl/issues/650>`_)
+* Implement equality operator function for C messages. (`#648 <https://github.com/ros2/rosidl/issues/648>`_)
+* Contributors: Jose Luis Rivero, Michel Hidalgo, Shane Loretz
+
+3.0.1 (2022-01-13)
+------------------
+* Set CXX standard to 17 (`#635 <https://github.com/ros2/rosidl/issues/635>`_)
+* Contributors: Øystein Sture
+
+3.0.0 (2021-11-05)
+------------------
+* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
+* Contributors: Michel Hidalgo
+
+2.5.0 (2021-08-10)
+------------------
+
+2.4.0 (2021-07-12)
+------------------
+
+2.3.0 (2021-06-11)
+------------------
+* Use RCUtils allocators in rosidl_generator_c (`#584 <https://github.com/ros2/rosidl/issues/584>`_)
+* Contributors: Pablo Garrido
+
+2.2.1 (2021-04-06)
+------------------
+* updating quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#581 <https://github.com/ros2/rosidl/issues/581>`_)
+* Contributors: shonigmann
+
+2.2.0 (2021-03-18)
+------------------
+
+2.1.0 (2021-03-09)
+------------------
+* Shorten some excessively long lines of CMake (`#571 <https://github.com/ros2/rosidl/issues/571>`_)
+* Contributors: Scott K Logan
+
+2.0.3 (2021-01-25)
+------------------
+
+2.0.2 (2020-12-08)
+------------------
+* Update and add package.xml descriptions to README (`#553 <https://github.com/ros2/rosidl/issues/553>`_)
+* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_)
+* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
+* Contributors: Chris Lalancette, Louise Poubel, Shane Loretz
+
+2.0.1 (2020-09-28)
+------------------
+* Add rcutils dependency. (`#534 <https://github.com/ros2/rosidl/issues/534>`_)
 * QD: Add links to hosted API docs (`#533 <https://github.com/ros2/rosidl/issues/533>`_)
 * Updated Quality Level to 1 (`#532 <https://github.com/ros2/rosidl/issues/532>`_)
 * Add benchmarks for rosidl_runtime\_* packages (`#521 <https://github.com/ros2/rosidl/issues/521>`_)
-* Add rcutils dependency (`#534 <https://github.com/ros2/rosidl/issues/534>`_)
+* Contributors: Alejandro Hernández Cordero, Chris Lalancette, Louise Poubel, Scott K Logan
+
+2.0.0 (2020-09-24)
+------------------
+* Fix the declared language for a few packages (`#530 <https://github.com/ros2/rosidl/issues/530>`_)
 * Add fault injection macros and test (`#509 <https://github.com/ros2/rosidl/issues/509>`_)
-* Contributors: Alejandro Hernández Cordero, Chris Lalancette, Louise Poubel, Scott K Logan, Stephen Brawner
+* Contributors: Scott K Logan, brawner
 
 1.1.0 (2020-08-17)
 ------------------

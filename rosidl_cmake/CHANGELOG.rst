@@ -2,13 +2,89 @@
 Changelog for package rosidl_cmake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.0 (2022-09-20)
+3.3.1 (2022-11-02)
+------------------
+* Skip rosidl_generate_interfaces dependency export on SKIP_INSTALL. (`#708 <https://github.com/ros2/rosidl/issues/708>`_)
+* Contributors: Chris Lalancette
+
+3.3.0 (2022-09-08)
+------------------
+* Move rosidl_cmake Python module to a new package rosidl_pycommon (`#696 <https://github.com/ros2/rosidl/issues/696>`_)
+  Deprecate the Python module in rosidl_cmake and move the implementation to the new package rosidl_pycommon.
+* Contributors: Jacob Perron
+
+3.2.1 (2022-06-21)
+------------------
+* Fix comment in camel case conversion function (`#683 <https://github.com/ros2/rosidl/issues/683>`_)
+* Protect rosidl_target_interfaces from using NOTFOUND in include_directories (`#679 <https://github.com/ros2/rosidl/issues/679>`_)
+* Contributors: Jose Luis Rivero, Shane Loretz
+
+3.2.0 (2022-05-04)
 ------------------
 
-1.2.1 (2021-04-14)
+3.1.3 (2022-04-08)
 ------------------
 
-1.2.0 (2020-12-08)
+3.1.2 (2022-04-05)
+------------------
+
+3.1.1 (2022-03-28)
+------------------
+* Make rosidl_get_typesupport_target return -NOTFOUND instead of FATAL_ERROR (`#672 <https://github.com/ros2/rosidl/issues/672>`_)
+* Contributors: Shane Loretz
+
+3.1.0 (2022-03-01)
+------------------
+* Add introspection typesupport tests for C/C++ messages (`#651 <https://github.com/ros2/rosidl/issues/651>`_)
+* Contributors: Michel Hidalgo
+
+3.0.1 (2022-01-13)
+------------------
+* Use target output name for exporting typesupport library (`#625 <https://github.com/ros2/rosidl/issues/625>`_)
+* Contributors: Jonathan Selling
+
+3.0.0 (2021-11-05)
+------------------
+* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
+* Contributors: Michel Hidalgo
+
+2.5.0 (2021-08-10)
+------------------
+* Revert "Bundle and ensure the exportation of rosidl generated targets" (`#611 <https://github.com/ros2/rosidl/issues/611>`_)
+* Add rosidl_get_typesupport_target and deprecate rosidl_target_interfaces (`#606 <https://github.com/ros2/rosidl/issues/606>`_)
+* Contributors: Michel Hidalgo, Shane Loretz
+
+2.4.0 (2021-07-12)
+------------------
+* Bundle and ensure the exportation of rosidl generated targets (`#601 <https://github.com/ros2/rosidl/issues/601>`_)
+* Contributors: Michel Hidalgo
+
+2.3.0 (2021-06-11)
+------------------
+
+2.2.1 (2021-04-06)
+------------------
+
+2.2.0 (2021-03-18)
+------------------
+
+2.1.0 (2021-03-09)
+------------------
+* Shorten some excessively long lines of CMake (`#571 <https://github.com/ros2/rosidl/issues/571>`_)
+* Contributors: Scott K Logan
+
+2.0.3 (2021-01-25)
+------------------
+
+2.0.2 (2020-12-08)
+------------------
+* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
+* Contributors: Chris Lalancette
+
+2.0.1 (2020-09-28)
+------------------
+
+2.0.0 (2020-09-24)
 ------------------
 
 1.1.0 (2020-08-17)

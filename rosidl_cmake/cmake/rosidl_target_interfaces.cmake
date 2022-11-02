@@ -29,15 +29,18 @@
 # @public
 #
 function(rosidl_target_interfaces target interface_target typesupport_name)
+  message(DEPRECATION "Use rosidl_get_typesupport_target() and target_link_libraries() instead of rosidl_target_interfaces()")
   if(ARGN)
     message(FATAL_ERROR
       "rosidl_target_interfaces() called with unused arguments: ${ARGN}")
   endif()
   if(NOT TARGET ${target})
-    message(FATAL_ERROR "rosidl_target_interfaces() the first argument '${target}' must be a valid target name")
+    message(FATAL_ERROR
+      "rosidl_target_interfaces() the first argument '${target}' must be a valid target name")
   endif()
   if(NOT TARGET ${interface_target})
-    message(FATAL_ERROR "rosidl_target_interfaces() the second argument '${interface_target}' must be a valid target name")
+    message(FATAL_ERROR
+      "rosidl_target_interfaces() the second argument '${interface_target}' must be a valid target name")
   endif()
   set(typesupport_target "${interface_target}__${typesupport_name}")
   if(NOT TARGET ${typesupport_target})
@@ -49,6 +52,8 @@ function(rosidl_target_interfaces target interface_target typesupport_name)
 
   add_dependencies(${target} ${interface_target})
   get_target_property(include_directories ${typesupport_target} INTERFACE_INCLUDE_DIRECTORIES)
-  target_include_directories(${target} PUBLIC ${include_directories})
+  if(${include_directories})
+    target_include_directories(${target} PUBLIC ${include_directories})
+  endif()
   target_link_libraries(${target} ${typesupport_target})
 endfunction()

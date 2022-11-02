@@ -280,22 +280,27 @@ rosidl_runtime_c__U16String__Sequence__copy(
   if (output->capacity < input->size) {
     const size_t size =
       input->size * sizeof(rosidl_runtime_c__U16String);
+    rcutils_allocator_t allocator = rcutils_get_default_allocator();
     rosidl_runtime_c__U16String * data =
-      (rosidl_runtime_c__U16String *)realloc(output->data, size);
+      (rosidl_runtime_c__U16String *)allocator.reallocate(
+      output->data, size, allocator.state);
     if (!data) {
       return false;
     }
+    // If reallocation succeeded, memory may or may not have been moved
+    // to fulfill the allocation request, invalidating output->data.
+    output->data = data;
     for (size_t i = output->capacity; i < input->size; ++i) {
-      if (!rosidl_runtime_c__U16String__init(&data[i])) {
-        /* free currently allocated and return false */
+      if (!rosidl_runtime_c__U16String__init(&output->data[i])) {
+        // If initialization of any new items fails, roll back all
+        // previously initialized items. Existing items in output
+        // are to be left unmodified.
         for (; i-- > output->capacity; ) {
-          rosidl_runtime_c__U16String__fini(&data[i]);
+          rosidl_runtime_c__U16String__fini(&output->data[i]);
         }
-        free(data);
         return false;
       }
     }
-    output->data = data;
     output->capacity = input->size;
   }
   output->size = input->size;
