@@ -2,6 +2,9 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.3.1 (2022-11-02)
+------------------
+
 3.3.0 (2022-09-08)
 ------------------
 * Add action2idl script (`#654 <https://github.com/ros2/rosidl/issues/654>`_)
