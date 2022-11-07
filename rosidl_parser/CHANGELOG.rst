@@ -2,19 +2,10 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.3.1 (2022-11-02)
+3.1.4 (2022-11-07)
 ------------------
-
-3.3.0 (2022-09-08)
-------------------
-* Always include whitespace in string literals (`#688 <https://github.com/ros2/rosidl/issues/688>`_)
-* Contributors: Shane Loretz
-
-3.2.1 (2022-06-21)
-------------------
-
-3.2.0 (2022-05-04)
-------------------
+* Always include whitespace in string literals (`#688 <https://github.com/ros2/rosidl/issues/688>`_) (`#689 <https://github.com/ros2/rosidl/issues/689>`_)
+* Contributors: mergify[bot]
 
 3.1.3 (2022-04-08)
 ------------------

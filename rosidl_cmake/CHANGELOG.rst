@@ -2,25 +2,10 @@
 Changelog for package rosidl_cmake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.3.1 (2022-11-02)
+3.1.4 (2022-11-07)
 ------------------
-* Skip rosidl_generate_interfaces dependency export on SKIP_INSTALL. (`#708 <https://github.com/ros2/rosidl/issues/708>`_)
-* Contributors: Chris Lalancette
-
-3.3.0 (2022-09-08)
-------------------
-* Move rosidl_cmake Python module to a new package rosidl_pycommon (`#696 <https://github.com/ros2/rosidl/issues/696>`_)
-  Deprecate the Python module in rosidl_cmake and move the implementation to the new package rosidl_pycommon.
-* Contributors: Jacob Perron
-
-3.2.1 (2022-06-21)
-------------------
-* Fix comment in camel case conversion function (`#683 <https://github.com/ros2/rosidl/issues/683>`_)
-* Protect rosidl_target_interfaces from using NOTFOUND in include_directories (`#679 <https://github.com/ros2/rosidl/issues/679>`_)
-* Contributors: Jose Luis Rivero, Shane Loretz
-
-3.2.0 (2022-05-04)
-------------------
+* Protect rosidl_target_interfaces from using NOTFOUND in include_directories (`#679 <https://github.com/ros2/rosidl/issues/679>`_) (`#681 <https://github.com/ros2/rosidl/issues/681>`_)
+* Contributors: Jose Luis Rivero
 
 3.1.3 (2022-04-08)
 ------------------
