@@ -1,3 +1,37 @@
+## rosidl (galactic) - 2.2.3-1
+
+The packages in the `rosidl` repository were released into the `galactic` distro by running `/home/cottsay/infra_ws/install/bin/bloom-release rosidl -r galactic` on `Sat, 03 Dec 2022 00:23:07 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cli`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_parser`
+- `rosidl_runtime_c`
+- `rosidl_runtime_cpp`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: https://github.com/ros2-gbp/rosidl-release.git
+- rosdistro version: `2.2.2-1`
+- old version: `2.2.2-1`
+- new version: `2.2.3-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.2`
+- catkin_pkg version: `0.5.2`
+- rosdep version: `0.22.1`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## rosidl (humble) - 3.1.4-1
 
 The packages in the `rosidl` repository were released into the `humble` distro by running `/usr/local/bin/bloom-release -r humble -y rosidl` on `Mon, 07 Nov 2022 17:31:44 -0000`
