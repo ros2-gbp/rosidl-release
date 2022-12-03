@@ -2,57 +2,13 @@
 Changelog for package rosidl_generator_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.4 (2022-11-07)
-------------------
-* Add namespaced ALIAS target to easily consume generated libraries via add_subdirectory (`#605 <https://github.com/ros2/rosidl/issues/605>`_) (`#692 <https://github.com/ros2/rosidl/issues/692>`_)
-* Contributors: mergify[bot]
-
-3.1.3 (2022-04-08)
+2.2.3 (2022-12-02)
 ------------------
 
-3.1.2 (2022-04-05)
+2.2.2 (2022-04-28)
 ------------------
-* Fix error handling when copying C sequence messages (`#671 <https://github.com/ros2/rosidl/issues/671>`_)
-* Contributors: Michel Hidalgo
-
-3.1.1 (2022-03-28)
-------------------
-* Install generated headers to include/${PROJECT_NAME} (`#670 <https://github.com/ros2/rosidl/issues/670>`_)
-* Misc cleanup in the rosidl generator extensions (`#662 <https://github.com/ros2/rosidl/issues/662>`_)
-* Set the output size unconditionally when copying sequences (`#669 <https://github.com/ros2/rosidl/issues/669>`_)
-* Contributors: Nikolai Morin, Shane Loretz
-
-3.1.0 (2022-03-01)
-------------------
-* Implement copy function for C messages (`#650 <https://github.com/ros2/rosidl/issues/650>`_)
-* Implement equality operator function for C messages. (`#648 <https://github.com/ros2/rosidl/issues/648>`_)
-* Generate documentation in generated C header files based on ROS interfaces comments (`#593 <https://github.com/ros2/rosidl/issues/593>`_)
-* Contributors: Ivan Santiago Paunovic, Michel Hidalgo
-
-3.0.1 (2022-01-13)
-------------------
-
-3.0.0 (2021-11-05)
-------------------
-* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
-* Make rosidl packages use FindPython3 instead of FindPythonInterp (`#612 <https://github.com/ros2/rosidl/issues/612>`_)
-* Contributors: Michel Hidalgo, Shane Loretz
-
-2.5.0 (2021-08-10)
-------------------
-* Revert "Bundle and ensure the exportation of rosidl generated targets" (`#611 <https://github.com/ros2/rosidl/issues/611>`_)
-* Contributors: Michel Hidalgo
-
-2.4.0 (2021-07-12)
-------------------
-* Bundle and ensure the exportation of rosidl generated targets (`#601 <https://github.com/ros2/rosidl/issues/601>`_)
-* Contributors: Michel Hidalgo
-
-2.3.0 (2021-06-11)
-------------------
-* Fix a cpplint allocator regression. (`#590 <https://github.com/ros2/rosidl/issues/590>`_)
-* Use RCUtils allocators in rosidl_generator_c (`#584 <https://github.com/ros2/rosidl/issues/584>`_)
-* Contributors: Chris Lalancette, Pablo Garrido
+* Galactic backport of `#648 <https://github.com/ros2/rosidl/issues/648>`_ and `#650 <https://github.com/ros2/rosidl/issues/650>`_ (`#668 <https://github.com/ros2/rosidl/issues/668>`_)
+* Contributors: Nikolai Morin
 
 2.2.1 (2021-04-06)
 ------------------

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.5)
 
 project(rosidl_typesupport_introspection_c C)
 
@@ -20,6 +20,8 @@ ament_export_dependencies(rosidl_runtime_c)
 # for the get_*_type_support_handle functions and defines the opensplice
 # specific version of these functions.
 
+ament_export_include_directories(include)
+
 ament_python_install_package(${PROJECT_NAME})
 
 add_library(${PROJECT_NAME} src/identifier.c)
@@ -29,13 +31,8 @@ if(WIN32)
 endif()
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-
-# Export old-style CMake variables
-ament_export_include_directories("include/${PROJECT_NAME}")
+  "$<INSTALL_INTERFACE:include>")
 ament_export_libraries(${PROJECT_NAME})
-
-# Export modern CMake targets
 ament_export_targets(${PROJECT_NAME})
 
 ament_index_register_resource("rosidl_typesupport_c")
@@ -66,7 +63,7 @@ install(
 )
 install(
   DIRECTORY include/
-  DESTINATION include/${PROJECT_NAME}
+  DESTINATION include
 )
 install(
   TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}

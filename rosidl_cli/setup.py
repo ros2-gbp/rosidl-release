@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='rosidl_cli',
-    version='3.1.4',
+    version='2.2.3',
     packages=find_packages(exclude=['test']),
     extras_require={
         'completion': ['argcomplete'],
@@ -24,8 +24,8 @@ setup(
     zip_safe=False,
     author='Michel Hidalgo',
     author_email='michel@ekumenlabs.com',
-    maintainer='Michel Hidalgo, Shane Loretz',
-    maintainer_email='michel@ekumenlabs.com, sloretz@openrobotics.org',
+    maintainer='Chris Lalancette, Shane Loretz',
+    maintainer_email='clalancette@openrobotics.org, sloretz@openrobotics.org',
     url='https://github.com/ros2/rosidl/tree/master/rosidl_cli',
     download_url='https://github.com/ros2/rosidl/releases',
     keywords=[],

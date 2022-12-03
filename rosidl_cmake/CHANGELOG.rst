@@ -2,49 +2,12 @@
 Changelog for package rosidl_cmake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.4 (2022-11-07)
+2.2.3 (2022-12-02)
 ------------------
-* Protect rosidl_target_interfaces from using NOTFOUND in include_directories (`#679 <https://github.com/ros2/rosidl/issues/679>`_) (`#681 <https://github.com/ros2/rosidl/issues/681>`_)
-* Contributors: Jose Luis Rivero
-
-3.1.3 (2022-04-08)
-------------------
-
-3.1.2 (2022-04-05)
-------------------
-
-3.1.1 (2022-03-28)
-------------------
-* Make rosidl_get_typesupport_target return -NOTFOUND instead of FATAL_ERROR (`#672 <https://github.com/ros2/rosidl/issues/672>`_)
-* Contributors: Shane Loretz
-
-3.1.0 (2022-03-01)
-------------------
-* Add introspection typesupport tests for C/C++ messages (`#651 <https://github.com/ros2/rosidl/issues/651>`_)
-* Contributors: Michel Hidalgo
-
-3.0.1 (2022-01-13)
-------------------
-* Use target output name for exporting typesupport library (`#625 <https://github.com/ros2/rosidl/issues/625>`_)
+* Use target output name for exporting typesupport library (`#638 <https://github.com/ros2/rosidl/issues/638>`_)
 * Contributors: Jonathan Selling
 
-3.0.0 (2021-11-05)
-------------------
-* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
-* Contributors: Michel Hidalgo
-
-2.5.0 (2021-08-10)
-------------------
-* Revert "Bundle and ensure the exportation of rosidl generated targets" (`#611 <https://github.com/ros2/rosidl/issues/611>`_)
-* Add rosidl_get_typesupport_target and deprecate rosidl_target_interfaces (`#606 <https://github.com/ros2/rosidl/issues/606>`_)
-* Contributors: Michel Hidalgo, Shane Loretz
-
-2.4.0 (2021-07-12)
-------------------
-* Bundle and ensure the exportation of rosidl generated targets (`#601 <https://github.com/ros2/rosidl/issues/601>`_)
-* Contributors: Michel Hidalgo
-
-2.3.0 (2021-06-11)
+2.2.2 (2022-04-28)
 ------------------
 
 2.2.1 (2021-04-06)

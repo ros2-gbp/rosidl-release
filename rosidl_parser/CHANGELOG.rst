@@ -2,46 +2,15 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.4 (2022-11-07)
+2.2.3 (2022-12-02)
 ------------------
-* Always include whitespace in string literals (`#688 <https://github.com/ros2/rosidl/issues/688>`_) (`#689 <https://github.com/ros2/rosidl/issues/689>`_)
-* Contributors: mergify[bot]
+* Always include whitespace in string literals (`#690 <https://github.com/ros2/rosidl/issues/690>`_)
+* Contributors: Shane Loretz
 
-3.1.3 (2022-04-08)
+2.2.2 (2022-04-28)
 ------------------
-
-3.1.2 (2022-04-05)
-------------------
-
-3.1.1 (2022-03-28)
-------------------
-
-3.1.0 (2022-03-01)
-------------------
-* Set maybe_placeholders to False for lark 1.+ compatibility (`#664 <https://github.com/ros2/rosidl/issues/664>`_)
-* Generate documentation in generated C header files based on ROS interfaces comments (`#593 <https://github.com/ros2/rosidl/issues/593>`_)
-* Contributors: Ivan Santiago Paunovic, Shane Loretz
-
-3.0.1 (2022-01-13)
-------------------
-* Pass comments in ros interface constants to the .idl generated files (`#630 <https://github.com/ros2/rosidl/issues/630>`_)
-* Contributors: Ivan Santiago Paunovic
-
-3.0.0 (2021-11-05)
-------------------
-* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
-* Contributors: Michel Hidalgo
-
-2.5.0 (2021-08-10)
-------------------
-
-2.4.0 (2021-07-12)
-------------------
-
-2.3.0 (2021-06-11)
-------------------
-* Fix escaping in string literals (`#595 <https://github.com/ros2/rosidl/issues/595>`_)
-* Contributors: Ivan Santiago Paunovic
+* Fix escaping in string literals (`#595 <https://github.com/ros2/rosidl/issues/595>`_) (`#617 <https://github.com/ros2/rosidl/issues/617>`_)
+* Contributors: Jacob Perron
 
 2.2.1 (2021-04-06)
 ------------------

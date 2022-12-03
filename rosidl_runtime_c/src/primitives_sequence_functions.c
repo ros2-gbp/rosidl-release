@@ -17,8 +17,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <rcutils/allocator.h>
-
 #include "rosidl_runtime_c/primitives_sequence_functions.h"
 
 #define ROSIDL_GENERATOR_C__DEFINE_PRIMITIVE_SEQUENCE_FUNCTIONS(STRUCT_NAME, TYPE_NAME) \
@@ -30,8 +28,7 @@
     } \
     TYPE_NAME * data = NULL; \
     if (size) { \
-      rcutils_allocator_t allocator = rcutils_get_default_allocator(); \
-      data = allocator.allocate(sizeof(TYPE_NAME) * size, allocator.state); \
+      data = malloc(sizeof(TYPE_NAME) * size); \
       if (!data) { \
         return false; \
       } \
@@ -51,8 +48,7 @@
     if (sequence->data) { \
       /* ensure that data and capacity values are consistent */ \
       assert(sequence->capacity > 0); \
-      rcutils_allocator_t allocator = rcutils_get_default_allocator(); \
-      allocator.deallocate(sequence->data, allocator.state); \
+      free(sequence->data); \
       sequence->data = NULL; \
       sequence->size = 0; \
       sequence->capacity = 0; \
@@ -89,9 +85,8 @@
       return false; \
     } \
     if (output->capacity < input->size) { \
-      rcutils_allocator_t allocator = rcutils_get_default_allocator(); \
-      TYPE_NAME * data = (TYPE_NAME *)allocator.reallocate( \
-        output->data, sizeof(TYPE_NAME) * input->size, allocator.state); \
+      TYPE_NAME * data = (TYPE_NAME *)realloc( \
+        output->data, sizeof(TYPE_NAME) * input->size); \
       if (!data) { \
         return false; \
       } \

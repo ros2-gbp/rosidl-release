@@ -2,42 +2,10 @@
 Changelog for package rosidl_typesupport_interface
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.4 (2022-11-07)
+2.2.3 (2022-12-02)
 ------------------
 
-3.1.3 (2022-04-08)
-------------------
-
-3.1.2 (2022-04-05)
-------------------
-
-3.1.1 (2022-03-28)
-------------------
-
-3.1.0 (2022-03-01)
-------------------
-* De-duplicate Quality Level from README and QUALITY_DECLARATION (`#661 <https://github.com/ros2/rosidl/issues/661>`_)
-* Install headers to include/${PROJECT_NAME} (`#658 <https://github.com/ros2/rosidl/issues/658>`_)
-* Add ROSIDL_TYPESUPPORT_INTERFACE__LIBRARY_NAME() macro (`#649 <https://github.com/ros2/rosidl/issues/649>`_)
-* Contributors: Jose Luis Rivero, Michel Hidalgo, Shane Loretz
-
-3.0.1 (2022-01-13)
-------------------
-* Set CXX standard to 17 (`#635 <https://github.com/ros2/rosidl/issues/635>`_)
-* Contributors: Øystein Sture
-
-3.0.0 (2021-11-05)
-------------------
-* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
-* Contributors: Michel Hidalgo
-
-2.5.0 (2021-08-10)
-------------------
-
-2.4.0 (2021-07-12)
-------------------
-
-2.3.0 (2021-06-11)
+2.2.2 (2022-04-28)
 ------------------
 
 2.2.1 (2021-04-06)
