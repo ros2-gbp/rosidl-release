@@ -2,15 +2,21 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>rosidl_typesupport_introspection_c</name>
-  <version>3.3.1</version>
+  <version>3.4.0</version>
   <description>
     Generate the message type support for dynamic message construction in C.
   </description>
-  <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
+
+  <maintainer email="aditya.pande@openrobotics.org">Aditya Pande</maintainer>
+  <maintainer email="brandon@openrobotics.org">Brandon Ong</maintainer>
+  <maintainer email="dharini@openrobotics.org">Dharini Dutia</maintainer>
   <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
+
   <license>Apache License 2.0</license>
-  <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
+
   <author email="clalancette@openrobotics.org">Chris Lalancette</author>
+  <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
+  <author email="michel@ekumenlabs.com">Michel Hidalgo</author>
 
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
 
