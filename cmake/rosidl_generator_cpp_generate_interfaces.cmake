@@ -75,6 +75,7 @@ rosidl_write_generator_arguments(
   OUTPUT_DIR "${_output_path}"
   TEMPLATE_DIR "${rosidl_generator_cpp_TEMPLATE_DIR}"
   TARGET_DEPENDENCIES ${target_dependencies}
+  TYPE_DESCRIPTION_TUPLES "${${rosidl_generate_interfaces_TARGET}__DESCRIPTION_TUPLES}"
 )
 
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
@@ -99,9 +100,13 @@ add_custom_target(
   DEPENDS
   ${_generated_headers}
 )
+add_dependencies(
+  ${rosidl_generate_interfaces_TARGET}__cpp
+  ${rosidl_generate_interfaces_TARGET}__rosidl_generator_type_description)
 
 set(_target_suffix "__rosidl_generator_cpp")
 add_library(${rosidl_generate_interfaces_TARGET}${_target_suffix} INTERFACE)
+target_compile_features(${rosidl_generate_interfaces_TARGET}${_target_suffix} INTERFACE cxx_std_17)
 add_library(${PROJECT_NAME}::${rosidl_generate_interfaces_TARGET}${_target_suffix} ALIAS
   ${rosidl_generate_interfaces_TARGET}${_target_suffix})
 target_include_directories(${rosidl_generate_interfaces_TARGET}${_target_suffix}
