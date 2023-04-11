@@ -2,6 +2,14 @@
 Changelog for package rosidl_typesupport_introspection_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.0.0 (2023-04-11)
+------------------
+* Fix a few more clang analysis problems. (`#731 <https://github.com/ros2/rosidl/issues/731>`_)
+  In particular, make sure to mark the fact that we are
+  C++17 (as the emplace_back signature changed), and also
+  add in a few more (void)_ for benchmark tests.
+* Contributors: Chris Lalancette
+
 3.4.0 (2023-02-13)
 ------------------
 * [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
