@@ -62,12 +62,30 @@ def generate_files(
     latest_target_timestamp = get_newest_modification_time(args['target_dependencies'])
     generated_files = []
 
+    type_description_files = {}
+    for description_tuple in args.get('type_description_tuples', []):
+        tuple_parts = description_tuple.split(':', 1)
+        assert len(tuple_parts) == 2
+        type_description_files[tuple_parts[0]] = tuple_parts[1]
+    ros_interface_files = {}
+    for ros_interface_file in args.get('ros_interface_files',  []):
+        p = pathlib.Path(ros_interface_file)
+        ros_interface_files[p.stem] = p
+
     for idl_tuple in args.get('idl_tuples', []):
         idl_parts = idl_tuple.rsplit(':', 1)
         assert len(idl_parts) == 2
         locator = IdlLocator(*idl_parts)
         idl_rel_path = pathlib.Path(idl_parts[1])
+
+        type_description_info = None
+        if type_description_files:
+            type_hash_file = type_description_files[idl_parts[1]]
+            with open(type_hash_file, 'r') as f:
+                type_description_info = json.load(f)
+
         idl_stem = idl_rel_path.stem
+        type_source_file = ros_interface_files.get(idl_stem, locator.get_absolute_path())
         if not keep_case:
             idl_stem = convert_camel_case_to_lower_case_underscore(idl_stem)
         try:
@@ -81,6 +99,8 @@ def generate_files(
                     'package_name': args['package_name'],
                     'interface_path': idl_rel_path,
                     'content': idl_file.content,
+                    'type_description_info': type_description_info,
+                    'type_source_file': type_source_file,
                 }
                 if additional_context is not None:
                     data.update(additional_context)
