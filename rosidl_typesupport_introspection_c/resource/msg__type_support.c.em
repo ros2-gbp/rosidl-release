@@ -2,6 +2,10 @@
 @{
 from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
 from rosidl_generator_c import idl_structure_type_to_c_include_prefix
+from rosidl_generator_c import idl_structure_type_to_c_typename
+from rosidl_generator_type_description import GET_DESCRIPTION_FUNC
+from rosidl_generator_type_description import GET_HASH_FUNC
+from rosidl_generator_type_description import GET_SOURCES_FUNC
 from rosidl_parser.definition import AbstractGenericString
 from rosidl_parser.definition import AbstractNestedType
 from rosidl_parser.definition import AbstractSequence
@@ -283,6 +287,9 @@ static rosidl_message_type_support_t @(function_prefix)__@(message.structure.nam
   0,
   &@(function_prefix)__@(message.structure.namespaced_type.name)_message_members,
   get_message_typesupport_handle_function,
+  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_HASH_FUNC),
+  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_DESCRIPTION_FUNC),
+  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_SOURCES_FUNC),
 };
 
 ROSIDL_TYPESUPPORT_INTROSPECTION_C_EXPORT_@(package_name)
