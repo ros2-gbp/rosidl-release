@@ -15,13 +15,18 @@ find_package(ament_cmake_ros REQUIRED)
 find_package(rcutils REQUIRED)
 find_package(rosidl_typesupport_interface REQUIRED)
 
+file(GLOB type_description_sources "src/type_description/*.c")
+file(GLOB type_description_includes "include/rosidl_runtime_c/type_description/*.h")
 add_library(${PROJECT_NAME}
   "src/message_type_support.c"
   "src/primitives_sequence_functions.c"
   "src/sequence_bound.c"
   "src/service_type_support.c"
   "src/string_functions.c"
+  "src/type_hash.c"
   "src/u16string_functions.c"
+  "src/type_description_utils.c"
+  ${type_description_sources}
 )
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
@@ -59,7 +64,30 @@ if(BUILD_TESTING)
   # Give cppcheck hints about macro definitions coming from outside this package
   get_target_property(ament_cmake_cppcheck_ADDITIONAL_INCLUDE_DIRS performance_test_fixture::performance_test_fixture
     INTERFACE_INCLUDE_DIRECTORIES)
+
+  set(AMENT_LINT_AUTO_FILE_EXCLUDE ${type_description_includes} ${type_description_sources})
   ament_lint_auto_find_test_dependencies()
+
+  # Run specific linters on copied generated code
+  if(ament_cmake_cppcheck_FOUND)
+    ament_cppcheck(
+      TESTNAME "cppcheck_copied_type_description_interfaces"
+      ${type_description_includes} ${type_description_sources})
+  endif()
+  if(ament_cmake_cpplint_FOUND)
+    ament_cpplint(
+      TESTNAME "cpplint_copied_type_description_interfaces"
+      # the generated code might contain longer lines for templated types
+      MAX_LINE_LENGTH 999
+      ${type_description_includes} ${type_description_sources})
+  endif()
+  if(ament_cmake_uncrustify_FOUND)
+    ament_uncrustify(
+      TESTNAME "uncrustify_copied_type_description_interfaces"
+      # the generated code might contain longer lines for templated types
+      MAX_LINE_LENGTH 0
+      ${type_description_includes} ${type_description_sources})
+  endif()
 
   # For gtest
   enable_language(CXX)
@@ -98,10 +126,20 @@ if(BUILD_TESTING)
     target_compile_definitions(test_string_functions PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
   endif()
 
+  ament_add_gtest(test_type_hash test/test_type_hash.cpp)
+  if(TARGET test_type_hash)
+    target_link_libraries(test_type_hash ${PROJECT_NAME})
+  endif()
+
   ament_add_gtest(test_u16string_functions test/test_u16string_functions.cpp)
   if(TARGET test_u16string_functions)
     target_link_libraries(test_u16string_functions ${PROJECT_NAME})
     target_compile_definitions(test_u16string_functions PUBLIC RCUTILS_ENABLE_FAULT_INJECTION)
+  endif()
+
+  ament_add_gtest(test_type_description_utils test/test_type_description_utils.cpp)
+  if(TARGET test_type_description_utils)
+    target_link_libraries(test_type_description_utils ${PROJECT_NAME})
   endif()
 
   add_performance_test(benchmark_string_conversion test/benchmark/benchmark_string_conversion.cpp)
