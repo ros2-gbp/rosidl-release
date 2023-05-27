@@ -2,6 +2,9 @@
 Changelog for package rosidl_generator_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.1 (2023-05-27)
+------------------
+
 1.3.0 (2022-09-20)
 ------------------
 * Fix a cpplint allocator regression (`#590 <https://github.com/ros2/rosidl/issues/590>`_)
