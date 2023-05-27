@@ -33,7 +33,6 @@ BENCHMARK_F(PerformanceTest, bounded_vector)(benchmark::State & st)
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     v.push_back(0);
     v.erase(v.begin());
   }
@@ -48,7 +47,6 @@ BENCHMARK_F(PerformanceTest, bounded_vector_rvalue)(benchmark::State & st)
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     v.emplace_back(0);
     v.erase(v.begin());
   }
@@ -65,7 +63,6 @@ BENCHMARK_F(PerformanceTest, bounded_vector_insert)(benchmark::State & st)
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     v.insert(v.begin(), v2.begin(), v2.end());
     v.erase(v.begin());
   }
@@ -85,7 +82,6 @@ BENCHMARK_F(PerformanceTest, bounded_vector_input_iterators)(benchmark::State & 
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     v.assign(ii, end);
     v.erase(v.begin());
   }
@@ -102,7 +98,6 @@ BENCHMARK_F(PerformanceTest, bounded_vector_forward_iterators)(benchmark::State 
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     v.assign(l.begin(), l.end());
     v.erase(v.begin());
   }

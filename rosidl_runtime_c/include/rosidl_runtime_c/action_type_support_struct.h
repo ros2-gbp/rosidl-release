@@ -17,7 +17,6 @@
 
 #include "rosidl_runtime_c/message_type_support_struct.h"
 #include "rosidl_runtime_c/service_type_support_struct.h"
-#include "rosidl_runtime_c/type_hash.h"
 #include "rosidl_runtime_c/visibility_control.h"
 #include "rosidl_typesupport_interface/macros.h"
 
@@ -27,15 +26,6 @@ extern "C"
 #endif
 
 typedef struct rosidl_action_type_support_t rosidl_action_type_support_t;
-
-typedef const rosidl_type_hash_t *
-(* rosidl_action_get_type_hash_function)(const rosidl_action_type_support_t *);
-
-typedef const rosidl_runtime_c__type_description__TypeDescription *
-(* rosidl_action_get_type_description_function)(const rosidl_action_type_support_t *);
-
-typedef const rosidl_runtime_c__type_description__TypeSource__Sequence *
-(* rosidl_action_get_type_description_sources_function)(const rosidl_action_type_support_t *);
 
 /// Contains rosidl action type support data.
 /*
@@ -48,12 +38,6 @@ struct rosidl_action_type_support_t
   const rosidl_service_type_support_t * cancel_service_type_support;
   const rosidl_message_type_support_t * feedback_message_type_support;
   const rosidl_message_type_support_t * status_message_type_support;
-  /// Pointer to function to get the hash of the action's description
-  rosidl_action_get_type_hash_function get_type_hash_func;
-  /// Pointer to function to get the description of the type
-  rosidl_action_get_type_description_function get_type_description_func;
-  /// Pointer to function to get the text of the sources that defined the description of the type
-  rosidl_action_get_type_description_sources_function get_type_description_sources_func;
 };
 
 /// Get the action type support given a provided action and package.

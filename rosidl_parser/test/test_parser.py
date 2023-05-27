@@ -15,6 +15,7 @@
 import pathlib
 
 import pytest
+
 from rosidl_parser.definition import Action
 from rosidl_parser.definition import Array
 from rosidl_parser.definition import BasicType
@@ -26,7 +27,6 @@ from rosidl_parser.definition import Include
 from rosidl_parser.definition import Message
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import Service
-from rosidl_parser.definition import SERVICE_EVENT_MESSAGE_SUFFIX
 from rosidl_parser.definition import UnboundedSequence
 from rosidl_parser.definition import UnboundedString
 from rosidl_parser.definition import UnboundedWString
@@ -133,7 +133,7 @@ def test_message_parser_structure(message_idl_file):
     structure = messages[0].structure
     assert structure.namespaced_type.namespaces == ['rosidl_parser', 'msg']
     assert structure.namespaced_type.name == 'MyMessage'
-    assert len(structure.members) == 45
+    assert len(structure.members) == 41
 
     assert isinstance(structure.members[0].type, BasicType)
     assert structure.members[0].type.typename == 'int16'
@@ -275,30 +275,6 @@ def test_message_parser_annotations(message_idl_file):
     assert len(structure.members[40].annotations) == 1
     assert structure.members[40].annotations[0].name == 'default'
 
-    assert isinstance(structure.members[41].type, BasicType)
-    assert structure.members[41].type.typename == 'float'
-    assert structure.members[41].name == 'fixed_int_and_frac'
-    assert len(structure.members[41].annotations) == 1
-    assert structure.members[41].annotations[0].name == 'default'
-
-    assert isinstance(structure.members[42].type, BasicType)
-    assert structure.members[42].type.typename == 'float'
-    assert structure.members[42].name == 'fixed_int_with_dot_only'
-    assert len(structure.members[42].annotations) == 1
-    assert structure.members[42].annotations[0].name == 'default'
-
-    assert isinstance(structure.members[43].type, BasicType)
-    assert structure.members[43].type.typename == 'float'
-    assert structure.members[43].name == 'fixed_frac_only'
-    assert len(structure.members[43].annotations) == 1
-    assert structure.members[43].annotations[0].name == 'default'
-
-    assert isinstance(structure.members[44].type, BasicType)
-    assert structure.members[44].type.typename == 'float'
-    assert structure.members[44].name == 'fixed_int_only'
-    assert len(structure.members[44].annotations) == 1
-    assert structure.members[44].annotations[0].name == 'default'
-
 
 @pytest.fixture(scope='module')
 def service_idl_file():
@@ -315,13 +291,6 @@ def test_service_parser(service_idl_file):
     assert srv.namespaced_type.name == 'MyService'
     assert len(srv.request_message.structure.members) == 2
     assert len(srv.response_message.structure.members) == 1
-    assert(srv.event_message.structure.namespaced_type.name ==
-           'MyService' + SERVICE_EVENT_MESSAGE_SUFFIX)
-
-    event_message_members = [i.name for i in srv.event_message.structure.members]
-    assert('request' in event_message_members)
-    assert('response' in event_message_members)
-    assert('info' in event_message_members)
 
     constants = srv.request_message.constants
     assert len(constants) == 1

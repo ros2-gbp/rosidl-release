@@ -2,108 +2,25 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.1.1 (2023-05-11)
+1.3.1 (2023-05-27)
 ------------------
 
-4.1.0 (2023-04-28)
+1.3.0 (2022-09-20)
 ------------------
 
-4.0.0 (2023-04-11)
+1.2.1 (2021-04-14)
 ------------------
-* Type Description Codegen and Typesupport  (rep2011) (`#727 <https://github.com/ros2/rosidl/issues/727>`_)
-* Copied type_description_interfaces structs (rep2011) (`#732 <https://github.com/ros2/rosidl/issues/732>`_)
-* Fix a few more clang analysis problems. (`#731 <https://github.com/ros2/rosidl/issues/731>`_)
-* Return reference from BoundedVector::emplace_back (`#730 <https://github.com/ros2/rosidl/issues/730>`_)
-* Contributors: Alexander Hans, Chris Lalancette, Emerson Knapp
+* Update quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#582 <https://github.com/ros2/rosidl/issues/582>`_)
+* Contributors: Simon Honigmann
 
-3.4.0 (2023-02-13)
+1.2.0 (2020-12-08)
 ------------------
-* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
-* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
-* fix conversion to ‘std::streamsize’ {aka ‘long int’} from ‘size_t’ {aka ‘long unsigned int’} may change the sign of the result (`#715 <https://github.com/ros2/rosidl/issues/715>`_)
-* Contributors: Audrow Nash, Brian, ralwing
-
-3.3.1 (2022-11-02)
-------------------
-
-3.3.0 (2022-09-08)
-------------------
-
-3.2.1 (2022-06-21)
-------------------
-
-3.2.0 (2022-05-04)
-------------------
-
-3.1.3 (2022-04-08)
-------------------
-
-3.1.2 (2022-04-05)
-------------------
-
-3.1.1 (2022-03-28)
-------------------
-
-3.1.0 (2022-03-01)
-------------------
-* Add missing dependency on rosidl_runtime_c (`#666 <https://github.com/ros2/rosidl/issues/666>`_)
-* De-duplicate Quality Level from README and QUALITY_DECLARATION (`#661 <https://github.com/ros2/rosidl/issues/661>`_)
-* Install headers to include/${PROJECT_NAME} (`#658 <https://github.com/ros2/rosidl/issues/658>`_)
-* Contributors: Jose Luis Rivero, Shane Loretz
-
-3.0.1 (2022-01-13)
-------------------
-* Set CXX standard to 17 (`#635 <https://github.com/ros2/rosidl/issues/635>`_)
-* Contributors: Øystein Sture
-
-3.0.0 (2021-11-05)
-------------------
-* Update package maintainers (`#624 <https://github.com/ros2/rosidl/issues/624>`_)
-* Contributors: Michel Hidalgo
-
-2.5.0 (2021-08-10)
-------------------
-
-2.4.0 (2021-07-12)
-------------------
-
-2.3.0 (2021-06-11)
-------------------
-
-2.2.1 (2021-04-06)
-------------------
-* updating quality declaration links (re: `ros2/docs.ros2.org#52 <https://github.com/ros2/docs.ros2.org/issues/52>`_) (`#581 <https://github.com/ros2/rosidl/issues/581>`_)
-* Contributors: shonigmann
-
-2.2.0 (2021-03-18)
-------------------
-
-2.1.0 (2021-03-09)
-------------------
-
-2.0.3 (2021-01-25)
-------------------
-* Fix typo of package name in README heading (`#561 <https://github.com/ros2/rosidl/issues/561>`_)
-* Contributors: Tully Foote
-
-2.0.2 (2020-12-08)
-------------------
-* Update and add package.xml descriptions to README (`#553 <https://github.com/ros2/rosidl/issues/553>`_)
-* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_)
-* Update the maintainers of this repository. (`#536 <https://github.com/ros2/rosidl/issues/536>`_)
-* Contributors: Chris Lalancette, Louise Poubel, Shane Loretz
-
-2.0.1 (2020-09-28)
-------------------
+* Fix item number in QD (`#546 <https://github.com/ros2/rosidl/issues/546>`_) (`#547 <https://github.com/ros2/rosidl/issues/547>`_)
+* Update QD links for Foxy
 * QD: Add links to hosted API docs (`#533 <https://github.com/ros2/rosidl/issues/533>`_)
 * Updated Quality Level to 1 (`#532 <https://github.com/ros2/rosidl/issues/532>`_)
 * Add benchmarks for rosidl_runtime\_* packages (`#521 <https://github.com/ros2/rosidl/issues/521>`_)
 * Contributors: Alejandro Hernández Cordero, Louise Poubel, Scott K Logan
-
-2.0.0 (2020-09-24)
-------------------
-* Add to_yaml() function for C++ messages (`#527 <https://github.com/ros2/rosidl/issues/527>`_)
-* Contributors: Devin Bonnie, Dirk Thomas
 
 1.1.0 (2020-08-17)
 ------------------

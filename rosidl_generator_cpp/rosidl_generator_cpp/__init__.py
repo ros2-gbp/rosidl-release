@@ -14,6 +14,7 @@
 
 from ast import literal_eval
 
+from rosidl_cmake import generate_files
 from rosidl_parser.definition import AbstractGenericString
 from rosidl_parser.definition import AbstractNestedType
 from rosidl_parser.definition import AbstractSequence
@@ -25,7 +26,6 @@ from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import FLOATING_POINT_TYPES
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import UnboundedSequence
-from rosidl_pycommon import generate_files
 
 
 def generate_cpp(generator_arguments_file):
@@ -34,8 +34,9 @@ def generate_cpp(generator_arguments_file):
         'idl__builder.hpp.em': 'detail/%s__builder.hpp',
         'idl__struct.hpp.em': 'detail/%s__struct.hpp',
         'idl__traits.hpp.em': 'detail/%s__traits.hpp',
+        'idl__type_support.hpp.em': 'detail/%s__type_support.hpp',
     }
-    return generate_files(
+    generate_files(
         generator_arguments_file, mapping,
         post_process_callback=prefix_with_bom_if_necessary)
 
@@ -68,9 +69,9 @@ MSG_TYPE_TO_CPP = {
     'uint64': 'uint64_t',
     'int64': 'int64_t',
     'string': 'std::basic_string<char, std::char_traits<char>, ' +
-              'typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>',
-    'wstring': 'std::basic_string<char16_t, std::char_traits<char16_t>, typename ' +
-               'std::allocator_traits<ContainerAllocator>::template rebind_alloc<char16_t>>',
+              'typename ContainerAllocator::template rebind<char>::other>',
+    'wstring': 'std::basic_string<char16_t, std::char_traits<char16_t>, ' +
+               'typename ContainerAllocator::template rebind<char16_t>::other>',
 }
 
 
@@ -117,14 +118,12 @@ def msg_type_to_cpp(type_):
     if isinstance(type_, AbstractNestedType):
         if isinstance(type_, UnboundedSequence):
             return \
-                ('std::vector<%s, typename std::allocator_traits<ContainerAllocator>::template ' +
-                 'rebind_alloc<%s>>') % (cpp_type, cpp_type)
+                ('std::vector<%s, typename ContainerAllocator::template ' +
+                 'rebind<%s>::other>') % (cpp_type, cpp_type)
         elif isinstance(type_, BoundedSequence):
             return \
-                ('rosidl_runtime_cpp::BoundedVector<%s, %u, typename std::allocator_traits' +
-                 '<ContainerAllocator>::template rebind_alloc<%s>>') % (cpp_type,
-                                                                        type_.maximum_size,
-                                                                        cpp_type)
+                ('rosidl_runtime_cpp::BoundedVector<%s, %u, typename ContainerAllocator::' +
+                 'template rebind<%s>::other>') % (cpp_type, type_.maximum_size, cpp_type)
         else:
             assert isinstance(type_, Array)
             return 'std::array<%s, %u>' % (cpp_type, type_.size)

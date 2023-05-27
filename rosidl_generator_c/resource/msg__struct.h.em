@@ -13,8 +13,6 @@ from rosidl_parser.definition import FLOATING_POINT_TYPES
 from rosidl_parser.definition import INTEGER_TYPES
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import OCTET_TYPE
-from rosidl_parser.definition import SERVICE_REQUEST_MESSAGE_SUFFIX
-from rosidl_parser.definition import SERVICE_RESPONSE_MESSAGE_SUFFIX
 from rosidl_generator_c import basetype_to_c
 from rosidl_generator_c import idl_declaration_to_c
 from rosidl_generator_c import idl_structure_type_sequence_to_c_typename
@@ -45,14 +43,6 @@ for member in message.structure.members:
             'rosidl_runtime_c/u16string.h', [])
         member_names.append(member.name)
     elif isinstance(type_, NamespacedType):
-        if (
-            message.structure.namespaced_type.namespaces[-1] in ['action', 'srv'] and (
-            type_.name.endswith(SERVICE_REQUEST_MESSAGE_SUFFIX) or
-            type_.name.endswith(SERVICE_RESPONSE_MESSAGE_SUFFIX))
-        ):
-            typename = type_.name.rsplit('_', 1)[0]
-            if typename == message.structure.namespaced_type.name.rsplit('_', 1)[0]:
-                continue
         include_prefix = idl_structure_type_to_c_include_prefix(
             type_, 'detail')
         member_names = includes.setdefault(
@@ -60,24 +50,12 @@ for member in message.structure.members:
         member_names.append(member.name)
 }@
 @#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-@
+
 @#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 // Constants defined in the message
 @[for constant in message.constants]@
 
 /// Constant '@(constant.name)'.
-@{comments = constant.get_comment_lines()}@
-@[if comments]@
-/**
-@[  for line in comments]@
-@[    if line]@
-  * @(line)
-@[    else]@
-  *
-@[    end if]@
-@[  end for]@
- */
-@[end if]@
 @[    if isinstance(constant.type, BasicType)]@
 @[        if constant.type.typename in (
                 *INTEGER_TYPES, *CHARACTER_TYPES, OCTET_TYPE
@@ -151,29 +129,10 @@ enum
 @#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 @#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-/// Struct defined in @(interface_path_to_string(interface_path)) in the package @(package_name).
-@{comments = message.structure.get_comment_lines()}@
-@[if comments]@
-/**
-@[  for line in comments]@
-@[    if line]@
-  * @(line)
-@[    else]@
-  *
-@[    end if]@
-@[  end for]@
- */
-@[end if]@
+// Struct defined in @(interface_path_to_string(interface_path)) in the package @(package_name).
 typedef struct @(idl_structure_type_to_c_typename(message.structure.namespaced_type))
 {
 @[for member in message.structure.members]@
-@[  for line in member.get_comment_lines()]@
-@[    if line]@
-  /// @(line)
-@[    else]@
-  ///
-@[    end if]@
-@[  end for]@
   @(idl_declaration_to_c(member.type, member.name));
 @[end for]@
 } @(idl_structure_type_to_c_typename(message.structure.namespaced_type));

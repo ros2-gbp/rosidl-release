@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.5)
 
 project(rosidl_adapter NONE)
 
@@ -8,10 +8,8 @@ find_package(ament_cmake_python REQUIRED)
 ament_python_install_package(${PROJECT_NAME})
 
 if(BUILD_TESTING)
-  find_package(ament_cmake_pytest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
-  ament_add_pytest_test(pytest test)
 endif()
 
 ament_package(
@@ -26,5 +24,9 @@ install(
 install(PROGRAMS
   scripts/msg2idl.py
   scripts/srv2idl.py
-  scripts/action2idl.py
   DESTINATION lib/${PROJECT_NAME})
+
+if(BUILD_TESTING)
+  find_package(ament_cmake_pytest REQUIRED)
+  ament_add_pytest_test(pytest test)
+endif()

@@ -12,15 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if(NOT TARGET ${rosidl_generate_interfaces_TARGET}__rosidl_generator_c)
+if(NOT rosidl_generator_c_FOUND)
   message(FATAL_ERROR
-    "The 'rosidl_generator_c' extension must be executed before the "
+    "'rosidl_generator_c' not found when executing "
     "'rosidl_typesupport_introspection_c' extension.")
 endif()
-
-find_package(rosidl_runtime_c REQUIRED)
-find_package(rosidl_typesupport_interface REQUIRED)
-find_package(rosidl_typesupport_introspection_c REQUIRED)
 
 set(_output_path
   "${CMAKE_CURRENT_BINARY_DIR}/rosidl_typesupport_introspection_c/${PROJECT_NAME}")
@@ -76,12 +72,9 @@ rosidl_write_generator_arguments(
   TARGET_DEPENDENCIES ${target_dependencies}
 )
 
-find_package(Python3 REQUIRED COMPONENTS Interpreter)
-
 add_custom_command(
   OUTPUT ${_generated_header_files} ${_generated_source_files}
-  COMMAND Python3::Interpreter
-  ARGS ${rosidl_typesupport_introspection_c_BIN}
+  COMMAND ${PYTHON_EXECUTABLE} ${rosidl_typesupport_introspection_c_BIN}
   --generator-arguments-file "${generator_arguments_file}"
   DEPENDS ${target_dependencies}
   COMMENT "Generating C introspection for ROS interfaces"
@@ -103,8 +96,6 @@ set(_target_suffix "__rosidl_typesupport_introspection_c")
 
 add_library(${rosidl_generate_interfaces_TARGET}${_target_suffix} ${rosidl_typesupport_introspection_c_LIBRARY_TYPE}
   ${_generated_header_files} ${_generated_source_files})
-add_library(${PROJECT_NAME}::${rosidl_generate_interfaces_TARGET}${_target_suffix} ALIAS
-  ${rosidl_generate_interfaces_TARGET}${_target_suffix})
 if(rosidl_generate_interfaces_LIBRARY_NAME)
   set_target_properties(${rosidl_generate_interfaces_TARGET}${_target_suffix}
     PROPERTIES OUTPUT_NAME "${rosidl_generate_interfaces_LIBRARY_NAME}${_target_suffix}")
@@ -114,41 +105,41 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     C_STANDARD 11
     COMPILE_OPTIONS -Wall -Wextra -Wpedantic)
 endif()
-set_property(TARGET ${rosidl_generate_interfaces_TARGET}${_target_suffix}
-  PROPERTY DEFINE_SYMBOL "ROSIDL_TYPESUPPORT_INTROSPECTION_C_BUILDING_DLL_${PROJECT_NAME}")
-
+if(WIN32)
+  target_compile_definitions(${rosidl_generate_interfaces_TARGET}${_target_suffix}
+    PRIVATE "ROSIDL_TYPESUPPORT_INTROSPECTION_C_BUILDING_DLL_${PROJECT_NAME}")
+endif()
 target_include_directories(${rosidl_generate_interfaces_TARGET}${_target_suffix}
   PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c>"
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/rosidl_typesupport_introspection_c>"
-  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-
-# Depend on the library created by rosidl_generator_c
-target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
+)
+target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix}
   ${rosidl_generate_interfaces_TARGET}__rosidl_generator_c)
-
-target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
-  rosidl_runtime_c::rosidl_runtime_c
-  rosidl_typesupport_interface::rosidl_typesupport_interface
-  rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c)
-
+ament_target_dependencies(${rosidl_generate_interfaces_TARGET}${_target_suffix}
+  "rosidl_typesupport_introspection_c")
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
+  ament_target_dependencies(
+    ${rosidl_generate_interfaces_TARGET}${_target_suffix}
+    ${_pkg_name})
   target_link_libraries(
-    ${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
+    ${rosidl_generate_interfaces_TARGET}${_target_suffix}
     ${${_pkg_name}_TARGETS${_target_suffix}})
 endforeach()
 
-# Make top level generation target depend on this generated library
 add_dependencies(
   ${rosidl_generate_interfaces_TARGET}
   ${rosidl_generate_interfaces_TARGET}${_target_suffix}
 )
 
 if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
-  install(
-    DIRECTORY ${_output_path}/
-    DESTINATION "include/${PROJECT_NAME}/${PROJECT_NAME}"
-    PATTERN "*.h"
-  )
+  if(NOT _generated_header_files STREQUAL "")
+    install(
+      DIRECTORY ${_output_path}/
+      DESTINATION "include/${PROJECT_NAME}"
+      PATTERN "*.h"
+    )
+  endif()
   install(
     TARGETS ${rosidl_generate_interfaces_TARGET}${_target_suffix}
     EXPORT ${rosidl_generate_interfaces_TARGET}${_target_suffix}
@@ -162,25 +153,27 @@ if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
 endif()
 
 if(BUILD_TESTING AND rosidl_generate_interfaces_ADD_LINTER_TESTS)
-  find_package(ament_cmake_cppcheck REQUIRED)
-  ament_cppcheck(
-    TESTNAME "cppcheck_rosidl_typesupport_introspection_c"
-    "${_output_path}")
+  if(NOT _generated_header_files STREQUAL "")
+    find_package(ament_cmake_cppcheck REQUIRED)
+    ament_cppcheck(
+      TESTNAME "cppcheck_rosidl_typesupport_introspection_c"
+      "${_output_path}")
 
-  find_package(ament_cmake_cpplint REQUIRED)
-  get_filename_component(_cpplint_root "${_output_path}" DIRECTORY)
-  ament_cpplint(
-    TESTNAME "cpplint_rosidl_typesupport_introspection_c"
-    # the generated code might contain longer lines for templated types
-    MAX_LINE_LENGTH 999
-    ROOT "${_cpplint_root}"
-    "${_output_path}")
+    find_package(ament_cmake_cpplint REQUIRED)
+    get_filename_component(_cpplint_root "${_output_path}" DIRECTORY)
+    ament_cpplint(
+      TESTNAME "cpplint_rosidl_typesupport_introspection_c"
+      # the generated code might contain longer lines for templated types
+      MAX_LINE_LENGTH 999
+      ROOT "${_cpplint_root}"
+      "${_output_path}")
 
-  find_package(ament_cmake_uncrustify REQUIRED)
-  ament_uncrustify(
-    TESTNAME "uncrustify_rosidl_typesupport_introspection_c"
-    # the generated code might contain longer lines for templated types
-    # a value of zero tells uncrustify to ignore line length
-    MAX_LINE_LENGTH 0
-    "${_output_path}")
+    find_package(ament_cmake_uncrustify REQUIRED)
+    ament_uncrustify(
+      TESTNAME "uncrustify_rosidl_typesupport_introspection_c"
+      # the generated code might contain longer lines for templated types
+      # a value of zero tells uncrustify to ignore line length
+      MAX_LINE_LENGTH 0
+      "${_output_path}")
+  endif()
 endif()

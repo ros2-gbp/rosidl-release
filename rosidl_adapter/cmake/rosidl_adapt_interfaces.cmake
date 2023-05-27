@@ -37,11 +37,14 @@ function(rosidl_adapt_interfaces idl_var arguments_file)
       "arguments: ${ARG_UNPARSED_ARGUMENTS}")
   endif()
 
-  find_package(Python3 REQUIRED COMPONENTS Interpreter)
+  find_package(PythonInterp REQUIRED)
+  if(NOT PYTHON_EXECUTABLE)
+    message(FATAL_ERROR "Variable 'PYTHON_EXECUTABLE' must not be empty")
+  endif()
 
   set(idl_output "${CMAKE_CURRENT_BINARY_DIR}/rosidl_adapter/${ARG_TARGET}.idls")
   set(cmd
-    "${Python3_EXECUTABLE}" -m rosidl_adapter
+    "${PYTHON_EXECUTABLE}" -m rosidl_adapter
     --package-name ${PROJECT_NAME}
     --arguments-file "${arguments_file}"
     --output-dir "${CMAKE_CURRENT_BINARY_DIR}/rosidl_adapter/${PROJECT_NAME}"
