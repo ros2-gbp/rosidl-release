@@ -2,6 +2,9 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.1 (2023-05-27)
+------------------
+
 1.3.0 (2022-09-20)
 ------------------
 * Fix escaping in string literals (`#595 <https://github.com/ros2/rosidl/issues/595>`_) (`#618 <https://github.com/ros2/rosidl/issues/618>`_)
