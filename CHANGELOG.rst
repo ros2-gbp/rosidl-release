@@ -2,6 +2,9 @@
 Changelog for package rosidl_runtime_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.2.0 (2023-06-07)
+------------------
+
 4.1.1 (2023-05-11)
 ------------------
 * Mark _ in benchmark tests as unused. (`#741 <https://github.com/ros2/rosidl/issues/741>`_)
