@@ -89,8 +89,9 @@
       return false; \
     } \
     if (output->capacity < input->size) { \
-      TYPE_NAME * data = (TYPE_NAME *)realloc( \
-        output->data, sizeof(TYPE_NAME) * input->size); \
+      rcutils_allocator_t allocator = rcutils_get_default_allocator(); \
+      TYPE_NAME * data = (TYPE_NAME *)allocator.reallocate( \
+        output->data, sizeof(TYPE_NAME) * input->size, allocator.state); \
       if (!data) { \
         return false; \
       } \

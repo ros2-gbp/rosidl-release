@@ -15,6 +15,11 @@
 #ifndef ROSIDL_TYPESUPPORT_INTERFACE__MACROS_H_
 #define ROSIDL_TYPESUPPORT_INTERFACE__MACROS_H_
 
+/// Declare the typesupport library name.
+#define ROSIDL_TYPESUPPORT_INTERFACE__LIBRARY_NAME( \
+    typesupport_name, package_name) \
+  package_name ## __ ## typesupport_name
+
 /// Declare the typesupport symbol name. Note: this should not be called directly.
 #define ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME( \
     typesupport_name, function_name, package_name, interface_type, interface_name) \
@@ -41,5 +46,17 @@
   ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME( \
     typesupport_name, get_action_type_support_handle, \
     package_name, interface_type, action_name)
+
+#define ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_CREATE_EVENT_MESSAGE_SYMBOL_NAME( \
+    typesupport_name, package_name, interface_type, service_name) \
+  ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME( \
+    typesupport_name, create_service_event_message, \
+    package_name, interface_type, service_name)
+
+#define ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_DESTROY_EVENT_MESSAGE_SYMBOL_NAME( \
+    typesupport_name, package_name, interface_type, service_name) \
+  ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME( \
+    typesupport_name, destroy_service_event_message, \
+    package_name, interface_type, service_name)
 
 #endif  // ROSIDL_TYPESUPPORT_INTERFACE__MACROS_H_

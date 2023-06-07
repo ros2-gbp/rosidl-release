@@ -25,7 +25,7 @@
 #   definitions where each value might be either a path relative to the
 #   CMAKE_CURRENT_SOURCE_DIR or a tuple separated by a colon with an absolute
 #   base path and a path relative to that base path.
-#   If the interface file's parent directory is 'action', is is assumed to be
+#   If the interface file's parent directory is 'action', it is assumed to be
 #   an action definition.
 #   If an action interface is passed then you must add a depend tag for
 #   'action_msgs' to your package.xml, otherwise this macro will error.
@@ -41,8 +41,8 @@
 # :type LIBRARY_NAME: string
 # :param SKIP_INSTALL: if set skip installing the interface files
 # :type SKIP_INSTALL: option
-# :param SKIP_GROUP_MEMBERSHIP_CHECK: if set, skip enforcing the appartenance
-#   to the rosidl_interface_packages group
+# :param SKIP_GROUP_MEMBERSHIP_CHECK: if set, skip enforcing membership in the
+#   rosidl_interface_packages group
 # :type SKIP_GROUP_MEMBERSHIP_CHECK: option
 # :param ADD_LINTER_TESTS: if set lint the interface files using
 #   the ``ament_lint`` package
@@ -66,7 +66,9 @@ macro(rosidl_generate_interfaces target)
   endif()
 
   _rosidl_cmake_register_package_hook()
-  ament_export_dependencies(${_ARG_DEPENDENCIES})
+  if(NOT _ARG_SKIP_INSTALL)
+    ament_export_dependencies(${_ARG_DEPENDENCIES})
+  endif()
 
   # check that passed interface files exist
   # a tuple with an absolute base and a relative path is returned as is
@@ -137,11 +139,25 @@ macro(rosidl_generate_interfaces target)
   # afterwards all remaining interface files are .idl files
   list(APPEND _idl_tuples ${_idl_adapter_tuples})
 
-  # to generate action interfaces, we need to depend on "action_msgs"
+  # Check for any action or service interfaces
+  # Which have implicit dependencies that need to be found
   foreach(_tuple ${_interface_tuples})
+    # We use the parent directory name to identify if the interface is an action or service
     string(REGEX REPLACE ".*:([^:]*)$" "\\1" _tuple_file "${_tuple}")
     get_filename_component(_parent_dir "${_tuple_file}" DIRECTORY)
+    get_filename_component(_parent_dir ${_parent_dir} NAME)
+
     if("${_parent_dir}" STREQUAL "action")
+      # Actions depend on the packages service_msgs and action_msgs
+      find_package(service_msgs QUIET)
+      if(NOT ${service_msgs_FOUND})
+        message(FATAL_ERROR
+          "Unable to generate action interface for '${_tuple_file}'. "
+          "In order to generate action interfaces you must add a depend tag "
+          "for 'service_msgs' in your package.xml.")
+      endif()
+      ament_export_dependencies(service_msgs)
+      list_append_unique(_ARG_DEPENDENCIES "service_msgs")
       find_package(action_msgs QUIET)
       if(NOT ${action_msgs_FOUND})
         message(FATAL_ERROR
@@ -149,9 +165,23 @@ macro(rosidl_generate_interfaces target)
           "In order to generate action interfaces you must add a depend tag "
           "for 'action_msgs' in your package.xml.")
       endif()
-      list_append_unique(_ARG_DEPENDENCIES "action_msgs")
       ament_export_dependencies(action_msgs)
+      list_append_unique(_ARG_DEPENDENCIES "action_msgs")
+
+      # It is safe to break out of the loop since services only depend on service_msgs
+      # Which has already been found above
       break()
+    elseif("${_parent_dir}" STREQUAL "srv")
+      # Services depend on service_msgs
+      find_package(service_msgs QUIET)
+      if(NOT ${service_msgs_FOUND})
+        message(FATAL_ERROR
+          "Unable to generate service interface for '${_tuple_file}'. "
+          "In order to generate service interfaces you must add a depend tag "
+          "for 'service_msgs' in your package.xml.")
+      endif()
+      ament_export_dependencies(service_msgs)
+      list_append_unique(_ARG_DEPENDENCIES "service_msgs")
     endif()
   endforeach()
 
