@@ -2,24 +2,10 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.3.0 (2023-07-11)
+4.0.1 (2023-07-14)
 ------------------
-* Fixed visibility control file added to wrong header list variable. (`#755 <https://github.com/ros2/rosidl/issues/755>`_)
-* Contributors: Stefan Fabian
-
-4.2.0 (2023-06-07)
-------------------
-* Fix deprecation warnings for message constants (`#750 <https://github.com/ros2/rosidl/issues/750>`_)
-* Generate typesupport declarations for actions, messages and services (`#703 <https://github.com/ros2/rosidl/issues/703>`_)
-* Contributors: Emerson Knapp, Stefan Fabian
-
-4.1.1 (2023-05-11)
-------------------
-* Fix IWYU for clangd in C and C++ (`#742 <https://github.com/ros2/rosidl/issues/742>`_)
-* Contributors: Alexis Paques
-
-4.1.0 (2023-04-28)
-------------------
+* Fix deprecation warnings for message constants (`#751 <https://github.com/ros2/rosidl/issues/751>`_)
+* Contributors: Emerson Knapp
 
 4.0.0 (2023-04-11)
 ------------------

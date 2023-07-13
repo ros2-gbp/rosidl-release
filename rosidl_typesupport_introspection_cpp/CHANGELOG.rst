@@ -2,19 +2,10 @@
 Changelog for package rosidl_typesupport_introspection_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.3.0 (2023-07-11)
+4.0.1 (2023-07-14)
 ------------------
-
-4.2.0 (2023-06-07)
-------------------
-* Fix deprecation warnings for message constants (`#750 <https://github.com/ros2/rosidl/issues/750>`_)
+* Fix deprecation warnings for message constants (`#751 <https://github.com/ros2/rosidl/issues/751>`_)
 * Contributors: Emerson Knapp
-
-4.1.1 (2023-05-11)
-------------------
-
-4.1.0 (2023-04-28)
-------------------
 
 4.0.0 (2023-04-11)
 ------------------

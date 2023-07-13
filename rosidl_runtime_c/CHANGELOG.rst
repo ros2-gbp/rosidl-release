@@ -2,19 +2,7 @@
 Changelog for package rosidl_runtime_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.3.0 (2023-07-11)
-------------------
-
-4.2.0 (2023-06-07)
-------------------
-
-4.1.1 (2023-05-11)
-------------------
-* Mark _ in benchmark tests as unused. (`#741 <https://github.com/ros2/rosidl/issues/741>`_)
-  This helps clang static analysis.
-* Contributors: Chris Lalancette
-
-4.1.0 (2023-04-28)
+4.0.1 (2023-07-14)
 ------------------
 
 4.0.0 (2023-04-11)
