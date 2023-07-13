@@ -1,0 +1,12 @@
+Source: ros-iron-rosidl-typesupport-introspection-c
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-iron-ament-cmake-ros, ros-iron-ament-lint-auto <!nocheck>, ros-iron-ament-lint-common <!nocheck>, ros-iron-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-iron-rosidl-typesupport-introspection-c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, ros-iron-ament-cmake, ros-iron-ament-index-python, ros-iron-rosidl-cli, ros-iron-rosidl-generator-c, ros-iron-rosidl-parser, ros-iron-rosidl-pycommon, ros-iron-rosidl-runtime-c, ros-iron-rosidl-typesupport-interface, ros-iron-ros-workspace
+Description: Generate the message type support for dynamic message construction in C.
