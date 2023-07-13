@@ -1,0 +1,12 @@
+Source: ros-iron-rosidl-runtime-c
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-iron-ament-cmake-ros, ros-iron-ament-lint-auto <!nocheck>, ros-iron-ament-lint-common <!nocheck>, ros-iron-performance-test-fixture <!nocheck>, ros-iron-rcutils, ros-iron-rosidl-typesupport-interface, ros-iron-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-iron-rosidl-runtime-c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-iron-ament-cmake, ros-iron-rcutils, ros-iron-rosidl-typesupport-interface, ros-iron-ros-workspace
+Description: Provides definitions, initialization and finalization functions, and macros for getting and working with rosidl typesupport types in C.
