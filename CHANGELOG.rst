@@ -2,6 +2,9 @@
 Changelog for package rosidl_cli
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.0.1 (2023-07-14)
+------------------
+
 4.0.0 (2023-04-11)
 ------------------
 * Fix warnings (`#726 <https://github.com/ros2/rosidl/issues/726>`_)
