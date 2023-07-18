@@ -2,40 +2,16 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.0.1 (2023-07-14)
+3.1.5 (2023-07-18)
 ------------------
-* Fix deprecation warnings for message constants (`#751 <https://github.com/ros2/rosidl/issues/751>`_)
+* Merge pull request `#752 <https://github.com/ros2/rosidl/issues/752>`_ from ros2/mergify/bp/humble/pr-750
+* Fix deprecation warnings for message constants (`#750 <https://github.com/ros2/rosidl/issues/750>`_)
 * Contributors: Emerson Knapp
 
-4.0.0 (2023-04-11)
+3.1.4 (2022-11-07)
 ------------------
-* Type Description Codegen and Typesupport  (rep2011) (`#727 <https://github.com/ros2/rosidl/issues/727>`_)
-* Expose type hash on typesupports (rep2011) (`#729 <https://github.com/ros2/rosidl/issues/729>`_)
-* Type hash in interface codegen (rep2011) (`#722 <https://github.com/ros2/rosidl/issues/722>`_)
-* Contributors: Emerson Knapp
-
-3.4.0 (2023-02-13)
-------------------
-* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
-* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
-* Contributors: Audrow Nash, Brian
-
-3.3.1 (2022-11-02)
-------------------
-
-3.3.0 (2022-09-08)
-------------------
-* Move rosidl_generator_c/cpp tests to a separate package (`#701 <https://github.com/ros2/rosidl/issues/701>`_)
-* Move rosidl_cmake Python module to a new package rosidl_pycommon (`#696 <https://github.com/ros2/rosidl/issues/696>`_)
-  Deprecate the Python module in rosidl_cmake and move the implementation to the new package rosidl_pycommon.
-* Add namespaced ALIAS target to easily consume generated libraries via add_subdirectory (`#605 <https://github.com/ros2/rosidl/issues/605>`_)
-* Contributors: Jacob Perron, Silvio Traversaro
-
-3.2.1 (2022-06-21)
-------------------
-
-3.2.0 (2022-05-04)
-------------------
+* Add namespaced ALIAS target to easily consume generated libraries via add_subdirectory (`#605 <https://github.com/ros2/rosidl/issues/605>`_) (`#692 <https://github.com/ros2/rosidl/issues/692>`_)
+* Contributors: mergify[bot]
 
 3.1.3 (2022-04-08)
 ------------------

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from rosidl_generator_type_description import parse_rihs_string
-from rosidl_generator_type_description import RIHS01_HASH_VALUE_SIZE
+from rosidl_cmake import convert_camel_case_to_lower_case_underscore
+from rosidl_cmake import generate_files
 from rosidl_parser.definition import AbstractGenericString
 from rosidl_parser.definition import AbstractSequence
 from rosidl_parser.definition import AbstractString
@@ -24,26 +24,19 @@ from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import CHARACTER_TYPES
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import OCTET_TYPE
-from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
-from rosidl_pycommon import generate_files
 
 
-def generate_c(generator_arguments_file, disable_description_codegen=False):
+def generate_c(generator_arguments_file):
     mapping = {
         'idl.h.em': '%s.h',
-        'idl__description.c.em': 'detail/%s__description.c',
         'idl__functions.c.em': 'detail/%s__functions.c',
         'idl__functions.h.em': 'detail/%s__functions.h',
         'idl__struct.h.em': 'detail/%s__struct.h',
-        'idl__type_support.c.em': 'detail/%s__type_support.c',
         'idl__type_support.h.em': 'detail/%s__type_support.h',
     }
     return generate_files(
         generator_arguments_file, mapping,
-        post_process_callback=prefix_with_bom_if_necessary,
-        additional_context={
-            'disable_description_codegen': disable_description_codegen
-        })
+        post_process_callback=prefix_with_bom_if_necessary)
 
 
 def prefix_with_bom_if_necessary(content):
@@ -225,23 +218,3 @@ def escape_string(s):
 
 def escape_wstring(s):
     return escape_string(s)
-
-
-def type_hash_to_c_definition(hash_string, *, indent=2):
-    """Generate empy for rosidl_type_hash_t instance with 8 bytes per line for readability."""
-    bytes_per_row = 8
-    rows = 4
-    assert bytes_per_row * rows == RIHS01_HASH_VALUE_SIZE, 'This function is outdated.'
-    version, value = parse_rihs_string(hash_string)
-    assert version == 1, 'This function only knows how to generate RIHS01 definitions.'
-
-    result = f'{{{version}, {{'
-    result += '\n'
-    for row in range(rows):
-        result += ' ' * (indent + 1)
-        for i in range(row * bytes_per_row, (row + 1) * bytes_per_row):
-            result += f' 0x{value[i * 2]}{value[i * 2 + 1]},'
-        result += '\n'
-    result += ' ' * indent
-    result += '}}'
-    return result

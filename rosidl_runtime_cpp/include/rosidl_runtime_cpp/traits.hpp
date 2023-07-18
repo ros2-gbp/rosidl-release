@@ -17,7 +17,6 @@
 
 #include <codecvt>
 #include <iomanip>
-#include <iosfwd>
 #include <string>
 #include <type_traits>
 
@@ -115,7 +114,7 @@ inline void value_to_yaml(const std::string & value, std::ostream & out)
     if (pos == std::string::npos) {
       pos = value.size();
     }
-    out.write(&value[index], static_cast<std::streamsize>(pos - index));
+    out.write(&value[index], pos - index);
     if (pos >= value.size()) {
       break;
     }
