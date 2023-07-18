@@ -1,3 +1,40 @@
+## rosidl (humble) - 3.1.5-1
+
+The packages in the `rosidl` repository were released into the `humble` distro by running `/usr/bin/bloom-release -r humble -y rosidl` on `Tue, 18 Jul 2023 17:58:26 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cli`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_parser`
+- `rosidl_runtime_c`
+- `rosidl_runtime_cpp`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+These packages were explicitly ignored:
+- `rosidl_typesupport_introspection_tests`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: https://github.com/ros2-gbp/rosidl-release.git
+- rosdistro version: `3.1.4-1`
+- old version: `3.1.4-1`
+- new version: `3.1.5-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.2`
+- catkin_pkg version: `0.5.2`
+- rosdep version: `0.22.2`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## rosidl (iron) - 4.0.1-1
 
 The packages in the `rosidl` repository were released into the `iron` distro by running `/usr/bin/bloom-release --rosdistro iron rosidl` on `Thu, 13 Jul 2023 18:03:06 -0000`
