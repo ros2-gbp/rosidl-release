@@ -2,10 +2,44 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.5 (2023-07-18)
+4.3.1 (2023-08-21)
 ------------------
 
-3.1.4 (2022-11-07)
+4.3.0 (2023-07-11)
+------------------
+
+4.2.0 (2023-06-07)
+------------------
+
+4.1.1 (2023-05-11)
+------------------
+
+4.1.0 (2023-04-28)
+------------------
+
+4.0.0 (2023-04-11)
+------------------
+
+3.4.0 (2023-02-13)
+------------------
+* rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake: Make ament free (`#709 <https://github.com/ros2/rosidl/issues/709>`_)
+* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
+* Adding tests for unicode support in message comments. (`#720 <https://github.com/ros2/rosidl/issues/720>`_)
+* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
+* Contributors: Audrow Nash, Brian, Guilherme Henrique Galelli Christmann, Yasushi SHOJI
+
+3.3.1 (2022-11-02)
+------------------
+
+3.3.0 (2022-09-08)
+------------------
+* Add action2idl script (`#654 <https://github.com/ros2/rosidl/issues/654>`_)
+* Contributors: John Daktylidis
+
+3.2.1 (2022-06-21)
+------------------
+
+3.2.0 (2022-05-04)
 ------------------
 
 3.1.3 (2022-04-08)

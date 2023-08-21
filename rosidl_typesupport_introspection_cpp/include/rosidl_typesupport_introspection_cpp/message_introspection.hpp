@@ -19,6 +19,7 @@
 #include <cstdint>
 
 #include "rosidl_runtime_c/message_type_support_struct.h"
+#include "rosidl_runtime_c/type_hash.h"
 
 #include "rosidl_runtime_cpp/message_initialization.hpp"
 

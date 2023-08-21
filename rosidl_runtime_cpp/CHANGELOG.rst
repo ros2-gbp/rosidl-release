@@ -2,10 +2,46 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.5 (2023-07-18)
+4.3.1 (2023-08-21)
 ------------------
 
-3.1.4 (2022-11-07)
+4.3.0 (2023-07-11)
+------------------
+
+4.2.0 (2023-06-07)
+------------------
+
+4.1.1 (2023-05-11)
+------------------
+
+4.1.0 (2023-04-28)
+------------------
+
+4.0.0 (2023-04-11)
+------------------
+* Type Description Codegen and Typesupport  (rep2011) (`#727 <https://github.com/ros2/rosidl/issues/727>`_)
+* Copied type_description_interfaces structs (rep2011) (`#732 <https://github.com/ros2/rosidl/issues/732>`_)
+* Fix a few more clang analysis problems. (`#731 <https://github.com/ros2/rosidl/issues/731>`_)
+* Return reference from BoundedVector::emplace_back (`#730 <https://github.com/ros2/rosidl/issues/730>`_)
+* Contributors: Alexander Hans, Chris Lalancette, Emerson Knapp
+
+3.4.0 (2023-02-13)
+------------------
+* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
+* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
+* fix conversion to ‘std::streamsize’ {aka ‘long int’} from ‘size_t’ {aka ‘long unsigned int’} may change the sign of the result (`#715 <https://github.com/ros2/rosidl/issues/715>`_)
+* Contributors: Audrow Nash, Brian, ralwing
+
+3.3.1 (2022-11-02)
+------------------
+
+3.3.0 (2022-09-08)
+------------------
+
+3.2.1 (2022-06-21)
+------------------
+
+3.2.0 (2022-05-04)
 ------------------
 
 3.1.3 (2022-04-08)
