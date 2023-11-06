@@ -1,0 +1,12 @@
+Source: ros-rolling-rosidl-generator-cpp
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-rosidl-generator-cpp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, ros-rolling-ament-cmake-core, ros-rolling-ament-index-python, ros-rolling-rosidl-cli, ros-rolling-rosidl-cmake, ros-rolling-rosidl-generator-c, ros-rolling-rosidl-generator-type-description, ros-rolling-rosidl-parser, ros-rolling-rosidl-pycommon, ros-rolling-rosidl-runtime-cpp, ros-rolling-ros-workspace
+Description: Generate the ROS interfaces in C++.
