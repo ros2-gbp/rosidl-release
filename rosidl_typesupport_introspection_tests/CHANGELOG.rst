@@ -2,6 +2,9 @@
 Changelog for package rosidl_typesupport_introspection_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.4.2 (2023-11-06)
+------------------
+
 4.4.1 (2023-10-04)
 ------------------
 * Disable zero-variadic-macro-arguments warning when using clang. (`#768 <https://github.com/ros2/rosidl/issues/768>`_)
