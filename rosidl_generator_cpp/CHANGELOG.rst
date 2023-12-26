@@ -2,6 +2,9 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.5.0 (2023-12-26)
+------------------
+
 4.4.2 (2023-11-06)
 ------------------
 * Fix constant generation for C++ floats (`#772 <https://github.com/ros2/rosidl/issues/772>`_)
