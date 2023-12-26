@@ -2,6 +2,11 @@
 Changelog for package rosidl_runtime_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.5.0 (2023-12-26)
+------------------
+* Switch to target_link_libraries. (`#776 <https://github.com/ros2/rosidl/issues/776>`_)
+* Contributors: Chris Lalancette
+
 4.4.2 (2023-11-06)
 ------------------
 
