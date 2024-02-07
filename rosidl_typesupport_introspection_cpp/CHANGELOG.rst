@@ -2,6 +2,9 @@
 Changelog for package rosidl_typesupport_introspection_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.5.1 (2024-02-07)
+------------------
+
 4.5.0 (2023-12-26)
 ------------------
 * Switch to target_link_libraries. (`#776 <https://github.com/ros2/rosidl/issues/776>`_)
