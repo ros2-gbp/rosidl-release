@@ -301,4 +301,5 @@ tracks:
     ros_distro: rolling
     vcs_type: git
     vcs_uri: https://github.com/ros2/rosidl.git
-    version: :{auto}
+    version: 4.5.1
+    version_saved: :{auto}
