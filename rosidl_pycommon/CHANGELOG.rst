@@ -2,6 +2,9 @@
 Changelog for package rosidl_pycommon
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.5.2 (2024-03-27)
+------------------
+
 4.5.1 (2024-02-07)
 ------------------
 * Remove unnecessary parentheses. (`#783 <https://github.com/ros2/rosidl/issues/783>`_)
