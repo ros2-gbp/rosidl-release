@@ -2,6 +2,9 @@
 Changelog for package rosidl_typesupport_introspection_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.7.0 (2024-04-26)
+------------------
+
 4.6.0 (2024-04-16)
 ------------------
 * One last uncrustify fix for newer uncrustify. (`#795 <https://github.com/ros2/rosidl/issues/795>`_)
