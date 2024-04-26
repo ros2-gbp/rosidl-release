@@ -2,6 +2,9 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.7.0 (2024-04-26)
+------------------
+
 4.6.0 (2024-04-16)
 ------------------
 * Adding interfaces to support `@key` annotation (`#796 <https://github.com/ros2/rosidl/issues/796>`_)
