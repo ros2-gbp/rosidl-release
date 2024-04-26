@@ -2,10 +2,10 @@
 Changelog for package rosidl_generator_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.6.1 (2024-04-24)
+4.7.0 (2024-04-26)
 ------------------
-* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_) (`#802 <https://github.com/ros2/rosidl/issues/802>`_)
-* Contributors: mergify[bot]
+* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_)
+* Contributors: Alejandro Hernández Cordero
 
 4.6.0 (2024-04-16)
 ------------------

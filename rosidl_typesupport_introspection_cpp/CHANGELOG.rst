@@ -2,8 +2,11 @@
 Changelog for package rosidl_typesupport_introspection_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.6.1 (2024-04-24)
+4.7.0 (2024-04-26)
 ------------------
+* Global use of nodiscard (`#801 <https://github.com/ros2/rosidl/issues/801>`_)
+  * Global use of nodiscard
+* Contributors: Lucas Wendland
 
 4.6.0 (2024-04-16)
 ------------------
