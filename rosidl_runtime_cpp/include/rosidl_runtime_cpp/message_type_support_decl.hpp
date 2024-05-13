@@ -27,7 +27,6 @@ namespace rosidl_runtime_cpp
  * \return Function handler for the message's typesupport.
  */
 template<typename T>
-[[nodiscard]]
 const rosidl_message_type_support_t * get_message_type_support_handle();
 
 }  // namespace rosidl_runtime_cpp
