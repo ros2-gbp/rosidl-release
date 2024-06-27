@@ -2,20 +2,16 @@
 Changelog for package rosidl_generator_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.8.1 (2024-06-25)
+4.6.3 (2024-06-27)
 ------------------
-* Silence one more gcc false-positive. (`#814 <https://github.com/ros2/rosidl/issues/814>`_)
-* Contributors: Chris Lalancette
 
-4.8.0 (2024-06-17)
+4.6.2 (2024-05-13)
 ------------------
-* Switch to using fastjsonschema for schema validation. (`#809 <https://github.com/ros2/rosidl/issues/809>`_)
-* Contributors: Chris Lalancette
 
-4.7.0 (2024-04-26)
+4.6.1 (2024-04-24)
 ------------------
-* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_)
-* Contributors: Alejandro Hernández Cordero
+* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_) (`#802 <https://github.com/ros2/rosidl/issues/802>`_)
+* Contributors: mergify[bot]
 
 4.6.0 (2024-04-16)
 ------------------
