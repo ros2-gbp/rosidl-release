@@ -1,0 +1,12 @@
+Source: ros-jazzy-rosidl-runtime-cpp
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-jazzy-ament-cmake, ros-jazzy-ament-cmake-gtest <!nocheck>, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>, ros-jazzy-performance-test-fixture <!nocheck>, ros-jazzy-rosidl-runtime-c, ros-jazzy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-rosidl-runtime-cpp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jazzy-ament-cmake, ros-jazzy-rosidl-runtime-c, ros-jazzy-ros-workspace
+Description: Provides definitions and templated functions for getting and working with rosidl typesupport types in C++.
