@@ -2,6 +2,9 @@
 Changelog for package rosidl_typesupport_introspection_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.9.1 (2024-11-20)
+------------------
+
 4.9.0 (2024-10-03)
 ------------------
 * Add types `rosidl_pycommon` (`#824 <https://github.com/ros2/rosidl/issues/824>`_)
