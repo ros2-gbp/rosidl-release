@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pathlib
-from typing import List
 
 from ament_index_python import get_package_share_directory
 
@@ -33,7 +32,7 @@ class GenerateIntrospectionCppTypesupport(GenerateCommandExtension):
         interface_files,
         include_paths,
         output_path
-    ) -> List[str]:
+    ):
         package_share_path = pathlib.Path(
             get_package_share_directory('rosidl_typesupport_introspection_cpp'))
 

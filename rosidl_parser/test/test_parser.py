@@ -15,19 +15,18 @@
 import pathlib
 
 import pytest
+
 from rosidl_parser.definition import Action
 from rosidl_parser.definition import Array
 from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import BoundedString
 from rosidl_parser.definition import BoundedWString
-from rosidl_parser.definition import IdlFile
 from rosidl_parser.definition import IdlLocator
 from rosidl_parser.definition import Include
 from rosidl_parser.definition import Message
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import Service
-from rosidl_parser.definition import SERVICE_EVENT_MESSAGE_SUFFIX
 from rosidl_parser.definition import UnboundedSequence
 from rosidl_parser.definition import UnboundedString
 from rosidl_parser.definition import UnboundedWString
@@ -44,11 +43,11 @@ ACTION_IDL_LOCATOR = IdlLocator(
 
 
 @pytest.fixture(scope='module')
-def message_idl_file() -> IdlFile:
+def message_idl_file():
     return parse_idl_file(MESSAGE_IDL_LOCATOR)
 
 
-def test_whitespace_at_start_of_string() -> None:
+def test_whitespace_at_start_of_string():
     # Repeat to check ros2/rosidl#676
     for _ in range(10):
         ast = get_ast_from_idl_string('const string foo = " e";')
@@ -56,7 +55,7 @@ def test_whitespace_at_start_of_string() -> None:
         assert ' e' == get_string_literals_value(token)
 
 
-def test_whitespace_at_start_of_wide_string() -> None:
+def test_whitespace_at_start_of_wide_string():
     # Repeat to check ros2/rosidl#676
     for _ in range(10):
         ast = get_ast_from_idl_string('const wstring foo = L" e";')
@@ -64,7 +63,7 @@ def test_whitespace_at_start_of_wide_string() -> None:
         assert ' e' == get_string_literals_value(token, allow_unicode=True)
 
 
-def test_whitespace_at_end_of_string() -> None:
+def test_whitespace_at_end_of_string():
     # Repeat to check ros2/rosidl#676
     for _ in range(10):
         ast = get_ast_from_idl_string('const string foo = "e ";')
@@ -72,7 +71,7 @@ def test_whitespace_at_end_of_string() -> None:
         assert 'e ' == get_string_literals_value(token)
 
 
-def test_whitespace_at_end_of_wide_string() -> None:
+def test_whitespace_at_end_of_wide_string():
     # Repeat to check ros2/rosidl#676
     for _ in range(10):
         ast = get_ast_from_idl_string('const wstring foo = L"e ";')
@@ -80,19 +79,19 @@ def test_whitespace_at_end_of_wide_string() -> None:
         assert 'e ' == get_string_literals_value(token, allow_unicode=True)
 
 
-def test_message_parser(message_idl_file: IdlFile) -> None:
+def test_message_parser(message_idl_file):
     messages = message_idl_file.content.get_elements_of_type(Message)
     assert len(messages) == 1
 
 
-def test_message_parser_includes(message_idl_file: IdlFile) -> None:
+def test_message_parser_includes(message_idl_file):
     includes = message_idl_file.content.get_elements_of_type(Include)
     assert len(includes) == 2
     assert includes[0].locator == 'OtherMessage.idl'
     assert includes[1].locator == 'pkgname/msg/OtherMessage.idl'
 
 
-def test_message_parser_structure(message_idl_file: IdlFile) -> None:
+def test_message_parser_structure(message_idl_file):
     messages = message_idl_file.content.get_elements_of_type(Message)
     assert len(messages) == 1
 
@@ -186,45 +185,41 @@ def test_message_parser_structure(message_idl_file: IdlFile) -> None:
     assert structure.members[31].name == 'array_short_values'
 
 
-def test_message_parser_annotations(message_idl_file: IdlFile) -> None:
+def test_message_parser_annotations(message_idl_file):
     messages = message_idl_file.content.get_elements_of_type(Message)
     assert len(messages) == 1
     structure = messages[0].structure
 
     assert len(structure.annotations) == 2
     assert structure.annotations[0].name == 'verbatim'
-    assert len(structure.annotations[0].value) == 2  # type: ignore[arg-type]
-    assert 'language' in structure.annotations[0].value  # type: ignore[operator]
-    assert structure.annotations[0].value['language'] == 'comment'  # type: ignore[index]
-    assert 'text' in structure.annotations[0].value  # type: ignore[operator]
-    text = structure.annotations[0].value['text']  # type: ignore[index]
-    assert text == 'Documentation of MyMessage.Adjacent string literal.'
+    assert len(structure.annotations[0].value) == 2
+    assert 'language' in structure.annotations[0].value
+    assert structure.annotations[0].value['language'] == 'comment'
+    assert 'text' in structure.annotations[0].value
+    assert structure.annotations[0].value['text'] == \
+        'Documentation of MyMessage.Adjacent string literal.'
 
     assert structure.annotations[1].name == 'transfer_mode'
     assert structure.annotations[1].value == 'SHMEM_REF'
 
     assert len(structure.members[2].annotations) == 1
-    assert structure.has_any_member_with_annotation('autoid') is False
 
     assert structure.members[2].annotations[0].name == 'default'
-    assert len(structure.members[2].annotations[0].value) == 1  # type: ignore[arg-type]
-    assert 'value' in structure.members[2].annotations[0].value    # type: ignore[operator]
-    assert structure.members[2].annotations[0].value['value'] == 123  # type: ignore[index]
-    assert structure.has_any_member_with_annotation('default')
+    assert len(structure.members[2].annotations[0].value) == 1
+    assert 'value' in structure.members[2].annotations[0].value
+    assert structure.members[2].annotations[0].value['value'] == 123
 
     assert len(structure.members[3].annotations) == 2
 
     assert structure.members[3].annotations[0].name == 'key'
     assert structure.members[3].annotations[0].value is None
-    assert structure.has_any_member_with_annotation('key')
 
     assert structure.members[3].annotations[1].name == 'range'
-    assert len(structure.members[3].annotations[1].value) == 2  # type: ignore[arg-type]
-    assert 'min' in structure.members[3].annotations[1].value  # type: ignore[operator]
-    assert structure.members[3].annotations[1].value['min'] == -10    # type: ignore[index]
-    assert 'max' in structure.members[3].annotations[1].value  # type: ignore[operator]
-    assert structure.members[3].annotations[1].value['max'] == 10    # type: ignore[index]
-    assert structure.has_any_member_with_annotation('range')
+    assert len(structure.members[3].annotations[1].value) == 2
+    assert 'min' in structure.members[3].annotations[1].value
+    assert structure.members[3].annotations[1].value['min'] == -10
+    assert 'max' in structure.members[3].annotations[1].value
+    assert structure.members[3].annotations[1].value['max'] == 10
 
     assert isinstance(structure.members[32].type, BasicType)
     assert structure.members[32].type.typename == 'float'
@@ -306,11 +301,11 @@ def test_message_parser_annotations(message_idl_file: IdlFile) -> None:
 
 
 @pytest.fixture(scope='module')
-def service_idl_file() -> IdlFile:
+def service_idl_file():
     return parse_idl_file(SERVICE_IDL_LOCATOR)
 
 
-def test_service_parser(service_idl_file: IdlFile) -> None:
+def test_service_parser(service_idl_file):
     services = service_idl_file.content.get_elements_of_type(Service)
     assert len(services) == 1
 
@@ -320,13 +315,6 @@ def test_service_parser(service_idl_file: IdlFile) -> None:
     assert srv.namespaced_type.name == 'MyService'
     assert len(srv.request_message.structure.members) == 2
     assert len(srv.response_message.structure.members) == 1
-    assert (srv.event_message.structure.namespaced_type.name ==
-           'MyService' + SERVICE_EVENT_MESSAGE_SUFFIX)
-
-    event_message_members = [i.name for i in srv.event_message.structure.members]
-    assert 'request' in event_message_members
-    assert 'response' in event_message_members
-    assert 'info' in event_message_members
 
     constants = srv.request_message.constants
     assert len(constants) == 1
@@ -346,11 +334,11 @@ def test_service_parser(service_idl_file: IdlFile) -> None:
 
 
 @pytest.fixture(scope='module')
-def action_idl_file() -> IdlFile:
+def action_idl_file():
     return parse_idl_file(ACTION_IDL_LOCATOR)
 
 
-def test_action_parser(action_idl_file: IdlFile) -> None:
+def test_action_parser(action_idl_file):
     actions = action_idl_file.content.get_elements_of_type(Action)
     assert len(actions) == 1
 

@@ -1,9 +1,5 @@
 @# Included from rosidl_typesupport_introspection_cpp/resource/idl__type_support.cpp.em
 @{
-from rosidl_generator_c import idl_structure_type_to_c_typename
-from rosidl_generator_type_description import GET_DESCRIPTION_FUNC
-from rosidl_generator_type_description import GET_HASH_FUNC
-from rosidl_generator_type_description import GET_SOURCES_FUNC
 from rosidl_parser.definition import AbstractGenericString
 from rosidl_parser.definition import AbstractNestedType
 from rosidl_parser.definition import AbstractSequence
@@ -13,7 +9,7 @@ from rosidl_parser.definition import Array
 from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import NamespacedType
-from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
+from rosidl_cmake import convert_camel_case_to_lower_case_underscore
 
 include_parts = [package_name] + list(interface_path.parents[0].parts) + [
     'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
@@ -27,7 +23,6 @@ header_files = [
     'rosidl_runtime_c/message_type_support_struct.h',
     'rosidl_typesupport_cpp/message_type_support.hpp',
     'rosidl_typesupport_interface/macros.h',
-    include_base + '__functions.h',
     include_base + '__struct.hpp',
     'rosidl_typesupport_introspection_cpp/field_types.hpp',
     'rosidl_typesupport_introspection_cpp/identifier.hpp',
@@ -204,8 +199,6 @@ for index, member in enumerate(message.structure.members):
         print('    0,  // upper bound of string')
         # const rosidl_message_type_support_t * members_
         print('    ::rosidl_typesupport_introspection_cpp::get_message_type_support_handle<%s>(),  // members of sub message' % '::'.join(type_.namespaced_name()))
-    # bool is_key_
-    print('    %s,  // is key' % ('true' if member.has_annotation('key') else 'false'))
     # bool is_array_
     print('    %s,  // is array' % ('true' if isinstance(member.type, AbstractNestedType) else 'false'))
     # size_t array_size_
@@ -244,11 +237,6 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMembers @(message.st
   "@(message.structure.namespaced_type.name)",  // message name
   @(len(message.structure.members)),  // number of fields
   sizeof(@('::'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))),
-@[  if message.structure.has_any_member_with_annotation('key') ]@
-  true,  // has_any_key_member_
-@[  else]@
-  false,  // has_any_key_member_
-@[  end if]@
   @(message.structure.namespaced_type.name)_message_member_array,  // message members
   @(message.structure.namespaced_type.name)_init_function,  // function to initialize message memory (memory has to be allocated)
   @(message.structure.namespaced_type.name)_fini_function  // function to terminate message instance (will not free memory)
@@ -258,9 +246,6 @@ static const rosidl_message_type_support_t @(message.structure.namespaced_type.n
   ::rosidl_typesupport_introspection_cpp::typesupport_identifier,
   &@(message.structure.namespaced_type.name)_message_members,
   get_message_typesupport_handle_function,
-  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_HASH_FUNC),
-  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_DESCRIPTION_FUNC),
-  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_SOURCES_FUNC),
 };
 
 }  // namespace rosidl_typesupport_introspection_cpp

@@ -41,8 +41,8 @@
 # :type LIBRARY_NAME: string
 # :param SKIP_INSTALL: if set skip installing the interface files
 # :type SKIP_INSTALL: option
-# :param SKIP_GROUP_MEMBERSHIP_CHECK: if set, skip enforcing membership in the
-#   rosidl_interface_packages group
+# :param SKIP_GROUP_MEMBERSHIP_CHECK: if set, skip enforcing the appartenance
+#   to the rosidl_interface_packages group
 # :type SKIP_GROUP_MEMBERSHIP_CHECK: option
 # :param ADD_LINTER_TESTS: if set lint the interface files using
 #   the ``ament_lint`` package
@@ -66,9 +66,7 @@ macro(rosidl_generate_interfaces target)
   endif()
 
   _rosidl_cmake_register_package_hook()
-  if(NOT _ARG_SKIP_INSTALL)
-    ament_export_dependencies(${_ARG_DEPENDENCIES})
-  endif()
+  ament_export_dependencies(${_ARG_DEPENDENCIES})
 
   # check that passed interface files exist
   # a tuple with an absolute base and a relative path is returned as is
@@ -139,25 +137,11 @@ macro(rosidl_generate_interfaces target)
   # afterwards all remaining interface files are .idl files
   list(APPEND _idl_tuples ${_idl_adapter_tuples})
 
-  # Check for any action or service interfaces
-  # Which have implicit dependencies that need to be found
+  # to generate action interfaces, we need to depend on "action_msgs"
   foreach(_tuple ${_interface_tuples})
-    # We use the parent directory name to identify if the interface is an action or service
     string(REGEX REPLACE ".*:([^:]*)$" "\\1" _tuple_file "${_tuple}")
     get_filename_component(_parent_dir "${_tuple_file}" DIRECTORY)
-    get_filename_component(_parent_dir ${_parent_dir} NAME)
-
     if("${_parent_dir}" STREQUAL "action")
-      # Actions depend on the packages service_msgs and action_msgs
-      find_package(service_msgs QUIET)
-      if(NOT ${service_msgs_FOUND})
-        message(FATAL_ERROR
-          "Unable to generate action interface for '${_tuple_file}'. "
-          "In order to generate action interfaces you must add a depend tag "
-          "for 'service_msgs' in your package.xml.")
-      endif()
-      ament_export_dependencies(service_msgs)
-      list_append_unique(_ARG_DEPENDENCIES "service_msgs")
       find_package(action_msgs QUIET)
       if(NOT ${action_msgs_FOUND})
         message(FATAL_ERROR
@@ -165,23 +149,9 @@ macro(rosidl_generate_interfaces target)
           "In order to generate action interfaces you must add a depend tag "
           "for 'action_msgs' in your package.xml.")
       endif()
-      ament_export_dependencies(action_msgs)
       list_append_unique(_ARG_DEPENDENCIES "action_msgs")
-
-      # It is safe to break out of the loop since services only depend on service_msgs
-      # Which has already been found above
+      ament_export_dependencies(action_msgs)
       break()
-    elseif("${_parent_dir}" STREQUAL "srv")
-      # Services depend on service_msgs
-      find_package(service_msgs QUIET)
-      if(NOT ${service_msgs_FOUND})
-        message(FATAL_ERROR
-          "Unable to generate service interface for '${_tuple_file}'. "
-          "In order to generate service interfaces you must add a depend tag "
-          "for 'service_msgs' in your package.xml.")
-      endif()
-      ament_export_dependencies(service_msgs)
-      list_append_unique(_ARG_DEPENDENCIES "service_msgs")
     endif()
   endforeach()
 
@@ -193,7 +163,8 @@ macro(rosidl_generate_interfaces target)
         "'${_dep}' has not been found before using find_package()")
     endif()
     foreach(_idl_file ${${_dep}_IDL_FILES})
-      rosidl_find_package_idl(_abs_idl_file "${_dep}" "${_idl_file}")
+      set(_abs_idl_file "${${_dep}_DIR}/../${_idl_file}")
+      normalize_path(_abs_idl_file "${_abs_idl_file}")
       list(APPEND _dep_files "${_abs_idl_file}")
     endforeach()
   endforeach()
@@ -202,6 +173,41 @@ macro(rosidl_generate_interfaces target)
   foreach(_tuple ${_non_idl_tuples})
     string(REGEX REPLACE ":([^:]*)$" "/\\1" _non_idl_file "${_tuple}")
     list(APPEND _non_idl_files "${_non_idl_file}")
+
+    # Split .srv into two .msg files
+    get_filename_component(_extension "${_tuple}" EXT)
+    # generate request and response messages for services
+    if(_extension STREQUAL ".srv")
+      string(REGEX REPLACE ":([^:]*)$" ";\\1" _list "${_tuple}")
+      list(GET _list 1 _relpath)
+      get_filename_component(_name "${_relpath}" NAME_WE)
+      get_filename_component(_parent_folder "${_relpath}" DIRECTORY)
+      file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/rosidl_cmake/${_parent_folder}")
+      set(_request_file "${CMAKE_CURRENT_BINARY_DIR}/rosidl_cmake/${_parent_folder}/${_name}_Request.msg")
+      set(_response_file "${CMAKE_CURRENT_BINARY_DIR}/rosidl_cmake/${_parent_folder}/${_name}_Response.msg")
+      file(READ "${_non_idl_file}" _service_content)
+      string(REGEX REPLACE "^((.*\r?\n)|)---(\r?\n.*)?$" "\\1" _request_content "${_service_content}")
+      string(REGEX REPLACE "^((.*\r?\n)|)---(\r?\n(.*)|())$" "\\3" _response_content "${_service_content}")
+      # only re-write the request/response messages if the content has changed
+      # to avoid the last modified timestamp to be updated
+      if(NOT EXISTS "${_request_file}")
+        file(WRITE "${_request_file}" "${_request_content}")
+      else()
+        file(READ "${_request_file}" _existing_request_content)
+        if(NOT "${_request_content}" STREQUAL "${_existing_request_content}")
+          file(WRITE "${_request_file}" "${_request_content}")
+        endif()
+      endif()
+      if(NOT EXISTS "${_response_file}")
+        file(WRITE "${_response_file}" "${_response_content}")
+      else()
+        file(READ "${_response_file}" _existing_response_content)
+        if(NOT "${_response_content}" STREQUAL "${_existing_response_content}")
+          file(WRITE "${_response_file}" "${_response_content}")
+        endif()
+      endif()
+      list(APPEND _non_idl_files "${_request_file}" "${_response_file}")
+    endif()
   endforeach()
 
   add_custom_target(

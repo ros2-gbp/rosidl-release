@@ -2,94 +2,13 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.2 (2024-11-25)
+3.1.6 (2024-11-25)
 ------------------
 
-4.9.1 (2024-11-20)
+3.1.5 (2023-07-18)
 ------------------
 
-4.9.0 (2024-10-03)
-------------------
-
-4.8.1 (2024-06-25)
-------------------
-
-4.8.0 (2024-06-17)
-------------------
-* Suppress warnings in the benchmarks for upstream GCC false positives. (`#810 <https://github.com/ros2/rosidl/issues/810>`_)
-* Contributors: Chris Lalancette
-
-4.7.0 (2024-04-26)
-------------------
-* Global use of nodiscard (`#801 <https://github.com/ros2/rosidl/issues/801>`_)
-  * Global use of nodiscard
-* Suppress a warning around BoundedVector. (`#803 <https://github.com/ros2/rosidl/issues/803>`_)
-  The comment has more explanation, but in short GCC 13
-  has false positives around some warnings, so we suppress
-  it for BoundedVector.
-* Contributors: Chris Lalancette, Lucas Wendland
-
-4.6.0 (2024-04-16)
-------------------
-
-4.5.2 (2024-03-27)
-------------------
-
-4.5.1 (2024-02-07)
-------------------
-
-4.5.0 (2023-12-26)
-------------------
-
-4.4.2 (2023-11-06)
-------------------
-
-4.4.1 (2023-10-04)
-------------------
-
-4.4.0 (2023-09-07)
-------------------
-
-4.3.1 (2023-08-21)
-------------------
-
-4.3.0 (2023-07-11)
-------------------
-
-4.2.0 (2023-06-07)
-------------------
-
-4.1.1 (2023-05-11)
-------------------
-
-4.1.0 (2023-04-28)
-------------------
-
-4.0.0 (2023-04-11)
-------------------
-* Type Description Codegen and Typesupport  (rep2011) (`#727 <https://github.com/ros2/rosidl/issues/727>`_)
-* Copied type_description_interfaces structs (rep2011) (`#732 <https://github.com/ros2/rosidl/issues/732>`_)
-* Fix a few more clang analysis problems. (`#731 <https://github.com/ros2/rosidl/issues/731>`_)
-* Return reference from BoundedVector::emplace_back (`#730 <https://github.com/ros2/rosidl/issues/730>`_)
-* Contributors: Alexander Hans, Chris Lalancette, Emerson Knapp
-
-3.4.0 (2023-02-13)
-------------------
-* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
-* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
-* fix conversion to ‘std::streamsize’ {aka ‘long int’} from ‘size_t’ {aka ‘long unsigned int’} may change the sign of the result (`#715 <https://github.com/ros2/rosidl/issues/715>`_)
-* Contributors: Audrow Nash, Brian, ralwing
-
-3.3.1 (2022-11-02)
-------------------
-
-3.3.0 (2022-09-08)
-------------------
-
-3.2.1 (2022-06-21)
-------------------
-
-3.2.0 (2022-05-04)
+3.1.4 (2022-11-07)
 ------------------
 
 3.1.3 (2022-04-08)

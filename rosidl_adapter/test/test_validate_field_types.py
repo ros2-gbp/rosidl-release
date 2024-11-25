@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
 import pytest
+
 from rosidl_adapter.parser import BaseType
 from rosidl_adapter.parser import Field
 from rosidl_adapter.parser import MessageSpecification
@@ -23,9 +22,9 @@ from rosidl_adapter.parser import UnknownMessageType
 from rosidl_adapter.parser import validate_field_types
 
 
-def test_validate_field_types() -> None:
+def test_validate_field_types():
     msg_spec = MessageSpecification('pkg', 'Foo', [], [])
-    known_msg_type: List[BaseType] = []
+    known_msg_type = []
     validate_field_types(msg_spec, known_msg_type)
 
     msg_spec.fields.append(Field(Type('bool'), 'foo'))

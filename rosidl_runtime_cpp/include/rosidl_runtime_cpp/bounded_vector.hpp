@@ -21,16 +21,6 @@
 #include <utility>
 #include <vector>
 
-// GCC 13 has false positive warnings around stringop-overflow and array-bounds.
-// The layout of a BoundedVector<bool> triggers these warnings.  Suppress them
-// until this is fixed in upstream gcc.  See
-// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114758 for more details.
-#if defined(__GNUC__) && !defined(__clang__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wstringop-overflow"
-#pragma GCC diagnostic ignored "-Warray-bounds"
-#endif
-
 namespace rosidl_runtime_cpp
 {
 
@@ -484,7 +474,7 @@ public:
    * \param args Arguments to be forwarded to the constructor of Tp
    */
   template<typename ... Args>
-  typename Base::reference
+  auto
   emplace_back(Args && ... args)
   {
     if (size() >= UpperBound) {
@@ -724,7 +714,6 @@ private:
    * \param y A %BoundedVector of the same type as @a x
    * \return True if the size and elements of the vectors are equal
   */
-  [[nodiscard]]
   friend bool
   operator==(
     const BoundedVector & x,
@@ -745,7 +734,6 @@ private:
    * \param y A %BoundedVector of the same type as @a x
    * @return True if @a x is lexicographically less than @a y
   */
-  [[nodiscard]]
   friend bool
   operator<(
     const BoundedVector & x,
@@ -755,7 +743,6 @@ private:
   }
 
   /// Based on operator==
-  [[nodiscard]]
   friend bool
   operator!=(
     const BoundedVector & x,
@@ -765,7 +752,6 @@ private:
   }
 
   /// Based on operator<
-  [[nodiscard]]
   friend bool
   operator>(
     const BoundedVector & x,
@@ -775,7 +761,6 @@ private:
   }
 
   /// Based on operator<
-  [[nodiscard]]
   friend bool
   operator<=(
     const BoundedVector & x,
@@ -785,7 +770,6 @@ private:
   }
 
   /// Based on operator<
-  [[nodiscard]]
   friend bool
   operator>=(
     const BoundedVector & x,
@@ -804,9 +788,5 @@ swap(BoundedVector<Tp, UpperBound, Alloc> & x, BoundedVector<Tp, UpperBound, All
 }
 
 }  // namespace rosidl_runtime_cpp
-
-#if defined(__GNUC__) && !defined(__clang__)
-#pragma GCC diagnostic pop
-#endif
 
 #endif  // ROSIDL_RUNTIME_CPP__BOUNDED_VECTOR_HPP_
