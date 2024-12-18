@@ -1,0 +1,12 @@
+Source: ros-jazzy-rosidl-runtime-c
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-jazzy-ament-cmake-ros, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>, ros-jazzy-performance-test-fixture <!nocheck>, ros-jazzy-rcutils, ros-jazzy-rosidl-typesupport-interface, ros-jazzy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-rosidl-runtime-c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jazzy-ament-cmake, ros-jazzy-rcutils, ros-jazzy-rosidl-typesupport-interface, ros-jazzy-ros-workspace
+Description: Provides definitions, initialization and finalization functions, and macros for getting and working with rosidl typesupport types in C.
