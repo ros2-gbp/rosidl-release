@@ -91,6 +91,7 @@ CONSTANT_MODULE_SUFFIX = '_Constants'
 
 SERVICE_REQUEST_MESSAGE_SUFFIX = '_Request'
 SERVICE_RESPONSE_MESSAGE_SUFFIX = '_Response'
+SERVICE_EVENT_MESSAGE_SUFFIX = '_Event'
 
 ACTION_GOAL_SUFFIX = '_Goal'
 ACTION_RESULT_SUFFIX = '_Result'
@@ -107,7 +108,7 @@ class AbstractType:
     __slots__ = ()
 
     def __eq__(self, other):
-        return type(self) == type(other)
+        return type(self) is type(other)
 
 
 class AbstractNestableType(AbstractType):
@@ -507,6 +508,16 @@ class Structure(Annotatable):
         self.namespaced_type = namespaced_type
         self.members = members or []
 
+    def has_any_member_with_annotation(self, name: str):
+        """
+        Check whether any member has a particular annotation.
+
+        :param str name: the name of the annotation
+        :returns: True if there is at least one member with the annotation, False otherwise
+        """
+        has_any = [member.name for member in self.members if member.has_annotation(name)]
+        return bool(has_any)
+
 
 class Include:
     """An include statement."""
@@ -562,7 +573,7 @@ class Message:
 class Service:
     """A namespaced type containing a request and response message."""
 
-    __slots__ = ('namespaced_type', 'request_message', 'response_message')
+    __slots__ = ('namespaced_type', 'request_message', 'response_message', 'event_message')
 
     def __init__(
         self, namespaced_type: NamespacedType, request: Message,
@@ -594,6 +605,20 @@ class Service:
         assert response.structure.namespaced_type.name == \
             namespaced_type.name + SERVICE_RESPONSE_MESSAGE_SUFFIX
         self.response_message = response
+
+        self.event_message = Message(
+            Structure(
+                NamespacedType(
+                    namespaces=namespaced_type.namespaces,
+                    name=f'{namespaced_type.name}{SERVICE_EVENT_MESSAGE_SUFFIX}'
+                ),
+                members=[
+                    Member(NamespacedType(['service_msgs', 'msg'], 'ServiceEventInfo'), 'info'),
+                    Member(BoundedSequence(request.structure.namespaced_type, 1), 'request'),
+                    Member(BoundedSequence(response.structure.namespaced_type, 1), 'response'),
+                ]
+            )
+        )
 
 
 class Action:

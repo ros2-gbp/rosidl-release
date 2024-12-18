@@ -18,6 +18,11 @@ if(NOT TARGET ${rosidl_generate_interfaces_TARGET}__rosidl_generator_c)
     "'rosidl_typesupport_introspection_c' extension.")
 endif()
 
+find_package(rosidl_cmake REQUIRED)
+find_package(rosidl_runtime_c REQUIRED)
+find_package(rosidl_typesupport_interface REQUIRED)
+find_package(rosidl_typesupport_introspection_c REQUIRED)
+
 set(_output_path
   "${CMAKE_CURRENT_BINARY_DIR}/rosidl_typesupport_introspection_c/${PROJECT_NAME}")
 set(_generated_header_files "")
@@ -37,8 +42,7 @@ set(_dependency_files "")
 set(_dependencies "")
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
   foreach(_idl_file ${${_pkg_name}_IDL_FILES})
-    set(_abs_idl_file "${${_pkg_name}_DIR}/../${_idl_file}")
-    normalize_path(_abs_idl_file "${_abs_idl_file}")
+    rosidl_find_package_idl(_abs_idl_file "${_pkg_name}" "${_idl_file}")
     list(APPEND _dependency_files "${_abs_idl_file}")
     list(APPEND _dependencies "${_pkg_name}:${_abs_idl_file}")
   endforeach()
@@ -71,6 +75,22 @@ rosidl_write_generator_arguments(
   TEMPLATE_DIR "${rosidl_typesupport_introspection_c_TEMPLATE_DIR}"
   TARGET_DEPENDENCIES ${target_dependencies}
 )
+
+# By default, without the settings below, find_package(Python3) will attempt
+# to find the newest python version it can, and additionally will find the
+# most specific version.  For instance, on a system that has
+# /usr/bin/python3.10, /usr/bin/python3.11, and /usr/bin/python3, it will find
+# /usr/bin/python3.11, even if /usr/bin/python3 points to /usr/bin/python3.10.
+# The behavior we want is to prefer the "system" installed version unless the
+# user specifically tells us othewise through the Python3_EXECUTABLE hint.
+# Setting CMP0094 to NEW means that the search will stop after the first
+# python version is found.  Setting Python3_FIND_UNVERSIONED_NAMES means that
+# the search will prefer /usr/bin/python3 over /usr/bin/python3.11.  And that
+# latter functionality is only available in CMake 3.20 or later, so we need
+# at least that version.
+cmake_minimum_required(VERSION 3.20)
+cmake_policy(SET CMP0094 NEW)
+set(Python3_FIND_UNVERSIONED_NAMES FIRST)
 
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
@@ -123,6 +143,8 @@ target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBL
   ${rosidl_generate_interfaces_TARGET}__rosidl_generator_c)
 
 target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
+  rosidl_runtime_c::rosidl_runtime_c
+  rosidl_typesupport_interface::rosidl_typesupport_interface
   rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c)
 
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})

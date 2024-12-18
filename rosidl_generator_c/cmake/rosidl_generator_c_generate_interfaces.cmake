@@ -13,6 +13,7 @@
 # limitations under the License.
 
 find_package(rcutils REQUIRED)
+find_package(rosidl_cmake REQUIRED)
 find_package(rosidl_runtime_c REQUIRED)
 find_package(rosidl_typesupport_interface REQUIRED)
 
@@ -33,7 +34,9 @@ foreach(_abs_idl_file ${rosidl_generate_interfaces_ABS_IDL_FILES})
     "${_output_path}/${_parent_folder}/detail/${_header_name}__type_support.h"
   )
   list(APPEND _generated_sources
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__description.c"
     "${_output_path}/${_parent_folder}/detail/${_header_name}__functions.c"
+    "${_output_path}/${_parent_folder}/detail/${_header_name}__type_support.c"
   )
 endforeach()
 
@@ -41,8 +44,7 @@ set(_dependency_files "")
 set(_dependencies "")
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
   foreach(_idl_file ${${_pkg_name}_IDL_FILES})
-    set(_abs_idl_file "${${_pkg_name}_DIR}/../${_idl_file}")
-    normalize_path(_abs_idl_file "${_abs_idl_file}")
+    rosidl_find_package_idl(_abs_idl_file "${_pkg_name}" "${_idl_file}")
     list(APPEND _dependency_files "${_abs_idl_file}")
     list(APPEND _dependencies "${_pkg_name}:${_abs_idl_file}")
   endforeach()
@@ -52,15 +54,21 @@ set(target_dependencies
   "${rosidl_generator_c_BIN}"
   ${rosidl_generator_c_GENERATOR_FILES}
   "${rosidl_generator_c_TEMPLATE_DIR}/action__type_support.h.em"
+  "${rosidl_generator_c_TEMPLATE_DIR}/action__type_support.c.em"
+  "${rosidl_generator_c_TEMPLATE_DIR}/empty__description.c.em"
+  "${rosidl_generator_c_TEMPLATE_DIR}/full__description.c.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/idl.h.em"
+  "${rosidl_generator_c_TEMPLATE_DIR}/idl__description.c.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/idl__functions.c.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/idl__functions.h.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/idl__struct.h.em"
+  "${rosidl_generator_c_TEMPLATE_DIR}/idl__type_support.c.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/idl__type_support.h.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/msg__functions.c.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/msg__functions.h.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/msg__struct.h.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/msg__type_support.h.em"
+  "${rosidl_generator_c_TEMPLATE_DIR}/srv__type_support.c.em"
   "${rosidl_generator_c_TEMPLATE_DIR}/srv__type_support.h.em"
   ${rosidl_generate_interfaces_ABS_IDL_FILES}
   ${_dependency_files})
@@ -70,6 +78,7 @@ foreach(dep ${target_dependencies})
   endif()
 endforeach()
 
+get_target_property(_target_sources ${rosidl_generate_interfaces_TARGET} SOURCES)
 set(generator_arguments_file "${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c__arguments.json")
 rosidl_write_generator_arguments(
   "${generator_arguments_file}"
@@ -79,15 +88,39 @@ rosidl_write_generator_arguments(
   OUTPUT_DIR "${_output_path}"
   TEMPLATE_DIR "${rosidl_generator_c_TEMPLATE_DIR}"
   TARGET_DEPENDENCIES ${target_dependencies}
+  TYPE_DESCRIPTION_TUPLES "${${rosidl_generate_interfaces_TARGET}__DESCRIPTION_TUPLES}"
+  ROS_INTERFACE_FILES "${_target_sources}"
 )
 
+# By default, without the settings below, find_package(Python3) will attempt
+# to find the newest python version it can, and additionally will find the
+# most specific version.  For instance, on a system that has
+# /usr/bin/python3.10, /usr/bin/python3.11, and /usr/bin/python3, it will find
+# /usr/bin/python3.11, even if /usr/bin/python3 points to /usr/bin/python3.10.
+# The behavior we want is to prefer the "system" installed version unless the
+# user specifically tells us othewise through the Python3_EXECUTABLE hint.
+# Setting CMP0094 to NEW means that the search will stop after the first
+# python version is found.  Setting Python3_FIND_UNVERSIONED_NAMES means that
+# the search will prefer /usr/bin/python3 over /usr/bin/python3.11.  And that
+# latter functionality is only available in CMake 3.20 or later, so we need
+# at least that version.
+cmake_minimum_required(VERSION 3.20)
+cmake_policy(SET CMP0094 NEW)
+set(Python3_FIND_UNVERSIONED_NAMES FIRST)
+
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
+set(disable_description_codegen_arg)
+if(ROSIDL_GENERATOR_C_DISABLE_TYPE_DESCRIPTION_CODEGEN)
+  set(disable_description_codegen_arg "--disable-description-codegen")
+endif()
 
 add_custom_command(
   OUTPUT ${_generated_headers} ${_generated_sources}
   COMMAND Python3::Interpreter
   ARGS ${rosidl_generator_c_BIN}
   --generator-arguments-file "${generator_arguments_file}"
+  ${disable_description_codegen_arg}
   DEPENDS ${target_dependencies}
   COMMENT "Generating C code for ROS interfaces"
   VERBATIM
@@ -138,6 +171,9 @@ target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBL
   rosidl_runtime_c::rosidl_runtime_c
   rosidl_typesupport_interface::rosidl_typesupport_interface
   rcutils::rcutils)
+add_dependencies(
+  ${rosidl_generate_interfaces_TARGET}${_target_suffix}
+  ${rosidl_generate_interfaces_TARGET}__rosidl_generator_type_description)
 
 # Make top level generation target depend on this generated library
 add_dependencies(

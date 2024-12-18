@@ -2,13 +2,90 @@
 Changelog for package rosidl_runtime_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.6 (2024-11-25)
+4.6.5 (2024-12-18)
 ------------------
 
-3.1.5 (2023-07-18)
+4.6.4 (2024-09-06)
 ------------------
 
-3.1.4 (2022-11-07)
+4.6.3 (2024-06-27)
+------------------
+
+4.6.2 (2024-05-13)
+------------------
+
+4.6.1 (2024-04-24)
+------------------
+
+4.6.0 (2024-04-16)
+------------------
+
+4.5.2 (2024-03-27)
+------------------
+
+4.5.1 (2024-02-07)
+------------------
+
+4.5.0 (2023-12-26)
+------------------
+* Switch to target_link_libraries. (`#776 <https://github.com/ros2/rosidl/issues/776>`_)
+* Contributors: Chris Lalancette
+
+4.4.2 (2023-11-06)
+------------------
+
+4.4.1 (2023-10-04)
+------------------
+
+4.4.0 (2023-09-07)
+------------------
+
+4.3.1 (2023-08-21)
+------------------
+* Set the C++ version to 17. (`#761 <https://github.com/ros2/rosidl/issues/761>`_)
+* Contributors: Chris Lalancette
+
+4.3.0 (2023-07-11)
+------------------
+
+4.2.0 (2023-06-07)
+------------------
+
+4.1.1 (2023-05-11)
+------------------
+* Mark _ in benchmark tests as unused. (`#741 <https://github.com/ros2/rosidl/issues/741>`_)
+  This helps clang static analysis.
+* Contributors: Chris Lalancette
+
+4.1.0 (2023-04-28)
+------------------
+
+4.0.0 (2023-04-11)
+------------------
+* Dynamic Subscription (BONUS: Allocators): rosidl (`#737 <https://github.com/ros2/rosidl/issues/737>`_)
+* Runtime Interface Reflection: rosidl (`#728 <https://github.com/ros2/rosidl/issues/728>`_)
+* Type Description Codegen and Typesupport  (rep2011) (`#727 <https://github.com/ros2/rosidl/issues/727>`_)
+* Copied type_description_interfaces structs (rep2011) (`#732 <https://github.com/ros2/rosidl/issues/732>`_)
+* Expose type hash on typesupports (rep2011) (`#729 <https://github.com/ros2/rosidl/issues/729>`_)
+* Type hash in interface codegen (rep2011) (`#722 <https://github.com/ros2/rosidl/issues/722>`_)
+* Contributors: Emerson Knapp, methylDragon
+
+3.4.0 (2023-02-13)
+------------------
+* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
+* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
+* Contributors: Audrow Nash, Brian
+
+3.3.1 (2022-11-02)
+------------------
+
+3.3.0 (2022-09-08)
+------------------
+
+3.2.1 (2022-06-21)
+------------------
+
+3.2.0 (2022-05-04)
 ------------------
 
 3.1.3 (2022-04-08)

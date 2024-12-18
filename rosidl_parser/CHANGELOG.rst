@@ -2,16 +2,86 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.6 (2024-11-25)
+4.6.5 (2024-12-18)
 ------------------
 
-3.1.5 (2023-07-18)
+4.6.4 (2024-09-06)
 ------------------
 
-3.1.4 (2022-11-07)
+4.6.3 (2024-06-27)
 ------------------
-* Always include whitespace in string literals (`#688 <https://github.com/ros2/rosidl/issues/688>`_) (`#689 <https://github.com/ros2/rosidl/issues/689>`_)
-* Contributors: mergify[bot]
+
+4.6.2 (2024-05-13)
+------------------
+
+4.6.1 (2024-04-24)
+------------------
+
+4.6.0 (2024-04-16)
+------------------
+* Adding interfaces to support `@key` annotation (`#796 <https://github.com/ros2/rosidl/issues/796>`_)
+  Co-authored-by: Mario Dominguez <mariodominguez@eprosima.com>
+* Contributors: Miguel Company
+
+4.5.2 (2024-03-27)
+------------------
+* Small fix for newer flake8 compatibility. (`#792 <https://github.com/ros2/rosidl/issues/792>`_)
+* Contributors: Chris Lalancette
+
+4.5.1 (2024-02-07)
+------------------
+* Remove unnecessary parentheses. (`#783 <https://github.com/ros2/rosidl/issues/783>`_)
+* Contributors: Chris Lalancette
+
+4.5.0 (2023-12-26)
+------------------
+
+4.4.2 (2023-11-06)
+------------------
+
+4.4.1 (2023-10-04)
+------------------
+
+4.4.0 (2023-09-07)
+------------------
+
+4.3.1 (2023-08-21)
+------------------
+
+4.3.0 (2023-07-11)
+------------------
+
+4.2.0 (2023-06-07)
+------------------
+
+4.1.1 (2023-05-11)
+------------------
+
+4.1.0 (2023-04-28)
+------------------
+
+4.0.0 (2023-04-11)
+------------------
+
+3.4.0 (2023-02-13)
+------------------
+* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
+* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
+* Contributors: Audrow Nash, Brian
+
+3.3.1 (2022-11-02)
+------------------
+
+3.3.0 (2022-09-08)
+------------------
+* Always include whitespace in string literals (`#688 <https://github.com/ros2/rosidl/issues/688>`_)
+* Contributors: Shane Loretz
+
+3.2.1 (2022-06-21)
+------------------
+
+3.2.0 (2022-05-04)
+------------------
 
 3.1.3 (2022-04-08)
 ------------------

@@ -2,13 +2,84 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.6 (2024-11-25)
+4.6.5 (2024-12-18)
+------------------
+* Support empy3 and empy4 (`#821 <https://github.com/ros2/rosidl/issues/821>`_) (`#837 <https://github.com/ros2/rosidl/issues/837>`_)
+  (cherry picked from commit e25750db3d7735947cad24f630d135ba02db5e59)
+  Co-authored-by: Alejandro Hernández Cordero <ahcorde@gmail.com>
+* Contributors: mergify[bot]
+
+4.6.4 (2024-09-06)
 ------------------
 
-3.1.5 (2023-07-18)
+4.6.3 (2024-06-27)
 ------------------
 
-3.1.4 (2022-11-07)
+4.6.2 (2024-05-13)
+------------------
+
+4.6.1 (2024-04-24)
+------------------
+
+4.6.0 (2024-04-16)
+------------------
+
+4.5.2 (2024-03-27)
+------------------
+
+4.5.1 (2024-02-07)
+------------------
+
+4.5.0 (2023-12-26)
+------------------
+
+4.4.2 (2023-11-06)
+------------------
+
+4.4.1 (2023-10-04)
+------------------
+
+4.4.0 (2023-09-07)
+------------------
+
+4.3.1 (2023-08-21)
+------------------
+
+4.3.0 (2023-07-11)
+------------------
+
+4.2.0 (2023-06-07)
+------------------
+
+4.1.1 (2023-05-11)
+------------------
+
+4.1.0 (2023-04-28)
+------------------
+
+4.0.0 (2023-04-11)
+------------------
+
+3.4.0 (2023-02-13)
+------------------
+* rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake: Make ament free (`#709 <https://github.com/ros2/rosidl/issues/709>`_)
+* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
+* Adding tests for unicode support in message comments. (`#720 <https://github.com/ros2/rosidl/issues/720>`_)
+* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
+* Contributors: Audrow Nash, Brian, Guilherme Henrique Galelli Christmann, Yasushi SHOJI
+
+3.3.1 (2022-11-02)
+------------------
+
+3.3.0 (2022-09-08)
+------------------
+* Add action2idl script (`#654 <https://github.com/ros2/rosidl/issues/654>`_)
+* Contributors: John Daktylidis
+
+3.2.1 (2022-06-21)
+------------------
+
+3.2.0 (2022-05-04)
 ------------------
 
 3.1.3 (2022-04-08)
