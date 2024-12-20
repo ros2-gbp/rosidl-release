@@ -2,29 +2,32 @@
 Changelog for package rosidl_generator_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.6.5 (2024-12-18)
+4.9.3 (2024-12-20)
 ------------------
 
-4.6.4 (2024-09-06)
-------------------
-* Silence one more gcc false-positive. (`#814 <https://github.com/ros2/rosidl/issues/814>`_) (`#817 <https://github.com/ros2/rosidl/issues/817>`_)
-  gcc 13 has false positives around array-bounds and
-  stringop-overflow, so suppress them here while generating
-  test cases.
-  (cherry picked from commit 86fa39823b6ec7d2e24940647c214a4082beab79)
-  Co-authored-by: Chris Lalancette <clalancette@gmail.com>
-* Contributors: mergify[bot]
-
-4.6.3 (2024-06-27)
+4.9.2 (2024-11-25)
 ------------------
 
-4.6.2 (2024-05-13)
+4.9.1 (2024-11-20)
 ------------------
 
-4.6.1 (2024-04-24)
+4.9.0 (2024-10-03)
 ------------------
-* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_) (`#802 <https://github.com/ros2/rosidl/issues/802>`_)
-* Contributors: mergify[bot]
+
+4.8.1 (2024-06-25)
+------------------
+* Silence one more gcc false-positive. (`#814 <https://github.com/ros2/rosidl/issues/814>`_)
+* Contributors: Chris Lalancette
+
+4.8.0 (2024-06-17)
+------------------
+* Switch to using fastjsonschema for schema validation. (`#809 <https://github.com/ros2/rosidl/issues/809>`_)
+* Contributors: Chris Lalancette
+
+4.7.0 (2024-04-26)
+------------------
+* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_)
+* Contributors: Alejandro Hernández Cordero
 
 4.6.0 (2024-04-16)
 ------------------
