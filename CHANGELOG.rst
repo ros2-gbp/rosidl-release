@@ -2,6 +2,11 @@
 Changelog for package rosidl_generator_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.9.3 (2024-12-20)
+------------------
+* Deterministic iteration order for reproducible codegen (`#846 <https://github.com/ros2/rosidl/issues/846>`_)
+* Contributors: Harry Sarson
+
 4.9.2 (2024-11-25)
 ------------------
 
