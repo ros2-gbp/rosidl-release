@@ -1,1 +1,1 @@
-{"base": "88b80ecc3f26", "parent": "debian/rolling/rosidl_cmake", "previous": "cff35e31c1fa", "trim": "", "trimbase": ""}
+{"base": "fd8d75abb4e4", "parent": "debian/kilted/rosidl_cmake", "previous": "808c8c3310c0", "trim": "", "trimbase": ""}
