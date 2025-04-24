@@ -2,6 +2,9 @@
 Changelog for package rosidl_typesupport_introspection_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.10.0 (2025-04-24)
+-------------------
+
 4.9.4 (2025-04-18)
 ------------------
 * Switch to ament_cmake_ros_core package (`#860 <https://github.com/ros2/rosidl/issues/860>`_)
