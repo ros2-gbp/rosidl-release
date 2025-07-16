@@ -16,29 +16,27 @@ import os
 import re
 import sys
 import textwrap
-from typing import Final, Iterable, List, Optional, Tuple, TYPE_CHECKING, TypedDict, Union
 
-PACKAGE_NAME_MESSAGE_TYPE_SEPARATOR: Final = '/'
-COMMENT_DELIMITER: Final = '#'
-CONSTANT_SEPARATOR: Final = '='
-ARRAY_UPPER_BOUND_TOKEN: Final = '<='
-STRING_UPPER_BOUND_TOKEN: Final = '<='
+PACKAGE_NAME_MESSAGE_TYPE_SEPARATOR = '/'
+COMMENT_DELIMITER = '#'
+CONSTANT_SEPARATOR = '='
+ARRAY_UPPER_BOUND_TOKEN = '<='
+STRING_UPPER_BOUND_TOKEN = '<='
 
-SERVICE_REQUEST_RESPONSE_SEPARATOR: Final = '---'
-SERVICE_REQUEST_MESSAGE_SUFFIX: Final = '_Request'
-SERVICE_RESPONSE_MESSAGE_SUFFIX: Final = '_Response'
-SERVICE_EVENT_MESSAGE_SUFFIX: Final = '_Event'
+SERVICE_REQUEST_RESPONSE_SEPARATOR = '---'
+SERVICE_REQUEST_MESSAGE_SUFFIX = '_Request'
+SERVICE_RESPONSE_MESSAGE_SUFFIX = '_Response'
 
-ACTION_REQUEST_RESPONSE_SEPARATOR: Final = '---'
-ACTION_GOAL_SUFFIX: Final = '_Goal'
-ACTION_RESULT_SUFFIX: Final = '_Result'
-ACTION_FEEDBACK_SUFFIX: Final = '_Feedback'
+ACTION_REQUEST_RESPONSE_SEPARATOR = '---'
+ACTION_GOAL_SUFFIX = '_Goal'
+ACTION_RESULT_SUFFIX = '_Result'
+ACTION_FEEDBACK_SUFFIX = '_Feedback'
 
-ACTION_GOAL_SERVICE_SUFFIX: Final = '_Goal'
-ACTION_RESULT_SERVICE_SUFFIX: Final = '_Result'
-ACTION_FEEDBACK_MESSAGE_SUFFIX: Final = '_Feedback'
+ACTION_GOAL_SERVICE_SUFFIX = '_Goal'
+ACTION_RESULT_SERVICE_SUFFIX = '_Result'
+ACTION_FEEDBACK_MESSAGE_SUFFIX = '_Feedback'
 
-PRIMITIVE_TYPES: Final = [
+PRIMITIVE_TYPES = [
     'bool',
     'byte',
     'char',
@@ -60,29 +58,20 @@ PRIMITIVE_TYPES: Final = [
     'time',  # for compatibility only
 ]
 
-VALID_PACKAGE_NAME_PATTERN: Final = re.compile(
+VALID_PACKAGE_NAME_PATTERN = re.compile(
     '^'
     '(?!.*__)'  # no consecutive underscores
     '(?!.*_$)'  # no underscore at the end
     '[a-z]'  # first character must be alpha
     '[a-z0-9_]*'  # followed by alpha, numeric, and underscore
     '$')
-VALID_FIELD_NAME_PATTERN: Final = VALID_PACKAGE_NAME_PATTERN
+VALID_FIELD_NAME_PATTERN = VALID_PACKAGE_NAME_PATTERN
 # relaxed patterns used for compatibility with ROS 1 messages
 # VALID_FIELD_NAME_PATTERN = re.compile('^[A-Za-z][A-Za-z0-9_]*$')
-VALID_MESSAGE_NAME_PATTERN: Final = re.compile('^[A-Z][A-Za-z0-9]*$')
+VALID_MESSAGE_NAME_PATTERN = re.compile('^[A-Z][A-Za-z0-9]*$')
 # relaxed patterns used for compatibility with ROS 1 messages
 # VALID_MESSAGE_NAME_PATTERN = re.compile('^[A-Za-z][A-Za-z0-9]*$')
-VALID_CONSTANT_NAME_PATTERN: Final = re.compile('^[A-Z]([A-Z0-9_]?[A-Z0-9]+)*$')
-
-if TYPE_CHECKING:
-    from typing_extensions import TypeAlias
-
-    PrimitiveType: TypeAlias = Union[bool, float, int, str]
-
-    class Annotations(TypedDict, total=False):
-        comment: List[str]
-        unit: str
+VALID_CONSTANT_NAME_PATTERN = re.compile('^[A-Z]([A-Z0-9_]?[A-Z0-9]+)*$')
 
 
 class InvalidSpecification(Exception):
@@ -111,8 +100,7 @@ class UnknownMessageType(InvalidSpecification):
 
 class InvalidValue(Exception):
 
-    def __init__(self, type_: Union['Type', str], value_string: str,
-                 message_suffix: Optional[str] = None) -> None:
+    def __init__(self, type_, value_string, message_suffix=None):
         message = "value '%s' can not be converted to type '%s'" % \
             (value_string, type_)
         if message_suffix is not None:
@@ -120,7 +108,7 @@ class InvalidValue(Exception):
         super(InvalidValue, self).__init__(message)
 
 
-def is_valid_package_name(name: str) -> bool:
+def is_valid_package_name(name):
     try:
         m = VALID_PACKAGE_NAME_PATTERN.match(name)
     except TypeError:
@@ -128,7 +116,7 @@ def is_valid_package_name(name: str) -> bool:
     return m is not None and m.group(0) == name
 
 
-def is_valid_field_name(name: str) -> bool:
+def is_valid_field_name(name):
     try:
         m = VALID_FIELD_NAME_PATTERN.match(name)
     except TypeError:
@@ -136,7 +124,7 @@ def is_valid_field_name(name: str) -> bool:
     return m is not None and m.group(0) == name
 
 
-def is_valid_message_name(name: str) -> bool:
+def is_valid_message_name(name):
     try:
         prefix = 'Sample_'
         if name.startswith(prefix):
@@ -157,7 +145,7 @@ def is_valid_message_name(name: str) -> bool:
     return m is not None and m.group(0) == name
 
 
-def is_valid_constant_name(name: str) -> bool:
+def is_valid_constant_name(name):
     try:
         m = VALID_CONSTANT_NAME_PATTERN.match(name)
     except TypeError:
@@ -169,7 +157,7 @@ class BaseType:
 
     __slots__ = ['pkg_name', 'type', 'string_upper_bound']
 
-    def __init__(self, type_string: str, context_package_name: Optional[str] = None) -> None:
+    def __init__(self, type_string, context_package_name=None):
         # check for primitive types
         if type_string in PRIMITIVE_TYPES:
             self.pkg_name = None
@@ -205,14 +193,10 @@ class BaseType:
                 # either the type string contains the package name
                 self.pkg_name = parts[0]
                 self.type = parts[1]
-            elif context_package_name:
+            else:
                 # or the package name is provided by context
                 self.pkg_name = context_package_name
                 self.type = type_string
-            else:
-                raise ValueError('Either parts has length 2 or context_package_name exist'
-                                 'otherwise BaseType Malformed.')
-
             if not is_valid_package_name(self.pkg_name):
                 raise InvalidResourceName(
                     "'{}' is an invalid package name. It should have the pattern '{}'".format(
@@ -224,20 +208,20 @@ class BaseType:
 
             self.string_upper_bound = None
 
-    def is_primitive_type(self) -> bool:
+    def is_primitive_type(self):
         return self.pkg_name is None
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         if other is None or not isinstance(other, BaseType):
             return False
         return self.pkg_name == other.pkg_name and \
             self.type == other.type and \
             self.string_upper_bound == other.string_upper_bound
 
-    def __hash__(self) -> int:
+    def __hash__(self):
         return hash(str(self))
 
-    def __str__(self) -> str:
+    def __str__(self):
         if self.pkg_name is not None:
             return '%s/%s' % (self.pkg_name, self.type)
 
@@ -252,7 +236,7 @@ class Type(BaseType):
 
     __slots__ = ['is_array', 'array_size', 'is_upper_bound']
 
-    def __init__(self, type_string: str, context_package_name: Optional[str] = None) -> None:
+    def __init__(self, type_string, context_package_name=None):
         # check for array brackets
         self.is_array = type_string[-1] == ']'
 
@@ -262,8 +246,8 @@ class Type(BaseType):
             try:
                 index = type_string.rindex('[')
             except ValueError:
-                raise TypeError("the type %s ends with ']' but does not " % type_string +
-                                "contain a '['")
+                raise TypeError("the type ends with ']' but does not " +
+                                "contain a '['" % type_string)
             array_size_string = type_string[index + 1:-1]
             # get array limit
             if array_size_string != '':
@@ -294,13 +278,13 @@ class Type(BaseType):
             type_string,
             context_package_name=context_package_name)
 
-    def is_dynamic_array(self) -> bool:
+    def is_dynamic_array(self):
         return self.is_array and (not self.array_size or self.is_upper_bound)
 
-    def is_fixed_size_array(self) -> bool:
-        return self.is_array and bool(self.array_size) and not self.is_upper_bound
+    def is_fixed_size_array(self):
+        return self.is_array and self.array_size and not self.is_upper_bound
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         if other is None or not isinstance(other, Type):
             return False
         return super(Type, self).__eq__(other) and \
@@ -308,10 +292,10 @@ class Type(BaseType):
             self.array_size == other.array_size and \
             self.is_upper_bound == other.is_upper_bound
 
-    def __hash__(self) -> int:
+    def __hash__(self):
         return hash(str(self))
 
-    def __str__(self) -> str:
+    def __str__(self):
         s = super(Type, self).__str__()
         if self.is_array:
             s += '['
@@ -327,7 +311,7 @@ class Constant:
 
     __slots__ = ['type', 'name', 'value', 'annotations']
 
-    def __init__(self, primitive_type: str, name: str, value_string: str) -> None:
+    def __init__(self, primitive_type, name, value_string):
         if primitive_type not in PRIMITIVE_TYPES:
             raise TypeError("the constant type '%s' must be a primitive type" %
                             primitive_type)
@@ -343,16 +327,16 @@ class Constant:
         self.value = parse_primitive_value_string(
             Type(primitive_type), value_string)
 
-        self.annotations: 'Annotations' = {}
+        self.annotations = {}
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         if other is None or not isinstance(other, Constant):
             return False
         return self.type == other.type and \
             self.name == other.name and \
             self.value == other.value
 
-    def __str__(self) -> str:
+    def __str__(self):
         value = self.value
         if self.type in ('string', 'wstring'):
             value = "'%s'" % value
@@ -361,8 +345,7 @@ class Constant:
 
 class Field:
 
-    def __init__(self, type_: 'Type', name: str,
-                 default_value_string: Optional[str] = None) -> None:
+    def __init__(self, type_, name, default_value_string=None):
         if not isinstance(type_, Type):
             raise TypeError(
                 "the field type '%s' must be a 'Type' instance" % type_)
@@ -378,9 +361,9 @@ class Field:
             self.default_value = parse_value_string(
                 type_, default_value_string)
 
-        self.annotations: 'Annotations' = {}
+        self.annotations = {}
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         if other is None or not isinstance(other, Field):
             return False
         else:
@@ -388,7 +371,7 @@ class Field:
                 self.name == other.name and \
                 self.default_value == other.default_value
 
-    def __str__(self) -> str:
+    def __str__(self):
         s = '%s %s' % (str(self.type), self.name)
         if self.default_value is not None:
             if self.type.is_primitive_type() and not self.type.is_array and \
@@ -401,12 +384,11 @@ class Field:
 
 class MessageSpecification:
 
-    def __init__(self, pkg_name: str, msg_name: str, fields: Iterable['Field'],
-                 constants: Iterable['Constant']) -> None:
+    def __init__(self, pkg_name, msg_name, fields, constants):
         self.base_type = BaseType(
             pkg_name + PACKAGE_NAME_MESSAGE_TYPE_SEPARATOR + msg_name)
         self.msg_name = msg_name
-        self.annotations: 'Annotations' = {}
+        self.annotations = {}
 
         self.fields = []
         for index, field in enumerate(fields):
@@ -437,7 +419,7 @@ class MessageSpecification:
                 'the constants iterable contains duplicate names: %s' %
                 ', '.join(sorted(duplicate_constant_names)))
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         if not other or not isinstance(other, MessageSpecification):
             return False
         return self.base_type == other.base_type and \
@@ -446,7 +428,7 @@ class MessageSpecification:
             len(self.constants) == len(other.constants) and \
             self.constants == other.constants
 
-    def __str__(self) -> str:
+    def __str__(self):
         """Output an equivalent .msg IDL string."""
         output = ['# ', str(self.base_type), '\n']
         for constant in self.constants:
@@ -458,7 +440,7 @@ class MessageSpecification:
         return ''.join(output)
 
 
-def parse_message_file(pkg_name: str, interface_filename: str) -> MessageSpecification:
+def parse_message_file(pkg_name, interface_filename):
     basename = os.path.basename(interface_filename)
     msg_name = os.path.splitext(basename)[0]
     with open(interface_filename, 'r', encoding='utf-8') as h:
@@ -466,7 +448,7 @@ def parse_message_file(pkg_name: str, interface_filename: str) -> MessageSpecifi
             pkg_name, msg_name, h.read())
 
 
-def extract_file_level_comments(message_string: str) -> Tuple[List[str], List[str]]:
+def extract_file_level_comments(message_string):
     lines = message_string.splitlines()
     index = next(
         (i for i, v in enumerate(lines) if not v.startswith(COMMENT_DELIMITER)), -1)
@@ -480,11 +462,10 @@ def extract_file_level_comments(message_string: str) -> Tuple[List[str], List[st
     return file_level_comments, file_content
 
 
-def parse_message_string(pkg_name: str, msg_name: str,
-                         message_string: str) -> MessageSpecification:
-    fields: List[Field] = []
-    constants: List[Constant] = []
-    last_element: Union[Field, Constant, None] = None  # either a field or a constant
+def parse_message_string(pkg_name, msg_name, message_string):
+    fields = []
+    constants = []
+    last_element = None  # either a field or a constant
     # replace tabs with spaces
     message_string = message_string.replace('\t', ' ')
 
@@ -531,13 +512,13 @@ def parse_message_string(pkg_name: str, msg_name: str,
         if index == -1:
             # line contains a field
             field_name, _, default_value_string = rest.partition(' ')
-            optional_default_value_string: Optional[str] = default_value_string.lstrip()
-            if not optional_default_value_string:
-                optional_default_value_string = None
+            default_value_string = default_value_string.lstrip()
+            if not default_value_string:
+                default_value_string = None
             try:
                 fields.append(Field(
                     Type(type_string, context_package_name=pkg_name),
-                    field_name, optional_default_value_string))
+                    field_name, default_value_string))
             except Exception as err:
                 print(
                     "Error processing '{line}' of '{pkg}/{msg}': '{err}'".format(
@@ -573,7 +554,7 @@ def parse_message_string(pkg_name: str, msg_name: str,
     return msg
 
 
-def process_comments(instance: Union[MessageSpecification, Field, Constant]) -> None:
+def process_comments(instance):
     if 'comment' in instance.annotations:
         lines = instance.annotations['comment']
 
@@ -608,8 +589,7 @@ def process_comments(instance: Union[MessageSpecification, Field, Constant]) -> 
             instance.annotations['comment'] = textwrap.dedent(text).split('\n')
 
 
-def parse_value_string(type_: Type, value_string: str) -> Union['PrimitiveType',
-                                                                List['PrimitiveType']]:
+def parse_value_string(type_, value_string):
     if type_.is_primitive_type() and not type_.is_array:
         return parse_primitive_value_string(type_, value_string)
 
@@ -659,11 +639,10 @@ def parse_value_string(type_: Type, value_string: str) -> Union['PrimitiveType',
         "parsing string values into type '%s' is not supported" % type_)
 
 
-def parse_string_array_value_string(element_string: str,
-                                    expected_size: Optional[int]) -> List[str]:
+def parse_string_array_value_string(element_string, expected_size):
     # Walks the string, if start with quote (' or ") find next unescapted quote,
     # returns a list of string elements
-    value_strings: List[str] = []
+    value_strings = []
     while len(element_string) > 0:
         element_string = element_string.lstrip(' ')
         if element_string[0] == ',':
@@ -697,7 +676,7 @@ def parse_string_array_value_string(element_string: str,
     return value_strings
 
 
-def find_matching_end_quote(string: str, quote: str) -> int:
+def find_matching_end_quote(string, quote):
     # Given a string, walk it and find the next unescapted quote
     # returns the index of the ending quote if successful, -1 otherwise
     ending_quote_idx = -1
@@ -715,7 +694,7 @@ def find_matching_end_quote(string: str, quote: str) -> int:
     return -1
 
 
-def parse_primitive_value_string(type_: Type, value_string: str) -> 'PrimitiveType':
+def parse_primitive_value_string(type_, value_string):
     if not type_.is_primitive_type() or type_.is_array:
         raise ValueError('the passed type must be a non-array primitive type')
     primitive_type = type_.type
@@ -811,13 +790,10 @@ def parse_primitive_value_string(type_: Type, value_string: str) -> 'PrimitiveTy
     assert False, "unknown primitive type '%s'" % primitive_type
 
 
-def validate_field_types(spec: Union[MessageSpecification,
-                                     'ServiceSpecification',
-                                     'ActionSpecification'],
-                         known_msg_types: List[BaseType]) -> None:
+def validate_field_types(spec, known_msg_types):
     if isinstance(spec, MessageSpecification):
         spec_type = 'Message'
-        fields: List[Field] = spec.fields
+        fields = spec.fields
     elif isinstance(spec, ServiceSpecification):
         spec_type = 'Service'
         fields = spec.request.fields + spec.response.fields
@@ -841,8 +817,7 @@ def validate_field_types(spec: Union[MessageSpecification,
 
 class ServiceSpecification:
 
-    def __init__(self, pkg_name: str, srv_name: str, request: MessageSpecification,
-                 response: MessageSpecification) -> None:
+    def __init__(self, pkg_name, srv_name, request, response):
         self.pkg_name = pkg_name
         self.srv_name = srv_name
         assert isinstance(request, MessageSpecification)
@@ -850,7 +825,7 @@ class ServiceSpecification:
         assert isinstance(response, MessageSpecification)
         self.response = response
 
-    def __str__(self) -> str:
+    def __str__(self):
         """Output an equivalent .srv IDL string."""
         output = ['# ', str(self.pkg_name), '/', str(self.srv_name), '\n']
         output.append(str(self.request))
@@ -859,7 +834,7 @@ class ServiceSpecification:
         return ''.join(output)
 
 
-def parse_service_file(pkg_name: str, interface_filename: str) -> ServiceSpecification:
+def parse_service_file(pkg_name, interface_filename):
     basename = os.path.basename(interface_filename)
     srv_name = os.path.splitext(basename)[0]
     with open(interface_filename, 'r', encoding='utf-8') as h:
@@ -867,8 +842,7 @@ def parse_service_file(pkg_name: str, interface_filename: str) -> ServiceSpecifi
             pkg_name, srv_name, h.read())
 
 
-def parse_service_string(pkg_name: str, srv_name: str,
-                         message_string: str) -> ServiceSpecification:
+def parse_service_string(pkg_name, srv_name, message_string):
     lines = message_string.splitlines()
     separator_indices = [
         index for index, line in enumerate(lines) if line == SERVICE_REQUEST_RESPONSE_SEPARATOR]
@@ -894,11 +868,7 @@ def parse_service_string(pkg_name: str, srv_name: str,
 
 class ActionSpecification:
 
-    goal_service: ServiceSpecification
-    result_service: ServiceSpecification
-
-    def __init__(self, pkg_name: str, action_name: str, goal: MessageSpecification,
-                 result: MessageSpecification, feedback: MessageSpecification) -> None:
+    def __init__(self, pkg_name, action_name, goal, result, feedback):
         self.pkg_name = pkg_name
         self.action_name = action_name
         assert isinstance(goal, MessageSpecification)
@@ -909,15 +879,14 @@ class ActionSpecification:
         self.feedback = feedback
 
 
-def parse_action_file(pkg_name: str, interface_filename: str) -> ActionSpecification:
+def parse_action_file(pkg_name, interface_filename):
     basename = os.path.basename(interface_filename)
     action_name = os.path.splitext(basename)[0]
     with open(interface_filename, 'r', encoding='utf-8') as h:
         return parse_action_string(pkg_name, action_name, h.read())
 
 
-def parse_action_string(pkg_name: str, action_name: str,
-                        action_string: str) -> ActionSpecification:
+def parse_action_string(pkg_name, action_name, action_string):
     lines = action_string.splitlines()
     separator_indices = [
         index for index, line in enumerate(lines) if line == ACTION_REQUEST_RESPONSE_SEPARATOR]

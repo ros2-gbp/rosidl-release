@@ -10,7 +10,6 @@ ament_python_install_package(${PROJECT_NAME})
 if(BUILD_TESTING)
   find_package(ament_cmake_pytest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
-  find_package(ament_cmake_mypy REQUIRED)
   ament_lint_auto_find_test_dependencies()
   ament_add_pytest_test(pytest test)
 endif()
@@ -27,5 +26,4 @@ install(
 install(PROGRAMS
   scripts/msg2idl.py
   scripts/srv2idl.py
-  scripts/action2idl.py
   DESTINATION lib/${PROJECT_NAME})

@@ -12,12 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
-from rosidl_pycommon import generate_files
+from rosidl_cmake import generate_files
 
 
-def generate_c(generator_arguments_file: str) -> List[str]:
+def generate_c(generator_arguments_file: str):
     """
     Generate the C implementation of the type support.
 

@@ -22,7 +22,6 @@ namespace rosidl_typesupport_cpp
 {
 
 template<typename T>
-[[nodiscard]]
 const rosidl_action_type_support_t * get_action_type_support_handle();
 
 }  // namespace rosidl_typesupport_cpp
