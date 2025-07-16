@@ -2,6 +2,9 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.1.7 (2025-07-16)
+------------------
+
 3.1.6 (2024-11-25)
 ------------------
 * Generate typesupport getter declarations for actions, messages and services. (`#778 <https://github.com/ros2/rosidl/issues/778>`_)
