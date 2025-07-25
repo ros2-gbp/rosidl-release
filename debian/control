@@ -1,0 +1,12 @@
+Source: ros-kilted-rosidl-adapter
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-kilted-ament-cmake, ros-kilted-ament-cmake-mypy <!nocheck>, ros-kilted-ament-cmake-pytest <!nocheck>, ros-kilted-ament-lint-auto <!nocheck>, ros-kilted-ament-lint-common <!nocheck>, ros-kilted-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kilted-rosidl-adapter
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, python3-empy, ros-kilted-ament-cmake-core, ros-kilted-rosidl-cli, ros-kilted-ros-workspace
+Description: API and scripts to parse .msg/.srv/.action files and convert them to .idl.
