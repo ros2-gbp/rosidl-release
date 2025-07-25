@@ -11,14 +11,12 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
-find_package(ament_cmake_ros REQUIRED)
+find_package(ament_cmake_ros_core REQUIRED)
 
-ament_export_dependencies(rosidl_cmake)
 ament_export_dependencies(rosidl_runtime_c)
-# The reason the impl folder is exported is that it contains the implementation
-# for the get_*_type_support_handle functions and defines the opensplice
-# specific version of these functions.
+ament_export_dependencies(rosidl_typesupport_interface)
 
 ament_python_install_package(${PROJECT_NAME})
 

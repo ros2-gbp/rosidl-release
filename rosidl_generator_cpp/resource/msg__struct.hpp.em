@@ -11,6 +11,8 @@ from rosidl_parser.definition import AbstractWString
 from rosidl_parser.definition import ACTION_FEEDBACK_SUFFIX
 from rosidl_parser.definition import ACTION_GOAL_SUFFIX
 from rosidl_parser.definition import ACTION_RESULT_SUFFIX
+from rosidl_parser.definition import SERVICE_REQUEST_MESSAGE_SUFFIX
+from rosidl_parser.definition import SERVICE_RESPONSE_MESSAGE_SUFFIX
 from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import BOOLEAN_TYPE
 from rosidl_parser.definition import CHARACTER_TYPES
@@ -30,13 +32,21 @@ msvc_common_macros = ('DELETE', 'ERROR', 'NO_ERROR')
 @# Collect necessary include directives for all members
 @{
 from collections import OrderedDict
-from rosidl_cmake import convert_camel_case_to_lower_case_underscore
+from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
 includes = OrderedDict()
 for member in message.structure.members:
     type_ = member.type
     if isinstance(type_, AbstractNestedType):
         type_ = type_.value_type
     if isinstance(type_, NamespacedType):
+        if (
+            message.structure.namespaced_type.namespaces[-1] in ['action', 'srv'] and (
+            type_.name.endswith(SERVICE_REQUEST_MESSAGE_SUFFIX) or
+            type_.name.endswith(SERVICE_RESPONSE_MESSAGE_SUFFIX))
+        ):
+            typename = type_.name.rsplit('_', 1)[0]
+            if typename == message.structure.namespaced_type.name.rsplit('_', 1)[0]:
+                continue
         if (
             type_.name.endswith(ACTION_GOAL_SUFFIX) or
             type_.name.endswith(ACTION_RESULT_SUFFIX) or
@@ -270,10 +280,16 @@ non_defaulted_zero_initialized_members = [
   static const @(MSG_TYPE_TO_CPP['wstring']) @(constant.name);
 @[ else]@
   static constexpr @(MSG_TYPE_TO_CPP[constant.type.typename]) @(constant.name) =
-@[  if isinstance(constant.type, BasicType) and constant.type.typename in (*INTEGER_TYPES, *CHARACTER_TYPES, BOOLEAN_TYPE, OCTET_TYPE)]@
+@[  if isinstance(constant.type, BasicType)]@
+@[   if constant.type.typename in (*INTEGER_TYPES, *CHARACTER_TYPES, BOOLEAN_TYPE, OCTET_TYPE)]@
     @(int(constant.value))@
-@[   if constant.type.typename in UNSIGNED_INTEGER_TYPES]@
+@[    if constant.type.typename in UNSIGNED_INTEGER_TYPES]@
 u@
+@[    end if]@
+@[   elif constant.type.typename == 'float']@
+    @(constant.value)f@
+@[   else]@
+    @(constant.value)@
 @[   end if];
 @[  else]@
     @(constant.value);

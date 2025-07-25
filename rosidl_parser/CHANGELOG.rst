@@ -2,19 +2,104 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.7 (2025-07-16)
+4.9.5 (2025-07-07)
+------------------
+* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
+* Contributors: mosfet80
+
+4.9.4 (2025-04-18)
 ------------------
 
-3.1.6 (2024-11-25)
+4.9.3 (2024-12-20)
 ------------------
 
-3.1.5 (2023-07-18)
+4.9.2 (2024-11-25)
+------------------
+* Finish adding types to `rosidl_parser` (`#832 <https://github.com/ros2/rosidl/issues/832>`_)
+* Contributors: Michael Carlstrom
+
+4.9.1 (2024-11-20)
+------------------
+* Add types to definition.py in `rosidl_parser` (`#791 <https://github.com/ros2/rosidl/issues/791>`_)
+* Contributors: Michael Carlstrom
+
+4.9.0 (2024-10-03)
 ------------------
 
-3.1.4 (2022-11-07)
+4.8.1 (2024-06-25)
 ------------------
-* Always include whitespace in string literals (`#688 <https://github.com/ros2/rosidl/issues/688>`_) (`#689 <https://github.com/ros2/rosidl/issues/689>`_)
-* Contributors: mergify[bot]
+
+4.8.0 (2024-06-17)
+------------------
+
+4.7.0 (2024-04-26)
+------------------
+
+4.6.0 (2024-04-16)
+------------------
+* Adding interfaces to support `@key` annotation (`#796 <https://github.com/ros2/rosidl/issues/796>`_)
+  Co-authored-by: Mario Dominguez <mariodominguez@eprosima.com>
+* Contributors: Miguel Company
+
+4.5.2 (2024-03-27)
+------------------
+* Small fix for newer flake8 compatibility. (`#792 <https://github.com/ros2/rosidl/issues/792>`_)
+* Contributors: Chris Lalancette
+
+4.5.1 (2024-02-07)
+------------------
+* Remove unnecessary parentheses. (`#783 <https://github.com/ros2/rosidl/issues/783>`_)
+* Contributors: Chris Lalancette
+
+4.5.0 (2023-12-26)
+------------------
+
+4.4.2 (2023-11-06)
+------------------
+
+4.4.1 (2023-10-04)
+------------------
+
+4.4.0 (2023-09-07)
+------------------
+
+4.3.1 (2023-08-21)
+------------------
+
+4.3.0 (2023-07-11)
+------------------
+
+4.2.0 (2023-06-07)
+------------------
+
+4.1.1 (2023-05-11)
+------------------
+
+4.1.0 (2023-04-28)
+------------------
+
+4.0.0 (2023-04-11)
+------------------
+
+3.4.0 (2023-02-13)
+------------------
+* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
+* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
+* Contributors: Audrow Nash, Brian
+
+3.3.1 (2022-11-02)
+------------------
+
+3.3.0 (2022-09-08)
+------------------
+* Always include whitespace in string literals (`#688 <https://github.com/ros2/rosidl/issues/688>`_)
+* Contributors: Shane Loretz
+
+3.2.1 (2022-06-21)
+------------------
+
+3.2.0 (2022-05-04)
+------------------
 
 3.1.3 (2022-04-08)
 ------------------

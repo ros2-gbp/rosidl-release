@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from ast import literal_eval
+from typing import List
 
-from rosidl_cmake import generate_files
 from rosidl_parser.definition import AbstractGenericString
 from rosidl_parser.definition import AbstractNestedType
 from rosidl_parser.definition import AbstractSequence
@@ -26,9 +26,10 @@ from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import FLOATING_POINT_TYPES
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import UnboundedSequence
+from rosidl_pycommon import generate_files
 
 
-def generate_cpp(generator_arguments_file):
+def generate_cpp(generator_arguments_file) -> List[str]:
     mapping = {
         'idl.hpp.em': '%s.hpp',
         'idl__builder.hpp.em': 'detail/%s__builder.hpp',
@@ -41,7 +42,7 @@ def generate_cpp(generator_arguments_file):
         post_process_callback=prefix_with_bom_if_necessary)
 
 
-def prefix_with_bom_if_necessary(content):
+def prefix_with_bom_if_necessary(content: str) -> str:
     try:
         content.encode('ASCII')
     except UnicodeError:
