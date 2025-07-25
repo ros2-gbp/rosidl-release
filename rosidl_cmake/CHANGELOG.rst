@@ -2,13 +2,10 @@
 Changelog for package rosidl_cmake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.0.0 (2025-07-01)
+4.9.5 (2025-07-07)
 ------------------
-* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
+* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
 * Contributors: mosfet80
-
-4.10.0 (2025-04-24)
--------------------
 
 4.9.4 (2025-04-18)
 ------------------
