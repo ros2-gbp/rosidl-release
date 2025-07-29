@@ -2,10 +2,20 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.5 (2025-07-07)
+5.0.1 (2025-07-29)
 ------------------
-* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#866 <https://github.com/ros2/rosidl/issues/866>`_)
-* Contributors: Christophe Bedard, Francisco Rossi, Michel Hidalgo
+* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
+* Contributors: mosfet80
+
+5.0.0 (2025-07-01)
+------------------
+* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_)
+* Add missing cstdint include (`#864 <https://github.com/ros2/rosidl/issues/864>`_)
+* Removed deprecated methods (`#863 <https://github.com/ros2/rosidl/issues/863>`_)
+* Contributors: Alejandro Hernández Cordero, Francisco Rossi, Øystein Sture
+
+4.10.0 (2025-04-24)
+-------------------
 
 4.9.4 (2025-04-18)
 ------------------

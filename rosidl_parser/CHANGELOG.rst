@@ -2,10 +2,16 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.5 (2025-07-07)
+5.0.1 (2025-07-29)
 ------------------
-* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
+
+5.0.0 (2025-07-01)
+------------------
+* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
 * Contributors: mosfet80
+
+4.10.0 (2025-04-24)
+-------------------
 
 4.9.4 (2025-04-18)
 ------------------
