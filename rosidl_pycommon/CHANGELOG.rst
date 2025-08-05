@@ -2,6 +2,9 @@
 Changelog for package rosidl_pycommon
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+4.6.6 (2025-08-05)
+------------------
+
 4.6.5 (2024-12-18)
 ------------------
 * Support empy3 and empy4 (`#821 <https://github.com/ros2/rosidl/issues/821>`_) (`#837 <https://github.com/ros2/rosidl/issues/837>`_)
