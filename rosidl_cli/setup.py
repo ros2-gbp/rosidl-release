@@ -3,13 +3,10 @@ from setuptools import setup
 
 setup(
     name='rosidl_cli',
-    version='5.0.1',
+    version='4.6.6',
     packages=find_packages(exclude=['test']),
     extras_require={
         'completion': ['argcomplete'],
-        'test': [
-            'pytest',
-        ],
     },
     data_files=[
         ('share/ament_index/resource_index/packages', [
@@ -35,12 +32,14 @@ setup(
     classifiers=[
         'Environment :: Console',
         'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
     ],
     description='Command line tools for ROS interface generation.',
     long_description="""\
 The tooling provides a single command line script for ROS interface source code generation.""",
     license='Apache License, Version 2.0',
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             'rosidl = rosidl_cli.cli:main',

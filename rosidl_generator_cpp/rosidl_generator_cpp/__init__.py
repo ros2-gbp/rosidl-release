@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from ast import literal_eval
-from typing import List
 
 from rosidl_parser.definition import AbstractGenericString
 from rosidl_parser.definition import AbstractNestedType
@@ -29,7 +28,7 @@ from rosidl_parser.definition import UnboundedSequence
 from rosidl_pycommon import generate_files
 
 
-def generate_cpp(generator_arguments_file) -> List[str]:
+def generate_cpp(generator_arguments_file):
     mapping = {
         'idl.hpp.em': '%s.hpp',
         'idl__builder.hpp.em': 'detail/%s__builder.hpp',
@@ -42,7 +41,7 @@ def generate_cpp(generator_arguments_file) -> List[str]:
         post_process_callback=prefix_with_bom_if_necessary)
 
 
-def prefix_with_bom_if_necessary(content: str) -> str:
+def prefix_with_bom_if_necessary(content):
     try:
         content.encode('ASCII')
     except UnicodeError:

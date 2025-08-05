@@ -22,7 +22,6 @@ namespace rosidl_typesupport_cpp
 {
 
 template<typename T>
-[[nodiscard]]
 const rosidl_message_type_support_t * get_message_type_support_handle();
 
 }  // namespace rosidl_typesupport_cpp

@@ -12,11 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pathlib import Path
 
-
-def convert_to_idl(package_dir: Path, package_name: str, interface_file: Path,
-                   output_dir: Path) -> Path:
+def convert_to_idl(package_dir, package_name, interface_file, output_dir):
     if interface_file.suffix == '.msg':
         from rosidl_adapter.msg import convert_msg_to_idl
         return convert_msg_to_idl(
