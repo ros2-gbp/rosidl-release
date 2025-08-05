@@ -16,24 +16,23 @@ from rosidl_cli.extensions import Extension
 from rosidl_cli.extensions import load_extensions
 
 
-class GenerateCommandExtension(Extension):
+class HashCommandExtension(Extension):
     """
     The extension point for source code generation.
 
     The following methods must be defined:
-    * `generate`
+    * `generate_type_hashes`
     """
 
-    def generate(
+    def generate_type_hashes(
         self,
         package_name,
         interface_files,
         include_paths,
         output_path,
-        type_description_files
     ):
         """
-        Generate source code.
+        Generate type hashes from interface definition files.
 
         Paths to interface definition files are relative paths optionally
         prefixed by an absolute path followed by a colon ':', in which case
@@ -44,17 +43,13 @@ class GenerateCommandExtension(Extension):
         :param include_paths: list of paths to include dependency interface
           definition files from.
         :param output_path: path to directory to hold generated source code files
-        :param type_description_files: Optional list of paths to type description files
         :returns: list of paths to generated source files
         """
         raise NotImplementedError()
 
 
-def load_type_extensions(**kwargs):
-    """Load extensions for type representation source code generation."""
-    return load_extensions('rosidl_cli.command.generate.type_extensions', **kwargs)
-
-
-def load_typesupport_extensions(**kwargs):
-    """Load extensions for type support source code generation."""
-    return load_extensions('rosidl_cli.command.generate.typesupport_extensions', **kwargs)
+def load_hash_extensions(**kwargs):
+    """Load extensions for type hash generation."""
+    return load_extensions(
+        'rosidl_cli.command.hash.extensions', **kwargs
+    )
