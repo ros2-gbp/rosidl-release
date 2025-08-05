@@ -16,13 +16,13 @@ import pathlib
 
 from rosidl_cli.command import Command
 
-from .api import generate
+from .api import generate_type_hashes
 
 
-class GenerateCommand(Command):
-    """Generate source code from interface definition files."""
+class HashCommand(Command):
+    """Generate type description hashes from interface definition files."""
 
-    name = 'generate'
+    name = 'hash'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -30,18 +30,6 @@ class GenerateCommand(Command):
             type=pathlib.Path, default=None,
             help=('Path to directory to hold generated '
                   "source code files. Defaults to '.'."))
-        parser.add_argument(
-            '-t', '--type', metavar='TYPE',
-            dest='types', action='append', default=[],
-            help='Target type representations for generation.')
-        parser.add_argument(
-            '-ts', '--type-support', metavar='TYPESUPPORT',
-            dest='typesupports', action='append', default=[],
-            help='Target type supports for generation.')
-        parser.add_argument(
-            '-td', '--type-description-file', metavar='PATH',
-            dest='type_description_files', action='append', default=[],
-            help='Target type descriptions for generation.')
         parser.add_argument(
             '-I', '--include-path', type=pathlib.Path, metavar='PATH',
             dest='include_paths', action='append', default=[],
@@ -55,12 +43,9 @@ class GenerateCommand(Command):
                   'path resolution is performed against such path.'))
 
     def main(self, *, args):
-        generate(
+        generate_type_hashes(
             package_name=args.package_name,
             interface_files=args.interface_files,
             include_paths=args.include_paths,
             output_path=args.output_path,
-            types=args.types,
-            typesupports=args.typesupports,
-            type_description_files=args.type_description_files
         )
