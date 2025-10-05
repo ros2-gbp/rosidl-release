@@ -2,6 +2,12 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.0 (2025-10-05)
+------------------
+* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
+* Add static_cast (`#884 <https://github.com/ros2/rosidl/issues/884>`_)
+* Contributors: Michael Carlstrom
+
 5.0.1 (2025-07-29)
 ------------------
 * Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
