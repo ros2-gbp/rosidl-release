@@ -17,9 +17,10 @@ import json
 import os
 import pathlib
 import tempfile
+from typing import Any, Dict, Generator, List, Tuple
 
 
-def package_name_from_interface_file_path(path):
+def package_name_from_interface_file_path(path: pathlib.Path) -> str:
     """
     Derive ROS package name from a ROS interface definition file path.
 
@@ -29,7 +30,7 @@ def package_name_from_interface_file_path(path):
     return pathlib.Path(os.path.abspath(path)).parents[1].name
 
 
-def dependencies_from_include_paths(include_paths):
+def dependencies_from_include_paths(include_paths: List[str]) -> List[str]:
     """
     Collect dependencies' ROS interface definition files from include paths.
 
@@ -45,7 +46,7 @@ def dependencies_from_include_paths(include_paths):
     })
 
 
-def interface_path_as_tuple(path):
+def interface_path_as_tuple(path: str) -> Tuple[pathlib.Path, pathlib.Path]:
     """
     Express interface definition file path as an (absolute prefix, relative path) tuple.
 
@@ -61,18 +62,20 @@ def interface_path_as_tuple(path):
     """
     path_as_string = str(path)
     if ':' not in path_as_string:
-        prefix = pathlib.Path.cwd()
+        prefix_path = pathlib.Path.cwd()
     else:
         prefix, _, path = path_as_string.rpartition(':')
-        prefix = pathlib.Path(os.path.abspath(prefix))
-    path = pathlib.Path(path)
-    if path.is_absolute():
+        prefix_path = pathlib.Path(os.path.abspath(prefix))
+    path_as_path = pathlib.Path(path)
+    if path_as_path.is_absolute():
         raise ValueError('Interface definition file path '
-                         f"'{path}' cannot be absolute")
-    return prefix, path
+                         f"'{path_as_path}' cannot be absolute")
+    return prefix_path, path_as_path
 
 
-def idl_tuples_from_interface_files(interface_files):
+def idl_tuples_from_interface_files(
+    interface_files: List[str]
+) -> List[str]:
     """
     Express ROS interface definition file paths as IDL tuples.
 
@@ -80,9 +83,9 @@ def idl_tuples_from_interface_files(interface_files):
     which to resolve it followed by a colon ':'. This function then applies
     the same logic as `interface_path_as_tuple`.
     """
-    idl_tuples = []
-    for path in interface_files:
-        prefix, path = interface_path_as_tuple(path)
+    idl_tuples: List[str] = []
+    for interface_path in interface_files:
+        prefix, path = interface_path_as_tuple(interface_path)
         idl_tuples.append(f'{prefix}:{path.as_posix()}')
     return idl_tuples
 
@@ -110,7 +113,7 @@ def build_type_description_tuples(idl_interface_files, type_description_files):
     return type_description_tuples
 
 
-def ros_interface_file_from_idl(idl_file):
+def ros_interface_file_from_idl(idl_file: str) -> pathlib.Path:
     """
     Return the absolute path of the ROS interface file generated from the given IDL file.
 
@@ -123,7 +126,7 @@ def ros_interface_file_from_idl(idl_file):
 
 
 @contextlib.contextmanager
-def generator_arguments_file(**kwargs):
+def generator_arguments_file(**kwargs) -> Generator[str, None, None]:
     """
     Create a temporary file containing generator arguments.
 
@@ -146,12 +149,12 @@ def generator_arguments_file(**kwargs):
 
 def legacy_generator_arguments(
     *,
-    package_name,
-    interface_files,
-    include_paths,
-    templates_path,
-    output_path
-):
+    package_name: str,
+    interface_files: List[str],
+    include_paths: List[str],
+    templates_path: str,
+    output_path: str,
+) -> Dict[str, Any]:
     """
     Return a dict containing the generator arguments for the legacy ROSIDL generator.
 
@@ -166,7 +169,7 @@ def legacy_generator_arguments(
       generator script this arguments are for
     :param output_path: Path to the output directory for generated code
     """
-    arguments = {}
+    arguments: Dict[str, Any] = {}
     arguments['package_name'] = package_name
     arguments['output_dir'] = os.path.abspath(output_path)
     arguments['template_dir'] = os.path.abspath(templates_path)
@@ -181,12 +184,12 @@ def legacy_generator_arguments(
 @contextlib.contextmanager
 def legacy_generator_arguments_file(
     *,
-    package_name,
-    interface_files,
-    include_paths,
-    templates_path,
-    output_path
-):
+    package_name: str,
+    interface_files: List[str],
+    include_paths: List[str],
+    templates_path: str,
+    output_path: str
+) -> Generator[str, None, None]:
     """
     Create a temporary file containing legacy arguments only.
 
@@ -207,10 +210,10 @@ def legacy_generator_arguments_file(
 
 def generate_visibility_control_file(
     *,
-    package_name,
-    template_path,
-    output_path
-):
+    package_name: str,
+    template_path: str,
+    output_path: str
+) -> None:
     """
     Generate a visibility control file from a template.
 

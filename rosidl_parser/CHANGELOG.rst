@@ -2,22 +2,48 @@
 Changelog for package rosidl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.6.6 (2025-08-05)
+5.1.0 (2025-10-05)
+------------------
+* Add Optional Parsing (`#883 <https://github.com/ros2/rosidl/issues/883>`_)
+* Contributors: Michael Carlstrom
+
+5.0.1 (2025-07-29)
 ------------------
 
-4.6.5 (2024-12-18)
+5.0.0 (2025-07-01)
+------------------
+* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
+* Contributors: mosfet80
+
+4.10.0 (2025-04-24)
+-------------------
+
+4.9.4 (2025-04-18)
 ------------------
 
-4.6.4 (2024-09-06)
+4.9.3 (2024-12-20)
 ------------------
 
-4.6.3 (2024-06-27)
+4.9.2 (2024-11-25)
+------------------
+* Finish adding types to `rosidl_parser` (`#832 <https://github.com/ros2/rosidl/issues/832>`_)
+* Contributors: Michael Carlstrom
+
+4.9.1 (2024-11-20)
+------------------
+* Add types to definition.py in `rosidl_parser` (`#791 <https://github.com/ros2/rosidl/issues/791>`_)
+* Contributors: Michael Carlstrom
+
+4.9.0 (2024-10-03)
 ------------------
 
-4.6.2 (2024-05-13)
+4.8.1 (2024-06-25)
 ------------------
 
-4.6.1 (2024-04-24)
+4.8.0 (2024-06-17)
+------------------
+
+4.7.0 (2024-04-26)
 ------------------
 
 4.6.0 (2024-04-16)

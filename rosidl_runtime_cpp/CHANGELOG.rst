@@ -2,34 +2,53 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.6.6 (2025-08-05)
+5.1.0 (2025-10-05)
 ------------------
 
-4.6.5 (2024-12-18)
+5.0.1 (2025-07-29)
 ------------------
 
-4.6.4 (2024-09-06)
+5.0.0 (2025-07-01)
+------------------
+* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
+* Add missing cstdint include (`#864 <https://github.com/ros2/rosidl/issues/864>`_)
+* Contributors: mosfet80, Øystein Sture
+
+4.10.0 (2025-04-24)
+-------------------
+
+4.9.4 (2025-04-18)
 ------------------
 
-4.6.3 (2024-06-27)
+4.9.3 (2024-12-20)
 ------------------
-* Suppress warnings in the benchmarks for upstream GCC false positives. (`#810 <https://github.com/ros2/rosidl/issues/810>`_) (`#816 <https://github.com/ros2/rosidl/issues/816>`_)
-  (cherry picked from commit 57940a28bd9d0aface66130f21e5a9c5945694aa)
-  Co-authored-by: Chris Lalancette <clalancette@gmail.com>
-* Contributors: mergify[bot]
 
-4.6.2 (2024-05-13)
+4.9.2 (2024-11-25)
 ------------------
-* Suppress a warning around BoundedVector. (`#803 <https://github.com/ros2/rosidl/issues/803>`_) (`#804 <https://github.com/ros2/rosidl/issues/804>`_)
+
+4.9.1 (2024-11-20)
+------------------
+
+4.9.0 (2024-10-03)
+------------------
+
+4.8.1 (2024-06-25)
+------------------
+
+4.8.0 (2024-06-17)
+------------------
+* Suppress warnings in the benchmarks for upstream GCC false positives. (`#810 <https://github.com/ros2/rosidl/issues/810>`_)
+* Contributors: Chris Lalancette
+
+4.7.0 (2024-04-26)
+------------------
+* Global use of nodiscard (`#801 <https://github.com/ros2/rosidl/issues/801>`_)
+  * Global use of nodiscard
+* Suppress a warning around BoundedVector. (`#803 <https://github.com/ros2/rosidl/issues/803>`_)
   The comment has more explanation, but in short GCC 13
   has false positives around some warnings, so we suppress
   it for BoundedVector.
-  (cherry picked from commit 858e76adb03edba00469b91d50dd5fe0dcb34236)
-  Co-authored-by: Chris Lalancette <clalancette@gmail.com>
-* Contributors: mergify[bot]
-
-4.6.1 (2024-04-24)
-------------------
+* Contributors: Chris Lalancette, Lucas Wendland
 
 4.6.0 (2024-04-16)
 ------------------
