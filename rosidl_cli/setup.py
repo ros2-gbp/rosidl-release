@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='rosidl_cli',
-    version='5.0.1',
+    version='5.1.0',
     packages=find_packages(exclude=['test']),
     extras_require={
         'completion': ['argcomplete'],
@@ -24,6 +24,7 @@ setup(
             'completion/rosidl-argcomplete.zsh'
         ]),
     ],
+    package_data={'': ['py.typed']},
     zip_safe=False,
     author='Michel Hidalgo',
     author_email='michel@ekumenlabs.com',
