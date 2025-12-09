@@ -1,0 +1,12 @@
+Source: ros-jazzy-rosidl-generator-cpp
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-jazzy-ament-cmake, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>, ros-jazzy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-rosidl-generator-cpp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, ros-jazzy-ament-cmake-core, ros-jazzy-ament-index-python, ros-jazzy-rosidl-cli, ros-jazzy-rosidl-cmake, ros-jazzy-rosidl-generator-c, ros-jazzy-rosidl-generator-type-description, ros-jazzy-rosidl-parser, ros-jazzy-rosidl-pycommon, ros-jazzy-rosidl-runtime-cpp, ros-jazzy-ros-workspace
+Description: Generate the ROS interfaces in C++.
