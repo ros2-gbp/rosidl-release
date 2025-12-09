@@ -1,0 +1,12 @@
+Source: ros-kilted-rosidl-generator-cpp
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-kilted-ament-cmake, ros-kilted-ament-lint-auto <!nocheck>, ros-kilted-ament-lint-common <!nocheck>, ros-kilted-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kilted-rosidl-generator-cpp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-dev, ros-kilted-ament-cmake-core, ros-kilted-ament-index-python, ros-kilted-rosidl-cli, ros-kilted-rosidl-cmake, ros-kilted-rosidl-generator-c, ros-kilted-rosidl-generator-type-description, ros-kilted-rosidl-parser, ros-kilted-rosidl-pycommon, ros-kilted-rosidl-runtime-cpp, ros-kilted-ros-workspace
+Description: Generate the ROS interfaces in C++.
