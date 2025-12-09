@@ -2,26 +2,15 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.1.2 (2025-12-09)
+4.9.6 (2025-12-09)
 ------------------
+* Add missing cstdint include (`#864 <https://github.com/ros2/rosidl/issues/864>`_) (`#899 <https://github.com/ros2/rosidl/issues/899>`_)
+* Contributors: mergify[bot]
 
-5.1.1 (2025-11-11)
+4.9.5 (2025-07-07)
 ------------------
-
-5.1.0 (2025-10-05)
-------------------
-
-5.0.1 (2025-07-29)
-------------------
-
-5.0.0 (2025-07-01)
-------------------
-* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
-* Add missing cstdint include (`#864 <https://github.com/ros2/rosidl/issues/864>`_)
-* Contributors: mosfet80, Øystein Sture
-
-4.10.0 (2025-04-24)
--------------------
+* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
+* Contributors: mosfet80
 
 4.9.4 (2025-04-18)
 ------------------

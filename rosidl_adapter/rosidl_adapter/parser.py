@@ -19,8 +19,6 @@ import textwrap
 from typing import Final, Iterable, List, Optional, Tuple, TYPE_CHECKING, TypedDict, Union
 
 PACKAGE_NAME_MESSAGE_TYPE_SEPARATOR: Final = '/'
-ANNOTATION_DELIMITER: Final = '@'
-OPTIONAL_ANNOTATION: Final = ANNOTATION_DELIMITER + 'optional'
 COMMENT_DELIMITER: Final = '#'
 CONSTANT_SEPARATOR: Final = '='
 ARRAY_UPPER_BOUND_TOKEN: Final = '<='
@@ -85,7 +83,6 @@ if TYPE_CHECKING:
     class Annotations(TypedDict, total=False):
         comment: List[str]
         unit: str
-        optional: bool
 
 
 class InvalidSpecification(Exception):
@@ -109,10 +106,6 @@ class InvalidFieldDefinition(InvalidSpecification):
 
 
 class UnknownMessageType(InvalidSpecification):
-    pass
-
-
-class MultipleOptionalAnnotations(InvalidSpecification):
     pass
 
 
@@ -415,7 +408,7 @@ class MessageSpecification:
         self.msg_name = msg_name
         self.annotations: 'Annotations' = {}
 
-        self.fields: list[Field] = []
+        self.fields = []
         for index, field in enumerate(fields):
             if not isinstance(field, Field):
                 raise TypeError("field %u must be a 'Field' instance" % index)
@@ -429,7 +422,7 @@ class MessageSpecification:
                 'the fields iterable contains duplicate names: %s' %
                 ', '.join(sorted(duplicate_field_names)))
 
-        self.constants: list[Constant] = []
+        self.constants = []
         for index, constant in enumerate(constants):
             if not isinstance(constant, Constant):
                 raise TypeError("constant %u must be a 'Constant' instance" %
@@ -492,11 +485,10 @@ def parse_message_string(pkg_name: str, msg_name: str,
     fields: List[Field] = []
     constants: List[Constant] = []
     last_element: Union[Field, Constant, None] = None  # either a field or a constant
-    is_optional = False
     # replace tabs with spaces
     message_string = message_string.replace('\t', ' ')
 
-    current_comments: list[str] = []
+    current_comments = []
     message_comments, lines = extract_file_level_comments(message_string)
     for line in lines:
         line = line.rstrip()
@@ -527,17 +519,6 @@ def parse_message_string(pkg_name: str, msg_name: str,
             current_comments.append(comment)
 
             line = line.rstrip()
-            if not line:
-                continue
-
-        if line.startswith(OPTIONAL_ANNOTATION):
-            if is_optional:
-                raise MultipleOptionalAnnotations(
-                    f'Already declared @optional. Error detected with {line}.')
-
-            line = line[len(OPTIONAL_ANNOTATION):].lstrip()
-            is_optional = True
-
             if not line:
                 continue
 
@@ -574,9 +555,6 @@ def parse_message_string(pkg_name: str, msg_name: str,
             last_element = constants[-1]
 
         # add "unused" comments to the field / constant
-        if is_optional:
-            last_element.annotations['optional'] = is_optional
-        is_optional = False
         comment_lines = last_element.annotations.setdefault(
             'comment', [])
         comment_lines += current_comments

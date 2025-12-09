@@ -2,29 +2,13 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.1.2 (2025-12-09)
+4.9.6 (2025-12-09)
 ------------------
+* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_) (`#879 <https://github.com/ros2/rosidl/issues/879>`_)
+* Contributors: mergify[bot]
 
-5.1.1 (2025-11-11)
+4.9.5 (2025-07-07)
 ------------------
-
-5.1.0 (2025-10-05)
-------------------
-* Fix @optional for string literals (`#905 <https://github.com/ros2/rosidl/issues/905>`_)
-* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
-* Add Optional Parsing (`#883 <https://github.com/ros2/rosidl/issues/883>`_)
-* Contributors: Michael Carlstrom
-
-5.0.1 (2025-07-29)
-------------------
-* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
-* Contributors: mosfet80
-
-5.0.0 (2025-07-01)
-------------------
-
-4.10.0 (2025-04-24)
--------------------
 
 4.9.4 (2025-04-18)
 ------------------

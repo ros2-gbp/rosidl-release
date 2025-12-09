@@ -2,30 +2,15 @@
 Changelog for package rosidl_cmake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.1.2 (2025-12-09)
+4.9.6 (2025-12-09)
 ------------------
-* Add `rosidl_auto_generate_interfaces` function (`#918 <https://github.com/ros2/rosidl/issues/918>`_)
-* Contributors: Kotaro Yoshimoto
+* Add `rosidl_auto_generate_inetrfaces` function (`#918 <https://github.com/ros2/rosidl/issues/918>`_) (`#920 <https://github.com/ros2/rosidl/issues/920>`_)
+* Contributors: mergify[bot]
 
-5.1.1 (2025-11-11)
+4.9.5 (2025-07-07)
 ------------------
-
-5.1.0 (2025-10-05)
-------------------
-* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
-* remove deprecated rosidl_target_interfaces. (`#898 <https://github.com/ros2/rosidl/issues/898>`_)
-* Contributors: Michael Carlstrom, Tomoya Fujita
-
-5.0.1 (2025-07-29)
-------------------
-
-5.0.0 (2025-07-01)
-------------------
-* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
+* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
 * Contributors: mosfet80
-
-4.10.0 (2025-04-24)
--------------------
 
 4.9.4 (2025-04-18)
 ------------------

@@ -2,31 +2,16 @@
 Changelog for package rosidl_generator_type_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.1.2 (2025-12-09)
+4.9.6 (2025-12-09)
 ------------------
-* Add missing dependency on ament_cmake_pytest (`#914 <https://github.com/ros2/rosidl/issues/914>`_)
-* Contributors: Scott K Logan
+* Add missing dependency on ament_cmake_pytest (`#914 <https://github.com/ros2/rosidl/issues/914>`_) (`#915 <https://github.com/ros2/rosidl/issues/915>`_)
+* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_) (`#879 <https://github.com/ros2/rosidl/issues/879>`_)
+* Contributors: mergify[bot]
 
-5.1.1 (2025-11-11)
+4.9.5 (2025-07-07)
 ------------------
-
-5.1.0 (2025-10-05)
-------------------
-* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
-* Contributors: Michael Carlstrom
-
-5.0.1 (2025-07-29)
-------------------
-* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
-* Contributors: mosfet80
-
-5.0.0 (2025-07-01)
-------------------
-* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_)
-* Contributors: Francisco Rossi
-
-4.10.0 (2025-04-24)
--------------------
+* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#866 <https://github.com/ros2/rosidl/issues/866>`_)
+* Contributors: Christophe Bedard, Francisco Rossi, Michel Hidalgo
 
 4.9.4 (2025-04-18)
 ------------------
