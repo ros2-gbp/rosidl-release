@@ -5,7 +5,7 @@ package_name = 'rosidl_pycommon'
 
 setup(
     name=package_name,
-    version='4.9.5',
+    version='4.9.6',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -20,7 +20,11 @@ setup(
     maintainer_email='aditya.pande@openrobotics.org, brandon@openrobotics.org, dharini@openrobotics.org, sloretz@openrobotics.org',  # noqa: E501
     description='Common Python functions used by rosidl packages.',
     license='Apache License, Version 2.0',
-    tests_require=['pytest'],
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
         'console_scripts': [
         ],
