@@ -2,6 +2,11 @@
 Changelog for package rosidl_cmake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.2 (2025-12-09)
+------------------
+* Add `rosidl_auto_generate_interfaces` function (`#918 <https://github.com/ros2/rosidl/issues/918>`_)
+* Contributors: Kotaro Yoshimoto
+
 5.1.1 (2025-11-11)
 ------------------
 
