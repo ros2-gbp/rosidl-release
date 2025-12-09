@@ -2,38 +2,31 @@
 Changelog for package rosidl_typesupport_introspection_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.6 (2025-12-09)
+4.6.7 (2025-12-09)
 ------------------
 
-4.9.5 (2025-07-07)
-------------------
-* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
-* Contributors: mosfet80
-
-4.9.4 (2025-04-18)
+4.6.6 (2025-08-05)
 ------------------
 
-4.9.3 (2024-12-20)
+4.6.5 (2024-12-18)
+------------------
+* Suppress false positive warnings from gcc. (`#811 <https://github.com/ros2/rosidl/issues/811>`_) (`#827 <https://github.com/ros2/rosidl/issues/827>`_)
+  This is one of the last warnings that is preventing us
+  from getting to yellow in release builds.
+  (cherry picked from commit ec7745ecedfe9bf9776d041a9d87a5ca3b88d18e)
+  Co-authored-by: Chris Lalancette <clalancette@gmail.com>
+* Contributors: mergify[bot]
+
+4.6.4 (2024-09-06)
 ------------------
 
-4.9.2 (2024-11-25)
+4.6.3 (2024-06-27)
 ------------------
 
-4.9.1 (2024-11-20)
+4.6.2 (2024-05-13)
 ------------------
 
-4.9.0 (2024-10-03)
-------------------
-
-4.8.1 (2024-06-25)
-------------------
-
-4.8.0 (2024-06-17)
-------------------
-* Suppress false positive warnings from gcc. (`#811 <https://github.com/ros2/rosidl/issues/811>`_)
-* Contributors: Chris Lalancette
-
-4.7.0 (2024-04-26)
+4.6.1 (2024-04-24)
 ------------------
 
 4.6.0 (2024-04-16)

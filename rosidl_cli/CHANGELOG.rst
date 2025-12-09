@@ -2,41 +2,49 @@
 Changelog for package rosidl_cli
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.6 (2025-12-09)
+4.6.7 (2025-12-09)
 ------------------
-* remove importlib-metadata (`#917 <https://github.com/ros2/rosidl/issues/917>`_) (`#919 <https://github.com/ros2/rosidl/issues/919>`_)
-* fix setuptools deprecations (`#877 <https://github.com/ros2/rosidl/issues/877>`_) (`#895 <https://github.com/ros2/rosidl/issues/895>`_)
+* fix setuptools deprecations (`#877 <https://github.com/ros2/rosidl/issues/877>`_) (`#896 <https://github.com/ros2/rosidl/issues/896>`_)
 * Contributors: mergify[bot]
 
-4.9.5 (2025-07-07)
+4.6.6 (2025-08-05)
 ------------------
-* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#866 <https://github.com/ros2/rosidl/issues/866>`_)
-* Contributors: Christophe Bedard, Francisco Rossi, Michel Hidalgo
+* rosidl_cli: Add type description support (backport `#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#867 <https://github.com/ros2/rosidl/issues/867>`_)
+  * rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_)
+  * Add type description support to rosidl_cli
+  * Fix typing annotation
+  * Please flake8, mypy
+  * Please flake8 take 2
+  ---------
+  Co-authored-by: Michel Hidalgo <michel@ekumenlabs.com>
+  Co-authored-by: mergify[bot] <37929162+mergify[bot]@users.noreply.github.com>
+  Co-authored-by: Christophe Bedard <bedard.christophe@gmail.com>
+  (cherry picked from commit c9a3084d8570ee7d1f3a35b81d7cf9259aee6dbc)
+  # Conflicts:
+  #	rosidl_cli/rosidl_cli/cli.py
+  #	rosidl_cli/rosidl_cli/command/generate/api.py
+  #	rosidl_cli/rosidl_cli/command/generate/extensions.py
+  #	rosidl_cli/rosidl_cli/command/helpers.py
+  * Solve conflicts (`#868 <https://github.com/ros2/rosidl/issues/868>`_)
+  * Please flake8 (`#870 <https://github.com/ros2/rosidl/issues/870>`_)
+  ---------
+  Co-authored-by: Francisco Rossi <50388097+frneer@users.noreply.github.com>
+  Co-authored-by: Michel Hidalgo <michel@ekumenlabs.com>
+* Contributors: mergify[bot]
 
-4.9.4 (2025-04-18)
+4.6.5 (2024-12-18)
 ------------------
 
-4.9.3 (2024-12-20)
+4.6.4 (2024-09-06)
 ------------------
 
-4.9.2 (2024-11-25)
+4.6.3 (2024-06-27)
 ------------------
 
-4.9.1 (2024-11-20)
-------------------
-* Rosidl cli types with `specs_set` fix (`#831 <https://github.com/ros2/rosidl/issues/831>`_)
-* Contributors: Chris Lalancette, Michael Carlstrom
-
-4.9.0 (2024-10-03)
+4.6.2 (2024-05-13)
 ------------------
 
-4.8.1 (2024-06-25)
-------------------
-
-4.8.0 (2024-06-17)
-------------------
-
-4.7.0 (2024-04-26)
+4.6.1 (2024-04-24)
 ------------------
 
 4.6.0 (2024-04-16)

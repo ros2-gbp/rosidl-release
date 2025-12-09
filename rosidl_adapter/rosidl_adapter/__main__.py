@@ -16,5 +16,4 @@ import sys
 
 from rosidl_adapter.main import main
 
-main()
-sys.exit()
+sys.exit(main())

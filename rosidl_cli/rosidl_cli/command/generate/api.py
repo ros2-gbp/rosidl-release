@@ -15,21 +15,20 @@
 import inspect
 import os
 import pathlib
-from typing import Any, Callable, Dict, List, Optional
 
-from .extensions import GenerateCommandExtension, load_type_extensions, load_typesupport_extensions
+from .extensions import load_type_extensions, load_typesupport_extensions
 
 
 def generate(
     *,
-    package_name: str,
-    interface_files: List[str],
-    include_paths: Optional[List[str]] = None,
-    output_path: Optional[pathlib.Path] = None,
-    types: Optional[List[str]] = None,
-    typesupports: Optional[List[str]] = None,
-    type_description_files: Optional[List[str]] = None
-) -> List[List[str]]:
+    package_name,
+    interface_files,
+    include_paths=None,
+    output_path=None,
+    types=None,
+    typesupports=None,
+    type_description_files=None
+):
     """
     Generate source code from interface definition files.
 
@@ -63,7 +62,7 @@ def generate(
     :returns: list of lists of paths to generated source code files,
         one group per type or type support extension invoked
     """
-    extensions: List[GenerateCommandExtension] = []
+    extensions = []
 
     unspecific_generation = not types and not typesupports
 
@@ -88,7 +87,7 @@ def generate(
     else:
         os.makedirs(output_path, exist_ok=True)
 
-    def extra_kwargs(func: Callable, **kwargs: Any) -> Dict[str, Any]:
+    def extra_kwargs(func, **kwargs):
         matched_kwargs = {}
         signature = inspect.signature(func)
         for name, value in kwargs.items():

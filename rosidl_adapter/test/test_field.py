@@ -19,7 +19,7 @@ from rosidl_adapter.parser import InvalidValue
 from rosidl_adapter.parser import Type
 
 
-def test_field_constructor() -> None:
+def test_field_constructor():
     type_ = Type('bool')
     field = Field(type_, 'foo')
     assert field.type == type_
@@ -30,10 +30,10 @@ def test_field_constructor() -> None:
     assert field.default_value
 
     with pytest.raises(TypeError):
-        Field('type', 'foo')  # type: ignore[arg-type]
+        Field('type', 'foo')
 
     with pytest.raises(NameError):
-        Field(type_, 'foo bar')  # type: ignore[arg-type]
+        Field(type_, 'foo bar')
 
     type_ = Type('bool[2]')
     field = Field(type_, 'foo', '[false, true]')
@@ -48,7 +48,7 @@ def test_field_constructor() -> None:
         Field(type_, 'foo', '[false, true]')
 
 
-def test_field_methods() -> None:
+def test_field_methods():
     assert Field(Type('bool'), 'foo') != 23
 
     assert (Field(Type('bool'), 'foo', '1') ==

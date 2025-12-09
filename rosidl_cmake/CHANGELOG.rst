@@ -2,38 +2,27 @@
 Changelog for package rosidl_cmake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.6 (2025-12-09)
+4.6.7 (2025-12-09)
 ------------------
-* Add `rosidl_auto_generate_inetrfaces` function (`#918 <https://github.com/ros2/rosidl/issues/918>`_) (`#920 <https://github.com/ros2/rosidl/issues/920>`_)
+* Add `rosidl_auto_generate_inetrfaces` function (`#918 <https://github.com/ros2/rosidl/issues/918>`_) (`#921 <https://github.com/ros2/rosidl/issues/921>`_)
 * Contributors: mergify[bot]
 
-4.9.5 (2025-07-07)
-------------------
-* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
-* Contributors: mosfet80
-
-4.9.4 (2025-04-18)
+4.6.6 (2025-08-05)
 ------------------
 
-4.9.3 (2024-12-20)
+4.6.5 (2024-12-18)
 ------------------
 
-4.9.2 (2024-11-25)
+4.6.4 (2024-09-06)
 ------------------
 
-4.9.1 (2024-11-20)
+4.6.3 (2024-06-27)
 ------------------
 
-4.9.0 (2024-10-03)
+4.6.2 (2024-05-13)
 ------------------
 
-4.8.1 (2024-06-25)
-------------------
-
-4.8.0 (2024-06-17)
-------------------
-
-4.7.0 (2024-04-26)
+4.6.1 (2024-04-24)
 ------------------
 
 4.6.0 (2024-04-16)

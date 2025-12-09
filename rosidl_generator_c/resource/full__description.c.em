@@ -1,6 +1,5 @@
 @# Included from rosidl_generator_c/resource/idl__description.c.em
 @{
-from collections import OrderedDict
 from rosidl_generator_c import escape_string
 from rosidl_generator_c import idl_structure_type_to_c_include_prefix
 from rosidl_generator_c import type_hash_to_c_definition
@@ -32,7 +31,7 @@ def utf8_encode(value_string):
   return escape_string(repr(value_string.encode('utf-8'))[2:-1])
 
 implicit_type_names = set(td['type_description']['type_name'] for td, _ in implicit_type_descriptions)
-includes = OrderedDict()
+includes = set()
 toplevel_msg, _ = toplevel_type_description
 
 for referenced_td in toplevel_msg['referenced_type_descriptions']:
@@ -41,7 +40,7 @@ for referenced_td in toplevel_msg['referenced_type_descriptions']:
     names = referenced_td['type_name'].split('/')
     _type = NamespacedType(names[:-1], names[-1])
     include_prefix = idl_structure_type_to_c_include_prefix(_type, 'detail')
-    includes[include_prefix + '__functions.h'] = None
+    includes.add(include_prefix + '__functions.h')
 
 full_type_descriptions = [toplevel_type_description] + implicit_type_descriptions
 full_type_names = [t['type_description']['type_name'] for t, _ in full_type_descriptions]

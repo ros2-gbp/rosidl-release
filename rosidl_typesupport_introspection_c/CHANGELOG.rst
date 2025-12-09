@@ -2,45 +2,50 @@
 Changelog for package rosidl_typesupport_introspection_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.6 (2025-12-09)
+4.6.7 (2025-12-09)
 ------------------
-* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_) (`#879 <https://github.com/ros2/rosidl/issues/879>`_)
+
+4.6.6 (2025-08-05)
+------------------
+* rosidl_cli: Add type description support (backport `#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#867 <https://github.com/ros2/rosidl/issues/867>`_)
+  * rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_)
+  * Add type description support to rosidl_cli
+  * Fix typing annotation
+  * Please flake8, mypy
+  * Please flake8 take 2
+  ---------
+  Co-authored-by: Michel Hidalgo <michel@ekumenlabs.com>
+  Co-authored-by: mergify[bot] <37929162+mergify[bot]@users.noreply.github.com>
+  Co-authored-by: Christophe Bedard <bedard.christophe@gmail.com>
+  (cherry picked from commit c9a3084d8570ee7d1f3a35b81d7cf9259aee6dbc)
+  # Conflicts:
+  #	rosidl_cli/rosidl_cli/cli.py
+  #	rosidl_cli/rosidl_cli/command/generate/api.py
+  #	rosidl_cli/rosidl_cli/command/generate/extensions.py
+  #	rosidl_cli/rosidl_cli/command/helpers.py
+  * Solve conflicts (`#868 <https://github.com/ros2/rosidl/issues/868>`_)
+  * Please flake8 (`#870 <https://github.com/ros2/rosidl/issues/870>`_)
+  ---------
+  Co-authored-by: Francisco Rossi <50388097+frneer@users.noreply.github.com>
+  Co-authored-by: Michel Hidalgo <michel@ekumenlabs.com>
 * Contributors: mergify[bot]
 
-4.9.5 (2025-07-07)
-------------------
-* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#866 <https://github.com/ros2/rosidl/issues/866>`_)
-* Contributors: Christophe Bedard, Francisco Rossi, Michel Hidalgo
-
-4.9.4 (2025-04-18)
-------------------
-* Switch to ament_cmake_ros_core package (`#860 <https://github.com/ros2/rosidl/issues/860>`_)
-* Contributors: Scott K Logan
-
-4.9.3 (2024-12-20)
+4.6.5 (2024-12-18)
 ------------------
 
-4.9.2 (2024-11-25)
+4.6.4 (2024-09-06)
 ------------------
 
-4.9.1 (2024-11-20)
+4.6.3 (2024-06-27)
 ------------------
 
-4.9.0 (2024-10-03)
-------------------
-* Add types `rosidl_pycommon` (`#824 <https://github.com/ros2/rosidl/issues/824>`_)
-* Contributors: Michael Carlstrom
-
-4.8.1 (2024-06-25)
+4.6.2 (2024-05-13)
 ------------------
 
-4.8.0 (2024-06-17)
+4.6.1 (2024-04-24)
 ------------------
-
-4.7.0 (2024-04-26)
-------------------
-* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_)
-* Contributors: Alejandro Hernández Cordero
+* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_) (`#802 <https://github.com/ros2/rosidl/issues/802>`_)
+* Contributors: mergify[bot]
 
 4.6.0 (2024-04-16)
 ------------------

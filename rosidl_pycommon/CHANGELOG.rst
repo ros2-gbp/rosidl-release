@@ -2,41 +2,31 @@
 Changelog for package rosidl_pycommon
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.6 (2025-12-09)
+4.6.7 (2025-12-09)
 ------------------
-* fix setuptools deprecation (`#880 <https://github.com/ros2/rosidl/issues/880>`_) (`#892 <https://github.com/ros2/rosidl/issues/892>`_)
+* fix setuptools deprecation (`#880 <https://github.com/ros2/rosidl/issues/880>`_) (`#893 <https://github.com/ros2/rosidl/issues/893>`_)
 * Contributors: mergify[bot]
 
-4.9.5 (2025-07-07)
+4.6.6 (2025-08-05)
 ------------------
 
-4.9.4 (2025-04-18)
+4.6.5 (2024-12-18)
+------------------
+* Support empy3 and empy4 (`#821 <https://github.com/ros2/rosidl/issues/821>`_) (`#837 <https://github.com/ros2/rosidl/issues/837>`_)
+  (cherry picked from commit e25750db3d7735947cad24f630d135ba02db5e59)
+  Co-authored-by: Alejandro Hernández Cordero <ahcorde@gmail.com>
+* Contributors: mergify[bot]
+
+4.6.4 (2024-09-06)
 ------------------
 
-4.9.3 (2024-12-20)
+4.6.3 (2024-06-27)
 ------------------
 
-4.9.2 (2024-11-25)
+4.6.2 (2024-05-13)
 ------------------
 
-4.9.1 (2024-11-20)
-------------------
-* Add test_xmllint to rosidl_pycommon. (`#833 <https://github.com/ros2/rosidl/issues/833>`_)
-* Contributors: Chris Lalancette
-
-4.9.0 (2024-10-03)
-------------------
-* Add types `rosidl_pycommon` (`#824 <https://github.com/ros2/rosidl/issues/824>`_)
-* Support empy3 and empy4 (`#821 <https://github.com/ros2/rosidl/issues/821>`_)
-* Contributors: Alejandro Hernández Cordero, Michael Carlstrom
-
-4.8.1 (2024-06-25)
-------------------
-
-4.8.0 (2024-06-17)
-------------------
-
-4.7.0 (2024-04-26)
+4.6.1 (2024-04-24)
 ------------------
 
 4.6.0 (2024-04-16)
