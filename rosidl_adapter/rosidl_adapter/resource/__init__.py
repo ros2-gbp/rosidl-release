@@ -18,12 +18,6 @@ import sys
 
 import em
 
-try:
-    from em import Configuration
-    em_has_configuration = True
-except ImportError:
-    em_has_configuration = False
-
 
 def expand_template(template_name, data, output_file, encoding='utf-8'):
     content = evaluate_template(template_name, data)
@@ -51,31 +45,18 @@ def evaluate_template(template_name, data):
 
     output = StringIO()
     try:
-        if em_has_configuration:
-            config = Configuration(
-                defaultRoot=template_path,
-                defaultStdout=output,
-                deleteOnError=True,
-                rawErrors=True,
-                useProxy=True)
-            _interpreter = em.Interpreter(
-                config=config,
-                dispatcher=False)
-        else:
-            _interpreter = em.Interpreter(
-                output=output,
-                options={
-                    em.BUFFERED_OPT: True,
-                    em.RAW_OPT: True,
-                })
+        _interpreter = em.Interpreter(
+            output=output,
+            options={
+                em.BUFFERED_OPT: True,
+                em.RAW_OPT: True,
+            })
+
         with open(template_path, 'r') as h:
             content = h.read()
         _interpreter.invoke(
             'beforeFile', name=template_name, file=h, locals=data)
-        if em_has_configuration:
-            _interpreter.string(content, locals=data)
-        else:
-            _interpreter.string(content, template_path, locals=data)
+        _interpreter.string(content, template_path, locals=data)
         _interpreter.invoke('afterFile')
 
         return output.getvalue()
@@ -85,8 +66,7 @@ def evaluate_template(template_name, data):
             file=sys.stderr)
         raise
     finally:
-        if _interpreter is not None:
-            _interpreter.shutdown()
+        _interpreter.shutdown()
         _interpreter = None
 
 
@@ -98,10 +78,7 @@ def _evaluate_template(template_name, **kwargs):
             'beforeInclude', name=template_path, file=h, locals=kwargs)
         content = h.read()
     try:
-        if em_has_configuration:
-            _interpreter.string(content, locals=kwargs)
-        else:
-            _interpreter.string(content, template_path, kwargs)
+        _interpreter.string(content, template_path, kwargs)
     except Exception as e:  # noqa: F841
         print(
             f"{e.__class__.__name__} processing template '{template_name}': "

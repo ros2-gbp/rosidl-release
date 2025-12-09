@@ -38,7 +38,6 @@ BENCHMARK_DEFINE_F(PerformanceTest, string_assign)(benchmark::State & st)
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     rosidl_runtime_c__String__assignn(&s, data.c_str(), len);
   }
 
@@ -65,7 +64,6 @@ BENCHMARK_DEFINE_F(PerformanceTest, string_resize_assign)(benchmark::State & st)
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     rosidl_runtime_c__String__assignn(&s, data.c_str(), len);
     rosidl_runtime_c__String__assignn(&s, data.c_str(), 0);
   }
@@ -92,7 +90,6 @@ BENCHMARK_DEFINE_F(PerformanceTest, u16string_assign)(benchmark::State & st)
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     rosidl_runtime_c__U16String__assignn_from_char(&s, data.c_str(), len);
   }
 
@@ -118,7 +115,6 @@ BENCHMARK_DEFINE_F(PerformanceTest, u16string_resize_assign)(benchmark::State & 
   reset_heap_counters();
 
   for (auto _ : st) {
-    (void)_;
     rosidl_runtime_c__U16String__assignn_from_char(&s, data.c_str(), len);
     rosidl_runtime_c__U16String__resize(&s, 0);
   }

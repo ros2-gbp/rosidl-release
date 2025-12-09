@@ -16,7 +16,6 @@ import argparse
 import signal
 
 from rosidl_cli.command.generate import GenerateCommand
-from rosidl_cli.command.hash import HashCommand
 from rosidl_cli.command.translate import TranslateCommand
 from rosidl_cli.common import get_first_line_doc
 
@@ -75,7 +74,7 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
 
-    commands = [GenerateCommand(), TranslateCommand(), HashCommand()]
+    commands = [GenerateCommand(), TranslateCommand()]
 
     # add arguments for command extension(s)
     add_subparsers(

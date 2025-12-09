@@ -2,125 +2,22 @@
 Changelog for package rosidl_typesupport_introspection_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.6.7 (2025-12-09)
+3.1.8 (2025-12-09)
 ------------------
 
-4.6.6 (2025-08-05)
+3.1.7 (2025-07-16)
 ------------------
-* rosidl_cli: Add type description support (backport `#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#867 <https://github.com/ros2/rosidl/issues/867>`_)
-  * rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_)
-  * Add type description support to rosidl_cli
-  * Fix typing annotation
-  * Please flake8, mypy
-  * Please flake8 take 2
-  ---------
-  Co-authored-by: Michel Hidalgo <michel@ekumenlabs.com>
-  Co-authored-by: mergify[bot] <37929162+mergify[bot]@users.noreply.github.com>
-  Co-authored-by: Christophe Bedard <bedard.christophe@gmail.com>
-  (cherry picked from commit c9a3084d8570ee7d1f3a35b81d7cf9259aee6dbc)
-  # Conflicts:
-  #	rosidl_cli/rosidl_cli/cli.py
-  #	rosidl_cli/rosidl_cli/command/generate/api.py
-  #	rosidl_cli/rosidl_cli/command/generate/extensions.py
-  #	rosidl_cli/rosidl_cli/command/helpers.py
-  * Solve conflicts (`#868 <https://github.com/ros2/rosidl/issues/868>`_)
-  * Please flake8 (`#870 <https://github.com/ros2/rosidl/issues/870>`_)
-  ---------
-  Co-authored-by: Francisco Rossi <50388097+frneer@users.noreply.github.com>
-  Co-authored-by: Michel Hidalgo <michel@ekumenlabs.com>
+
+3.1.6 (2024-11-25)
+------------------
+
+3.1.5 (2023-07-18)
+------------------
+
+3.1.4 (2022-11-07)
+------------------
+* Add namespaced ALIAS target to easily consume generated libraries via add_subdirectory (`#605 <https://github.com/ros2/rosidl/issues/605>`_) (`#692 <https://github.com/ros2/rosidl/issues/692>`_)
 * Contributors: mergify[bot]
-
-4.6.5 (2024-12-18)
-------------------
-
-4.6.4 (2024-09-06)
-------------------
-
-4.6.3 (2024-06-27)
-------------------
-
-4.6.2 (2024-05-13)
-------------------
-
-4.6.1 (2024-04-24)
-------------------
-* Fixed warnings - strict-prototypes (`#800 <https://github.com/ros2/rosidl/issues/800>`_) (`#802 <https://github.com/ros2/rosidl/issues/802>`_)
-* Contributors: mergify[bot]
-
-4.6.0 (2024-04-16)
-------------------
-* Adding interfaces to support `@key` annotation (`#796 <https://github.com/ros2/rosidl/issues/796>`_)
-  Co-authored-by: Mario Dominguez <mariodominguez@eprosima.com>
-* Contributors: Miguel Company
-
-4.5.2 (2024-03-27)
-------------------
-* Set hints to find the python version we actually want. (`#785 <https://github.com/ros2/rosidl/issues/785>`_)
-* Contributors: Chris Lalancette
-
-4.5.1 (2024-02-07)
-------------------
-
-4.5.0 (2023-12-26)
-------------------
-
-4.4.2 (2023-11-06)
-------------------
-
-4.4.1 (2023-10-04)
-------------------
-
-4.4.0 (2023-09-07)
-------------------
-* Add rosidl_find_package_idl helper function (`#754 <https://github.com/ros2/rosidl/issues/754>`_)
-* Contributors: Mike Purvis
-
-4.3.1 (2023-08-21)
-------------------
-* update comment (`#757 <https://github.com/ros2/rosidl/issues/757>`_)
-* Contributors: Chen Lihui
-
-4.3.0 (2023-07-11)
-------------------
-
-4.2.0 (2023-06-07)
-------------------
-
-4.1.1 (2023-05-11)
-------------------
-
-4.1.0 (2023-04-28)
-------------------
-
-4.0.0 (2023-04-11)
-------------------
-* Type Description Codegen and Typesupport  (rep2011) (`#727 <https://github.com/ros2/rosidl/issues/727>`_)
-* Expose type hash on typesupports (rep2011) (`#729 <https://github.com/ros2/rosidl/issues/729>`_)
-* Type hash in interface codegen (rep2011) (`#722 <https://github.com/ros2/rosidl/issues/722>`_)
-* Contributors: Emerson Knapp
-
-3.4.0 (2023-02-13)
-------------------
-* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
-* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
-* Contributors: Audrow Nash, Brian
-
-3.3.1 (2022-11-02)
-------------------
-
-3.3.0 (2022-09-08)
-------------------
-* Move rosidl_cmake Python module to a new package rosidl_pycommon (`#696 <https://github.com/ros2/rosidl/issues/696>`_)
-  Deprecate the Python module in rosidl_cmake and move the implementation to the new package rosidl_pycommon.
-* Fix build export dependencies in C introspection package (`#695 <https://github.com/ros2/rosidl/issues/695>`_)
-* Add namespaced ALIAS target to easily consume generated libraries via add_subdirectory (`#605 <https://github.com/ros2/rosidl/issues/605>`_)
-* Contributors: Jacob Perron, Silvio Traversaro
-
-3.2.1 (2022-06-21)
-------------------
-
-3.2.0 (2022-05-04)
-------------------
 
 3.1.3 (2022-04-08)
 ------------------
