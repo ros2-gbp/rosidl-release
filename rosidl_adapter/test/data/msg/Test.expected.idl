@@ -1,0 +1,65 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from test_msgs/msg/Test.msg
+// generated code does not contain a copyright notice
+
+
+module test_msgs {
+  module msg {
+    module Test_Constants {
+      @optional
+      const float INLINE_CONSTANT = 32.0;
+      @optional
+      const string OPTIONAL_STRING_CONST = "@optional";
+    };
+    @verbatim (language="comment", text=
+      "msg level doc")
+    struct Test {
+      @verbatim (language="comment", text=
+        "field level doc")
+      boolean bool_value;
+
+      @verbatim (language="comment", text=
+        "field level doc, style 2")
+      octet byte_value;
+
+      @verbatim (language="comment", text=
+        "combined styles" "\n"
+        "combined styles, part 2")
+      uint8 char_value;
+
+      float float32_value;
+
+      double float64_value;
+
+      int8 int8_value;
+
+      uint8 uint8_value;
+
+      int16 int16_value;
+
+      uint16 uint16_value;
+
+      int32 int32_value;
+
+      uint32 uint32_value;
+
+      int64 int64_value;
+
+      uint64 uint64_value;
+
+      @optional
+      float multiline_optional;
+
+      @optional
+      float inline_optional;
+
+      @optional
+      @default (value=32.0)
+      float inline_default_optional;
+
+      @optional
+      @default (value="@optional")
+      string optional_default_string;
+    };
+  };
+};
