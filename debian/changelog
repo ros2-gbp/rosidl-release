@@ -1,0 +1,394 @@
+ros-kilted-rosidl-generator-type-description (4.9.6-1noble) noble; urgency=high
+
+  * Add missing dependency on ament_cmake_pytest (#914 <https://github.com/ros2/rosidl/issues/914>) (#915 <https://github.com/ros2/rosidl/issues/915>)
+  * Uniform cmake minVersion (#849 <https://github.com/ros2/rosidl/issues/849>) (#879 <https://github.com/ros2/rosidl/issues/879>)
+  * Contributors: mergify[bot]
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 08 Dec 2025 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.9.5-1noble) noble; urgency=high
+
+  * rosidl_cli: Add type description support (#857 <https://github.com/ros2/rosidl/issues/857>) (#866 <https://github.com/ros2/rosidl/issues/866>)
+  * Contributors: Christophe Bedard, Francisco Rossi, Michel Hidalgo
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 06 Jul 2025 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.9.4-1noble) noble; urgency=high
+
+  * Switch to ament_cmake_ros_core package (#856 <https://github.com/ros2/rosidl/issues/856>)
+  * Contributors: Michael Carroll
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 17 Apr 2025 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.9.3-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 19 Dec 2024 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.9.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 24 Nov 2024 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.9.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 19 Nov 2024 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.9.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 02 Oct 2024 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.8.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 24 Jun 2024 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.8.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 16 Jun 2024 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.7.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 25 Apr 2024 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.6.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 15 Apr 2024 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.5.2-1noble) noble; urgency=high
+
+  * Set hints to find the python version we actually want. (#785 <https://github.com/ros2/rosidl/issues/785>)
+  * Contributors: Chris Lalancette
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 26 Mar 2024 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.5.1-1noble) noble; urgency=high
+
+  * Remove unnecessary parentheses. (#783 <https://github.com/ros2/rosidl/issues/783>)
+  * Contributors: Chris Lalancette
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 06 Feb 2024 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.5.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 25 Dec 2023 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.4.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 05 Nov 2023 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.4.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 03 Oct 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.4.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 06 Sep 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.3.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 20 Aug 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.3.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 10 Jul 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.2.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 06 Jun 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.1.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 10 May 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.1.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 27 Apr 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (4.0.0-1noble) noble; urgency=high
+
+  * Type Description Codegen and Typesupport  (rep2011) (#727 <https://github.com/ros2/rosidl/issues/727>)
+  * Expose type hash on typesupports (rep2011) (#729 <https://github.com/ros2/rosidl/issues/729>)
+  * Type hash in interface codegen (rep2011) (#722 <https://github.com/ros2/rosidl/issues/722>)
+  * Contributors: Emerson Knapp
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 10 Apr 2023 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.4.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 12 Feb 2023 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.3.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 01 Nov 2022 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.3.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 07 Sep 2022 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.2.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 20 Jun 2022 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.2.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 03 May 2022 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.1.3-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 07 Apr 2022 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.1.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 04 Apr 2022 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.1.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 27 Mar 2022 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.1.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 28 Feb 2022 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.0.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 12 Jan 2022 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (3.0.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 04 Nov 2021 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.5.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 09 Aug 2021 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.4.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 11 Jul 2021 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.3.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 10 Jun 2021 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.2.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 05 Apr 2021 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.2.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 17 Mar 2021 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.1.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 08 Mar 2021 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.0.3-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 24 Jan 2021 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.0.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 07 Dec 2020 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.0.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 27 Sep 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (2.0.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 23 Sep 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (1.1.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 16 Aug 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (1.0.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 02 Jun 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (1.0.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 21 May 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.9.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 18 May 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.9.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 07 May 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.9.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 23 Apr 2020 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.8.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 16 Jan 2020 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.8.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 22 Oct 2019 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.8.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Mon, 23 Sep 2019 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.7.3-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 28 May 2019 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.7.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Sun, 19 May 2019 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.7.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Tue, 07 May 2019 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.7.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 11 Apr 2019 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.6.3-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 06 Feb 2019 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.6.2-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 06 Dec 2018 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.6.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 05 Dec 2018 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.6.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 14 Nov 2018 23:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.5.1-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Wed, 27 Jun 2018 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.5.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Fri, 22 Jun 2018 22:00:00 -0000
+
+ros-kilted-rosidl-generator-type-description (0.4.0-1noble) noble; urgency=high
+
+
+
+ -- Emerson Knapp <me@emersonknapp.com>  Thu, 07 Dec 2017 23:00:00 -0000
+
+
