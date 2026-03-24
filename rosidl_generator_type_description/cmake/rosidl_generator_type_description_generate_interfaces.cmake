@@ -78,6 +78,12 @@ rosidl_write_generator_arguments(
   INCLUDE_PATHS "${_dependency_paths}"
 )
 
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.27)
+  set(_dep_explicit_only DEPENDS_EXPLICIT_ONLY)
+else()
+  set(_dep_explicit_only "")
+endif()
+
 # Create custom command and target to generate the hash output
 add_custom_command(
   COMMAND Python3::Interpreter
@@ -88,6 +94,7 @@ add_custom_command(
   DEPENDS ${target_dependencies}
   COMMENT "Generating type hashes for ROS interfaces"
   VERBATIM
+  ${_dep_explicit_only}
 )
 
 set(_target "${rosidl_generate_interfaces_TARGET}__rosidl_generator_type_description")
