@@ -151,10 +151,10 @@ inline void value_to_yaml(const std::u16string & value, std::ostream & out)
 }
 
 template<typename T>
-inline const char * data_type();
+constexpr const char * data_type();
 
 template<typename T>
-inline const char * name();
+constexpr const char * name();
 
 template<typename T>
 struct has_fixed_size : std::false_type {};
@@ -185,6 +185,9 @@ struct is_action_result : std::false_type {};
 
 template<typename T>
 struct is_action_feedback : std::false_type {};
+
+template<typename T>
+struct MessageTraits {};
 
 }  // namespace rosidl_generator_traits
 
