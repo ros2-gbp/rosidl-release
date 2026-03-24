@@ -11,7 +11,7 @@
 @#######################################################################
 @
 @{
-from rosidl_cmake import convert_camel_case_to_lower_case_underscore
+from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
 include_parts = [package_name] + list(interface_path.parents[0].parts) + \
     [convert_camel_case_to_lower_case_underscore(interface_path.stem)]
 include_parts_detail = [package_name] + list(interface_path.parents[0].parts) + [
@@ -22,9 +22,9 @@ include_base = '/'.join(include_parts_detail)
 #ifndef @(header_guard_variable)
 #define @(header_guard_variable)
 
-#include "@(include_base)__struct.hpp"
-#include "@(include_base)__builder.hpp"
-#include "@(include_base)__traits.hpp"
-#include "@(include_base)__type_support.hpp"
+#include "@(include_base)__struct.hpp"  // IWYU pragma: export
+#include "@(include_base)__builder.hpp"    // IWYU pragma: export
+#include "@(include_base)__traits.hpp"    // IWYU pragma: export
+#include "@(include_base)__type_support.hpp"    // IWYU pragma: export
 
 #endif  // @(header_guard_variable)

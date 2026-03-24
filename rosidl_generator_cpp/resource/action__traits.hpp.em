@@ -52,10 +52,23 @@ TEMPLATE(
 
 @{
 action_typename = '::'.join(action.namespaced_type.namespaced_name())
+action_fully_qualified_name = '/'.join(action.namespaced_type.namespaced_name())
 }@
 @
 namespace rosidl_generator_traits
 {
+
+template<>
+constexpr const char * data_type<@(action_typename)>()
+{
+  return "@(action_typename)";
+}
+
+template<>
+constexpr const char * name<@(action_typename)>()
+{
+  return "@(action_fully_qualified_name)";
+}
 
 template<>
 struct is_action<@(action_typename)>

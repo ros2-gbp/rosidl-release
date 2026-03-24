@@ -24,6 +24,19 @@ macro(_rosidl_cmake_register_package_hook)
       "rosidl_cmake_package_hook.cmake")
 
     find_package(ament_cmake_export_dependencies QUIET REQUIRED)
+
+    _rosidl_cmake_aggregate_target_register_package_hook()
+  endif()
+endmacro()
+
+# register ament_package() hook for the aggregate interface target once
+macro(_rosidl_cmake_aggregate_target_register_package_hook)
+  if(NOT DEFINED _ROSIDL_CMAKE_AGGREGATE_TARGET_PACKAGE_HOOK_REGISTERED)
+    set(_ROSIDL_CMAKE_AGGREGATE_TARGET_PACKAGE_HOOK_REGISTERED TRUE)
+
+    find_package(ament_cmake_core QUIET REQUIRED)
+    ament_register_extension("ament_package" "rosidl_cmake"
+      "rosidl_cmake_aggregate_target_package_hook.cmake")
   endif()
 endmacro()
 
@@ -32,7 +45,6 @@ find_package(rosidl_adapter)  # not required, being used when available
 include("${rosidl_cmake_DIR}/rosidl_generate_interfaces.cmake")
 include("${rosidl_cmake_DIR}/rosidl_auto_generate_interfaces.cmake")
 include("${rosidl_cmake_DIR}/rosidl_get_typesupport_target.cmake")
-include("${rosidl_cmake_DIR}/rosidl_target_interfaces.cmake")
 include("${rosidl_cmake_DIR}/rosidl_write_generator_arguments.cmake")
 include("${rosidl_cmake_DIR}/string_camel_case_to_lower_case_underscore.cmake")
 
@@ -59,3 +71,4 @@ endmacro()
 
 include("${rosidl_cmake_DIR}/rosidl_export_typesupport_libraries.cmake")
 include("${rosidl_cmake_DIR}/rosidl_export_typesupport_targets.cmake")
+include("${rosidl_cmake_DIR}/rosidl_find_package_idl.cmake")

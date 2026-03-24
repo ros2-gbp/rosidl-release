@@ -2,19 +2,122 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.1.8 (2025-12-09)
+5.1.3 (2026-03-24)
+------------------
+* Fix future regressions on flake8 (`#936 <https://github.com/ros2/rosidl//issues/936>`_)
+* Contributors: Michael Carlstrom
+
+5.1.2 (2025-12-09)
 ------------------
 
-3.1.7 (2025-07-16)
+5.1.1 (2025-11-11)
 ------------------
 
-3.1.6 (2024-11-25)
+5.1.0 (2025-10-05)
+------------------
+* Fix @optional for string literals (`#905 <https://github.com/ros2/rosidl/issues/905>`_)
+* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
+* Add Optional Parsing (`#883 <https://github.com/ros2/rosidl/issues/883>`_)
+* Contributors: Michael Carlstrom
+
+5.0.1 (2025-07-29)
+------------------
+* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
+* Contributors: mosfet80
+
+5.0.0 (2025-07-01)
 ------------------
 
-3.1.5 (2023-07-18)
+4.10.0 (2025-04-24)
+-------------------
+
+4.9.4 (2025-04-18)
 ------------------
 
-3.1.4 (2022-11-07)
+4.9.3 (2024-12-20)
+------------------
+
+4.9.2 (2024-11-25)
+------------------
+
+4.9.1 (2024-11-20)
+------------------
+* Types for rosidl_adapter (`#828 <https://github.com/ros2/rosidl/issues/828>`_)
+* Contributors: Michael Carlstrom
+
+4.9.0 (2024-10-03)
+------------------
+* Support empy3 and empy4 (`#821 <https://github.com/ros2/rosidl/issues/821>`_)
+* Contributors: Alejandro Hernández Cordero
+
+4.8.1 (2024-06-25)
+------------------
+
+4.8.0 (2024-06-17)
+------------------
+
+4.7.0 (2024-04-26)
+------------------
+
+4.6.0 (2024-04-16)
+------------------
+
+4.5.2 (2024-03-27)
+------------------
+
+4.5.1 (2024-02-07)
+------------------
+
+4.5.0 (2023-12-26)
+------------------
+
+4.4.2 (2023-11-06)
+------------------
+
+4.4.1 (2023-10-04)
+------------------
+
+4.4.0 (2023-09-07)
+------------------
+
+4.3.1 (2023-08-21)
+------------------
+
+4.3.0 (2023-07-11)
+------------------
+
+4.2.0 (2023-06-07)
+------------------
+
+4.1.1 (2023-05-11)
+------------------
+
+4.1.0 (2023-04-28)
+------------------
+
+4.0.0 (2023-04-11)
+------------------
+
+3.4.0 (2023-02-13)
+------------------
+* rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake: Make ament free (`#709 <https://github.com/ros2/rosidl/issues/709>`_)
+* [service introspection] generate service_event messages (`#700 <https://github.com/ros2/rosidl/issues/700>`_)
+* Adding tests for unicode support in message comments. (`#720 <https://github.com/ros2/rosidl/issues/720>`_)
+* [rolling] Update maintainers - 2022-11-07 (`#717 <https://github.com/ros2/rosidl/issues/717>`_)
+* Contributors: Audrow Nash, Brian, Guilherme Henrique Galelli Christmann, Yasushi SHOJI
+
+3.3.1 (2022-11-02)
+------------------
+
+3.3.0 (2022-09-08)
+------------------
+* Add action2idl script (`#654 <https://github.com/ros2/rosidl/issues/654>`_)
+* Contributors: John Daktylidis
+
+3.2.1 (2022-06-21)
+------------------
+
+3.2.0 (2022-05-04)
 ------------------
 
 3.1.3 (2022-04-08)
