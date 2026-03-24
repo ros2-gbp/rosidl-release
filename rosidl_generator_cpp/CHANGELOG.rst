@@ -2,6 +2,13 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.3 (2026-03-24)
+------------------
+* Use IWYU pragma export to avoid clangd warnings for generated headers (`#902 <https://github.com/ros2/rosidl//issues/902>`_)
+* rosidl_generator_cpp: constexpr message traits and to_tuple_ref for generated structs (`#928 <https://github.com/ros2/rosidl//issues/928>`_)
+* Make `data_type` and `name` traits constexpr (`#929 <https://github.com/ros2/rosidl//issues/929>`_)
+* Contributors: Adam Leeper, Michael Carlstrom, Øystein Sture
+
 5.1.2 (2025-12-09)
 ------------------
 
