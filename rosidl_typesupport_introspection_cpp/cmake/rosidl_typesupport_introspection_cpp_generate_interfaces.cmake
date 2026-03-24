@@ -94,6 +94,12 @@ set(Python3_FIND_UNVERSIONED_NAMES FIRST)
 
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.27)
+  set(_dep_explicit_only DEPENDS_EXPLICIT_ONLY)
+else()
+  set(_dep_explicit_only "")
+endif()
+
 add_custom_command(
   OUTPUT ${_generated_header_files} ${_generated_source_files}
   COMMAND Python3::Interpreter
@@ -102,6 +108,7 @@ add_custom_command(
   DEPENDS ${target_dependencies}
   COMMENT "Generating C++ introspection for ROS interfaces"
   VERBATIM
+  ${_dep_explicit_only}
 )
 
 set(_target_suffix "__rosidl_typesupport_introspection_cpp")
