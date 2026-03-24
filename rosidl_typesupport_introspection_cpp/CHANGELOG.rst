@@ -2,6 +2,11 @@
 Changelog for package rosidl_typesupport_introspection_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.3 (2026-03-24)
+------------------
+* Add DEPENDS_EXPLICIT_ONLY to remove implicit dependencies (`#910 <https://github.com/ros2/rosidl//issues/910>`_)
+* Contributors: Anthony Welte
+
 5.1.2 (2025-12-09)
 ------------------
 
