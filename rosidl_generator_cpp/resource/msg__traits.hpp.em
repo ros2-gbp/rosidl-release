@@ -214,6 +214,20 @@ inline std::string to_yaml(const @(message.structure.namespaced_type.name) & msg
   }
   return out.str();
 }
+
+template<typename T, std::enable_if_t<std::is_same_v<std::decay_t<T>, @(message_typename)>, int> = 0>
+constexpr auto as_tuple_ref(T && msg)
+{
+@[if len(message.structure.members) == 0]@
+  return std::forward_as_tuple();
+@[elif len(message.structure.members) == 1]@
+  return std::forward_as_tuple(std::forward<T>(msg).@(message.structure.members[0].name));
+@[else]@
+  return std::forward_as_tuple(
+@{forward_args = [f'    std::forward<T>(msg).{member.name}' for member in message.structure.members]}@
+@(',\n'.join(forward_args)));
+@[end if]@
+}
 @[for ns in reversed(message.structure.namespaced_type.namespaces)]@
 
 }  // namespace @(ns)
@@ -223,13 +237,13 @@ namespace rosidl_generator_traits
 {
 
 template<>
-inline const char * data_type<@(message_typename)>()
+constexpr const char * data_type<@(message_typename)>()
 {
   return "@(message_typename)";
 }
 
 template<>
-inline const char * name<@(message_typename)>()
+constexpr const char * name<@(message_typename)>()
 {
   return "@(message_fully_qualified_name)";
 }
@@ -285,5 +299,16 @@ struct has_bounded_size<@(message_typename)>
 template<>
 struct is_message<@(message_typename)>
   : std::true_type {};
+
+template<>
+struct MessageTraits<@(message_typename)>
+{
+  static constexpr std::size_t member_count = @(len(message.structure.members));
+  static constexpr std::array<std::string_view, member_count> member_names = {
+@[for member in message.structure.members]@
+    "@(member.name)",
+@[end for]@
+  };
+};
 
 }  // namespace rosidl_generator_traits
