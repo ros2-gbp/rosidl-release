@@ -2,6 +2,12 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.3 (2026-03-24)
+------------------
+* rosidl_generator_cpp: constexpr message traits and to_tuple_ref for generated structs (`#928 <https://github.com/ros2/rosidl//issues/928>`_)
+* Make `data_type` and `name` traits constexpr (`#929 <https://github.com/ros2/rosidl//issues/929>`_)
+* Contributors: Michael Carlstrom, Øystein Sture
+
 5.1.2 (2025-12-09)
 ------------------
 
