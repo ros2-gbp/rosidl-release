@@ -84,6 +84,9 @@ typedef struct ROSIDL_TYPESUPPORT_INTROSPECTION_CPP_PUBLIC MessageMember_s
   /// If is_array_ is true, a pointer to a function that resizes the array.
   /// First argument should be a pointer to the actual memory representation of the member.
   void (* resize_function)(void *, size_t size);
+  /// True if this field is an rosidl::Buffer<T> (e.g. uint8[] fields).
+  /// Introspection accessors (except size_function) throw for non-CPU backends.
+  bool is_rosidl_buffer_;
 } MessageMember;
 
 /// Structure used to describe all fields of a single interface type.

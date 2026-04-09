@@ -2,6 +2,11 @@
 Changelog for package rosidl_generator_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.4 (2026-04-09)
+------------------
+* Use new aggregate rosidl target instead of _TARGETS (`#952 <https://github.com/ros2/rosidl/issues/952>`_)
+* Contributors: Alexis Tsogias
+
 5.1.3 (2026-03-24)
 ------------------
 * rosidl_generator_cpp: constexpr message traits and to_tuple_ref for generated structs (`#928 <https://github.com/ros2/rosidl//issues/928>`_)
