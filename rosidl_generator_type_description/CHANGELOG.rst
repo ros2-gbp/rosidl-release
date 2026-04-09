@@ -2,6 +2,9 @@
 Changelog for package rosidl_generator_type_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.4 (2026-04-09)
+------------------
+
 5.1.3 (2026-03-24)
 ------------------
 * Add DEPENDS_EXPLICIT_ONLY to remove implicit dependencies (`#910 <https://github.com/ros2/rosidl//issues/910>`_)
