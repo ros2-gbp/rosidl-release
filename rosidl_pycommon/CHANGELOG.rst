@@ -2,6 +2,11 @@
 Changelog for package rosidl_pycommon
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.4 (2026-04-09)
+------------------
+* fix regressions (`#951 <https://github.com/ros2/rosidl/issues/951>`_)
+* Contributors: Michael Carlstrom
+
 5.1.3 (2026-03-24)
 ------------------
 * Fix future regressions on flake8 (`#936 <https://github.com/ros2/rosidl//issues/936>`_)
