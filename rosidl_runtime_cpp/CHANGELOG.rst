@@ -2,6 +2,11 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.4 (2026-04-09)
+------------------
+* Update rosidl cpp path to emit rosidl::Buffer for uint8[] type (`#942 <https://github.com/ros2/rosidl/issues/942>`_)
+* Contributors: CY Chen
+
 5.1.3 (2026-03-24)
 ------------------
 * rosidl_generator_cpp: constexpr message traits and to_tuple_ref for generated structs (`#928 <https://github.com/ros2/rosidl//issues/928>`_)
