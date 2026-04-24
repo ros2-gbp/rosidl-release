@@ -2,6 +2,9 @@
 Changelog for package rosidl_buffer_backend
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.2.0 (2026-04-24)
+------------------
+
 5.1.5 (2026-04-24)
 ------------------
 * Clarify return of get_descriptor_type_support() (`#958 <https://github.com/ros2/rosidl/issues/958>`_)
