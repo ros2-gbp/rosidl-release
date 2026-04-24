@@ -1,0 +1,22 @@
+ros-rolling-rosidl-buffer-backend-registry (5.2.0-1bookworm) bookworm; urgency=high
+
+
+
+ -- CY Chen <cyc@nvidia.com>  Fri, 24 Apr 2026 00:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend-registry (5.1.5-1bookworm) bookworm; urgency=high
+
+  * Add missing ament_cmake_gtest dep (#960 <https://github.com/ros2/rosidl/issues/960>)
+  * Contributors: Scott K Logan
+
+ -- CY Chen <cyc@nvidia.com>  Fri, 24 Apr 2026 00:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend-registry (5.1.4-1bookworm) bookworm; urgency=high
+
+  * Bump rosidl_buffer min CMake version (#956 <https://github.com/ros2/rosidl/issues/956>)
+  * Add rosidl_buffer_backend_registry (#944 <https://github.com/ros2/rosidl/issues/944>)
+  * Contributors: CY Chen, Shane Loretz
+
+ -- CY Chen <cyc@nvidia.com>  Thu, 09 Apr 2026 00:00:00 -0000
+
+
