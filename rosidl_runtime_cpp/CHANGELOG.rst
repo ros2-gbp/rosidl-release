@@ -2,6 +2,9 @@
 Changelog for package rosidl_runtime_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.5 (2026-04-24)
+------------------
+
 5.1.4 (2026-04-09)
 ------------------
 * Update rosidl cpp path to emit rosidl::Buffer for uint8[] type (`#942 <https://github.com/ros2/rosidl/issues/942>`_)
