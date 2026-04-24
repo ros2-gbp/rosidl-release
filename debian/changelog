@@ -1,0 +1,22 @@
+ros-rolling-rosidl-buffer-backend (5.2.0-1bookworm) bookworm; urgency=high
+
+
+
+ -- CY Chen <cyc@nvidia.com>  Fri, 24 Apr 2026 00:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend (5.1.5-1bookworm) bookworm; urgency=high
+
+  * Clarify return of get_descriptor_type_support() (#958 <https://github.com/ros2/rosidl/issues/958>)
+  * Contributors: CY Chen
+
+ -- CY Chen <cyc@nvidia.com>  Fri, 24 Apr 2026 00:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend (5.1.4-1bookworm) bookworm; urgency=high
+
+  * Bump rosidl_buffer min CMake version (#956 <https://github.com/ros2/rosidl/issues/956>)
+  * Add rosidl_buffer and rosidl_buffer_backend for native Buffer type support (#941 <https://github.com/ros2/rosidl/issues/941>)
+  * Contributors: CY Chen, Shane Loretz
+
+ -- CY Chen <cyc@nvidia.com>  Thu, 09 Apr 2026 00:00:00 -0000
+
+
