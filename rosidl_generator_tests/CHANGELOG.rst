@@ -2,6 +2,9 @@
 Changelog for package rosidl_generator_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+5.1.5 (2026-04-24)
+------------------
+
 5.1.4 (2026-04-09)
 ------------------
 * Use new aggregate rosidl target instead of _TARGETS (`#952 <https://github.com/ros2/rosidl/issues/952>`_)
