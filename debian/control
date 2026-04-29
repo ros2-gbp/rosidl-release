@@ -1,0 +1,12 @@
+Source: ros-lyrical-rosidl-buffer-py
+Section: misc
+Priority: optional
+Maintainer: CY Chen <cyc@nvidia.com>
+Build-Depends: debhelper (>= 9.0.0), pybind11-dev, python3-dev, ros-lyrical-ament-cmake, ros-lyrical-ament-cmake-python, ros-lyrical-ament-lint-auto <!nocheck>, ros-lyrical-ament-lint-common <!nocheck>, ros-lyrical-rosidl-buffer, ros-lyrical-ros-workspace
+Homepage: https://index.ros.org/p/rosidl_buffer_py/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-rosidl-buffer-py
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-lyrical-rosidl-buffer, ros-lyrical-ros-workspace
+Description: Python bindings for rosidl::Buffer, providing a Buffer class that supports vendor-specific memory backends (CPU, GPU, custom) for rclpy users.
