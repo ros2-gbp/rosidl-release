@@ -1,0 +1,12 @@
+Source: ros-lyrical-rosidl-parser
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), python3-pytest <!nocheck>, ros-lyrical-ament-cmake, ros-lyrical-ament-cmake-mypy <!nocheck>, ros-lyrical-ament-cmake-pytest <!nocheck>, ros-lyrical-ament-lint-auto <!nocheck>, ros-lyrical-ament-lint-common <!nocheck>, ros-lyrical-ros-workspace
+Homepage: https://index.ros.org/p/rosidl_parser/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-rosidl-parser
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-lark, ros-lyrical-rosidl-adapter, ros-lyrical-ros-workspace
+Description: The parser for `.idl` ROS interface files.
