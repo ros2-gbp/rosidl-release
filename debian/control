@@ -1,0 +1,12 @@
+Source: ros-lyrical-rosidl-buffer-backend
+Section: misc
+Priority: optional
+Maintainer: CY Chen <cyc@nvidia.com>
+Build-Depends: debhelper (>= 9.0.0), ros-lyrical-ament-cmake, ros-lyrical-ament-lint-auto <!nocheck>, ros-lyrical-ament-lint-common <!nocheck>, ros-lyrical-rmw, ros-lyrical-ros-workspace
+Homepage: https://index.ros.org/p/rosidl_buffer_backend/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-rosidl-buffer-backend
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-lyrical-rmw, ros-lyrical-ros-workspace
+Description: Buffer backend interface for ROS2 buffer types
