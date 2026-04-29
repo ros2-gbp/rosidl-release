@@ -1,0 +1,12 @@
+Source: ros-lyrical-rosidl-cli
+Section: misc
+Priority: optional
+Maintainer: Aditya Pande <aditya.pande@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), python3-pytest <!nocheck>, ros-lyrical-ament-copyright <!nocheck>, ros-lyrical-ament-flake8 <!nocheck>, ros-lyrical-ament-mypy <!nocheck>, ros-lyrical-ament-pep257 <!nocheck>, ros-lyrical-ament-xmllint <!nocheck>, ros-lyrical-ros-workspace, python3-all, python3-setuptools, dh-python
+Homepage: https://index.ros.org/p/rosidl_cli/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-rosidl-cli
+Architecture: any
+Depends: ${python3:Depends}, ${misc:Depends}, python3-argcomplete, ros-lyrical-ros-workspace
+Description: Command line tools for ROS interface generation.
