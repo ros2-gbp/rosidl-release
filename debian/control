@@ -1,0 +1,13 @@
+Source: ros-lyrical-rosidl-buffer
+Section: misc
+Priority: optional
+Maintainer: CY Chen <cyc@nvidia.com>
+Build-Depends: debhelper (>= 9.0.0), ros-lyrical-ament-cmake, ros-lyrical-ament-cmake-gtest <!nocheck>, ros-lyrical-ament-lint-auto <!nocheck>, ros-lyrical-ament-lint-common <!nocheck>, ros-lyrical-ros-workspace
+Homepage: https://index.ros.org/p/rosidl_buffer/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-rosidl-buffer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-lyrical-ros-workspace
+Description: Core Buffer types and implementations for ROS2 native buffer feature.
+ Provides Buffer container type with support for multiple memory backends (CPU, GPU, custom).
