@@ -23,4 +23,3 @@ string string_value
 # 8
 
 bool ok
-@optional bool optional_bool

@@ -22,7 +22,6 @@ find_package(rosidl_cmake REQUIRED)
 find_package(rosidl_runtime_c REQUIRED)
 find_package(rosidl_typesupport_interface REQUIRED)
 find_package(rosidl_typesupport_introspection_c REQUIRED)
-find_package(rosidl_buffer REQUIRED)
 
 set(_output_path
   "${CMAKE_CURRENT_BINARY_DIR}/rosidl_typesupport_introspection_c/${PROJECT_NAME}")
@@ -95,12 +94,6 @@ set(Python3_FIND_UNVERSIONED_NAMES FIRST)
 
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
-if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.27)
-  set(_dep_explicit_only DEPENDS_EXPLICIT_ONLY)
-else()
-  set(_dep_explicit_only "")
-endif()
-
 add_custom_command(
   OUTPUT ${_generated_header_files} ${_generated_source_files}
   COMMAND Python3::Interpreter
@@ -109,7 +102,6 @@ add_custom_command(
   DEPENDS ${target_dependencies}
   COMMENT "Generating C introspection for ROS interfaces"
   VERBATIM
-  ${_dep_explicit_only}
 )
 
 # generate header to switch between export and import for a specific package
@@ -153,8 +145,7 @@ target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBL
 target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
   rosidl_runtime_c::rosidl_runtime_c
   rosidl_typesupport_interface::rosidl_typesupport_interface
-  rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
-  rosidl_buffer::rosidl_buffer)
+  rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c)
 
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
   target_link_libraries(

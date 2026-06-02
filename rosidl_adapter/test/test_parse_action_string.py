@@ -18,7 +18,7 @@ from rosidl_adapter.parser import InvalidActionSpecification
 from rosidl_adapter.parser import parse_action_string
 
 
-def test_invalid_action_specification() -> None:
+def test_invalid_action_specification():
     with pytest.raises(InvalidActionSpecification):
         parse_action_string('pkg', 'Foo', '')
 
@@ -27,11 +27,11 @@ def test_invalid_action_specification() -> None:
         parse_action_string('pkg', 'Foo', 'bool foo\n---\nint8 bar')
 
 
-def test_valid_action_string() -> None:
+def test_valid_action_string():
     parse_action_string('pkg', 'Foo', 'bool foo\n---\nint8 bar\n---')
 
 
-def test_valid_action_string1() -> None:
+def test_valid_action_string1():
     spec = parse_action_string('pkg', 'Foo', 'bool foo\n---\nint8 bar\n---\nbool foo')
     # Goal checks
     assert spec.goal.base_type.pkg_name == 'pkg'
@@ -50,7 +50,7 @@ def test_valid_action_string1() -> None:
     assert len(spec.feedback.constants) == 0
 
 
-def test_valid_action_string2() -> None:
+def test_valid_action_string2():
     spec = parse_action_string(
         'pkg', 'Foo', '#comment---\n \nbool foo\n---\n#comment\n \nint8 bar\n---\nbool foo')
     # Goal checks
@@ -70,7 +70,7 @@ def test_valid_action_string2() -> None:
     assert len(spec.feedback.constants) == 0
 
 
-def test_valid_action_string3() -> None:
+def test_valid_action_string3():
     spec = parse_action_string(
         'pkg',
         'Foo',

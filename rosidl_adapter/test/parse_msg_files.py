@@ -17,12 +17,11 @@
 import argparse
 import os
 import sys
-from typing import List, Literal
 
 from rosidl_adapter.parser import parse_message_file
 
 
-def main(argv: List[str] = sys.argv[1:]) -> Literal[0]:
+def main(argv=sys.argv[1:]):
     parser = argparse.ArgumentParser(
         description='Parse all recursively found .msg files.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -46,8 +45,8 @@ def main(argv: List[str] = sys.argv[1:]) -> Literal[0]:
     return 0
 
 
-def get_files(paths: str) -> List[str]:
-    files: List[str] = []
+def get_files(paths):
+    files = []
     for path in paths:
         if os.path.isdir(path):
             for dirpath, dirnames, filenames in os.walk(path):

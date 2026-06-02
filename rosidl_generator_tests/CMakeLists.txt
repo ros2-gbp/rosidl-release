@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.8)
 project(rosidl_generator_tests)
 
 # Default to C++17
@@ -127,7 +127,7 @@ if(BUILD_TESTING)
   target_link_libraries(test_descriptions_c
     ${c_generator_target}
     rosidl_runtime_c::rosidl_runtime_c
-    type_description_interfaces::type_description_interfaces
+    ${type_description_interfaces_TARGETS}
   )
 
   ament_add_pytest_test(test_hash_generator test/rosidl_generator_type_description

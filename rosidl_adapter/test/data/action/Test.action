@@ -23,9 +23,6 @@ string string_value
 
 # ok docs
 bool ok
-
-@optional
-bool optional_bool
 ---
 # feedback definition
 # more

@@ -5,14 +5,13 @@ package_name = 'rosidl_pycommon'
 
 setup(
     name=package_name,
-    version='5.3.0',
+    version='4.6.8',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    package_data={'': ['py.typed']},
     install_requires=['setuptools'],
     zip_safe=True,
     author='Jacob Perron',

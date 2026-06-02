@@ -17,7 +17,7 @@ import pytest
 from rosidl_adapter.parser import Constant
 
 
-def test_constant_constructor() -> None:
+def test_constant_constructor():
     value = Constant('bool', 'FOO', '1')
     assert value
 
@@ -28,10 +28,10 @@ def test_constant_constructor() -> None:
         Constant('bool', 'FOO BAR', '')
 
     with pytest.raises(ValueError):
-        Constant('bool', 'FOO', None)  # type: ignore[arg-type]
+        Constant('bool', 'FOO', None)
 
 
-def test_constant_methods() -> None:
+def test_constant_methods():
     assert Constant('bool', 'FOO', '1') != 23
 
     assert Constant('bool', 'FOO', '1') == Constant('bool', 'FOO', '1')
