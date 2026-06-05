@@ -45,7 +45,6 @@ find_package(rosidl_adapter)  # not required, being used when available
 include("${rosidl_cmake_DIR}/rosidl_generate_interfaces.cmake")
 include("${rosidl_cmake_DIR}/rosidl_auto_generate_interfaces.cmake")
 include("${rosidl_cmake_DIR}/rosidl_get_typesupport_target.cmake")
-include("${rosidl_cmake_DIR}/rosidl_target_interfaces.cmake")
 include("${rosidl_cmake_DIR}/rosidl_write_generator_arguments.cmake")
 include("${rosidl_cmake_DIR}/string_camel_case_to_lower_case_underscore.cmake")
 
@@ -72,3 +71,4 @@ endmacro()
 
 include("${rosidl_cmake_DIR}/rosidl_export_typesupport_libraries.cmake")
 include("${rosidl_cmake_DIR}/rosidl_export_typesupport_targets.cmake")
+include("${rosidl_cmake_DIR}/rosidl_find_package_idl.cmake")

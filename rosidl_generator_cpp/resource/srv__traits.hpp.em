@@ -14,6 +14,13 @@ TEMPLATE(
 }@
 
 @{
+TEMPLATE(
+    'msg__traits.hpp.em',
+    package_name=package_name, interface_path=interface_path,
+    message=service.event_message, include_directives=include_directives)
+}@
+
+@{
 service_typename = '::'.join(service.namespaced_type.namespaced_name())
 service_fully_qualified_name = '/'.join(service.namespaced_type.namespaced_name())
 }@
@@ -22,13 +29,13 @@ namespace rosidl_generator_traits
 {
 
 template<>
-inline const char * data_type<@(service_typename)>()
+constexpr const char * data_type<@(service_typename)>()
 {
   return "@(service_typename)";
 }
 
 template<>
-inline const char * name<@(service_typename)>()
+constexpr const char * name<@(service_typename)>()
 {
   return "@(service_fully_qualified_name)";
 }

@@ -19,6 +19,7 @@
 
 #include <rcutils/allocator.h>
 
+#include "rosidl_buffer/c_helpers.h"
 #include "rosidl_runtime_c/primitives_sequence_functions.h"
 
 #define ROSIDL_GENERATOR_C__DEFINE_PRIMITIVE_SEQUENCE_FUNCTIONS(STRUCT_NAME, TYPE_NAME) \
@@ -30,6 +31,9 @@
     } \
     TYPE_NAME * data = NULL; \
     if (size) { \
+      if (size > SIZE_MAX / sizeof(TYPE_NAME)) { \
+        return false; \
+      } \
       rcutils_allocator_t allocator = rcutils_get_default_allocator(); \
       data = allocator.allocate(sizeof(TYPE_NAME) * size, allocator.state); \
       if (!data) { \
@@ -39,6 +43,8 @@
     sequence->data = data; \
     sequence->size = size; \
     sequence->capacity = size; \
+    sequence->is_rosidl_buffer = false; \
+    sequence->owns_rosidl_buffer = false; \
     return true; \
   } \
  \
@@ -46,6 +52,17 @@
     rosidl_runtime_c__ ## STRUCT_NAME ## __Sequence * sequence) \
   { \
     if (!sequence) { \
+      return; \
+    } \
+    if (sequence->is_rosidl_buffer) { \
+      if (sequence->owns_rosidl_buffer) { \
+        rosidl_buffer_uint8_destroy(sequence->data); \
+      } \
+      sequence->data = NULL; \
+      sequence->size = 0; \
+      sequence->capacity = 0; \
+      sequence->is_rosidl_buffer = false; \
+      sequence->owns_rosidl_buffer = false; \
       return; \
     } \
     if (sequence->data) { \
@@ -89,6 +106,9 @@
       return false; \
     } \
     if (output->capacity < input->size) { \
+      if (input->size > SIZE_MAX / sizeof(TYPE_NAME)) { \
+        return false; \
+      } \
       rcutils_allocator_t allocator = rcutils_get_default_allocator(); \
       TYPE_NAME * data = (TYPE_NAME *)allocator.reallocate( \
         output->data, sizeof(TYPE_NAME) * input->size, allocator.state); \
@@ -100,6 +120,8 @@
     } \
     memcpy(output->data, input->data, sizeof(TYPE_NAME) * input->size); \
     output->size = input->size; \
+    output->is_rosidl_buffer = input->is_rosidl_buffer; \
+    output->owns_rosidl_buffer = input->owns_rosidl_buffer; \
     return true; \
   }
 

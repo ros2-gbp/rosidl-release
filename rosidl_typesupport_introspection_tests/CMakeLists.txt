@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.20)
 project(rosidl_typesupport_introspection_tests)
 
 find_package(ament_cmake REQUIRED)
@@ -7,8 +7,19 @@ if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
 
+  # Default to C++17
+  if(NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  endif()
   if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
+  endif()
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    # When building under Clang, the "TYPED_TEST_SUITE" macros in the tests print the following
+    # warning: "must specify at least one argument for '...' parameter of variadic macro".
+    # Since this isn't really a problem, and will be allowed under C++20, just disable the warning.
+    add_compile_options(-Wno-gnu-zero-variadic-macro-arguments)
   endif()
 
   find_package(rosidl_cmake REQUIRED)
@@ -30,6 +41,7 @@ if(BUILD_TESTING)
     SKIP_INSTALL
   )
 
+  find_package(rosidl_buffer REQUIRED)
   find_package(rcutils REQUIRED)
   find_package(rcpputils REQUIRED)
   find_package(rosidl_typesupport_interface REQUIRED)
@@ -37,6 +49,7 @@ if(BUILD_TESTING)
   add_library(${PROJECT_NAME}_library INTERFACE)
   target_include_directories(${PROJECT_NAME}_library INTERFACE include/)
   target_link_libraries(${PROJECT_NAME}_library INTERFACE
+    rosidl_buffer::rosidl_buffer
     rcutils::rcutils
     rcpputils::rcpputils
     rosidl_typesupport_interface::rosidl_typesupport_interface

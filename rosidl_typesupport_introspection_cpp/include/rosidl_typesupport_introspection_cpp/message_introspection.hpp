@@ -19,6 +19,7 @@
 #include <cstdint>
 
 #include "rosidl_runtime_c/message_type_support_struct.h"
+#include "rosidl_runtime_c/type_hash.h"
 
 #include "rosidl_runtime_cpp/message_initialization.hpp"
 
@@ -40,6 +41,8 @@ typedef struct ROSIDL_TYPESUPPORT_INTROSPECTION_CPP_PUBLIC MessageMember_s
   /// If the type_id_ value is rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE
   /// this points to an array describing the fields of the sub-interface.
   const rosidl_message_type_support_t * members_;
+  /// True if this field is annotated as `@key`, false otherwise.
+  bool is_key_;
   /// True if this field is an array, false if it is a unary type. An array has the same value for
   /// type_id_.
   bool is_array_;
@@ -81,6 +84,9 @@ typedef struct ROSIDL_TYPESUPPORT_INTROSPECTION_CPP_PUBLIC MessageMember_s
   /// If is_array_ is true, a pointer to a function that resizes the array.
   /// First argument should be a pointer to the actual memory representation of the member.
   void (* resize_function)(void *, size_t size);
+  /// True if this field is an rosidl::Buffer<T> (e.g. uint8[] fields).
+  /// Introspection accessors (except size_function) throw for non-CPU backends.
+  bool is_rosidl_buffer_;
 } MessageMember;
 
 /// Structure used to describe all fields of a single interface type.
@@ -96,6 +102,8 @@ typedef struct ROSIDL_TYPESUPPORT_INTROSPECTION_CPP_PUBLIC MessageMembers_s
   uint32_t member_count_;
   /// The size of the interface structure in memory
   size_t size_of_;
+  /// A boolean value indicating if there are any members annotated as `@key` in the structure.
+  bool has_any_key_member_;
   /// A pointer to the array that describes each field of the interface
   const MessageMember * members_;
   /// The function used to initialise the interface's in-memory representation

@@ -1,7 +1,11 @@
 @# Included from rosidl_typesupport_introspection_c/resource/idl__type_support.c.em
 @{
-from rosidl_cmake import convert_camel_case_to_lower_case_underscore
+from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
 from rosidl_generator_c import idl_structure_type_to_c_include_prefix
+from rosidl_generator_c import idl_structure_type_to_c_typename
+from rosidl_generator_type_description import GET_DESCRIPTION_FUNC
+from rosidl_generator_type_description import GET_HASH_FUNC
+from rosidl_generator_type_description import GET_SOURCES_FUNC
 from rosidl_parser.definition import AbstractGenericString
 from rosidl_parser.definition import AbstractNestedType
 from rosidl_parser.definition import AbstractSequence
@@ -11,6 +15,15 @@ from rosidl_parser.definition import Array
 from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import NamespacedType
+from rosidl_parser.definition import UnboundedSequence
+
+buffer_field_names = set()
+for m in message.structure.members:
+    if (isinstance(m.type, UnboundedSequence) and
+            isinstance(m.type.value_type, BasicType) and
+            m.type.value_type.typename == 'uint8'):
+        buffer_field_names.add(m.name)
+any_buffer_field = len(buffer_field_names) > 0
 
 include_parts = [package_name] + list(interface_path.parents[0].parts) + [
     'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
@@ -28,6 +41,8 @@ header_files = [
 ]
 
 function_prefix = '__'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]) + '__rosidl_typesupport_introspection_c'
+if any_buffer_field:
+    header_files.append('rosidl_buffer/c_helpers.h')
 }@
 @[for header_file in header_files]@
 @[    if header_file in include_directives]@
@@ -121,45 +136,112 @@ void @(function_prefix)__@(message.structure.namespaced_type.name)_fini_function
 @[for member in message.structure.members]@
 @[  if isinstance(member.type, AbstractNestedType)]@
 @{from rosidl_generator_c import basetype_to_c, idl_type_to_c}@
+@[    if member.name in buffer_field_names]@
 size_t @(function_prefix)__size_function__@(message.structure.namespaced_type.name)__@(member.name)(
   const void * untyped_member)
 {
-@[    if isinstance(member.type, Array)]@
-  (void)untyped_member;
-  return @(member.type.size);
-@[    else]@
   const @(idl_type_to_c(member.type)) * member =
     (const @(idl_type_to_c(member.type)) *)(untyped_member);
+  if (member->is_rosidl_buffer) {
+    rosidl_buffer_uint8_throw_if_not_cpu((const void *)member->data);
+  }
   return member->size;
-@[    end if]@
 }
 
 const void * @(function_prefix)__get_const_function__@(message.structure.namespaced_type.name)__@(member.name)(
   const void * untyped_member, size_t index)
 {
-@[    if isinstance(member.type, Array)]@
-  const @(basetype_to_c(member.type.value_type)) * member =
-    (const @(basetype_to_c(member.type.value_type)) *)(untyped_member);
-  return &member[index];
-@[    else]@
   const @(idl_type_to_c(member.type)) * member =
     (const @(idl_type_to_c(member.type)) *)(untyped_member);
+  if (member->is_rosidl_buffer) {
+    rosidl_buffer_uint8_throw_if_not_cpu((const void *)member->data);
+  }
   return &member->data[index];
-@[    end if]@
 }
 
 void * @(function_prefix)__get_function__@(message.structure.namespaced_type.name)__@(member.name)(
   void * untyped_member, size_t index)
 {
-@[    if isinstance(member.type, Array)]@
+  @(idl_type_to_c(member.type)) * member =
+    (@(idl_type_to_c(member.type)) *)(untyped_member);
+  if (member->is_rosidl_buffer) {
+    rosidl_buffer_uint8_throw_if_not_cpu((const void *)member->data);
+  }
+  return &member->data[index];
+}
+
+void @(function_prefix)__fetch_function__@(message.structure.namespaced_type.name)__@(member.name)(
+  const void * untyped_member, size_t index, void * untyped_value)
+{
+  const uint8_t * item =
+    ((const uint8_t *)
+    @(function_prefix)__get_const_function__@(message.structure.namespaced_type.name)__@(member.name)(untyped_member, index));
+  uint8_t * value = (uint8_t *)(untyped_value);
+  *value = *item;
+}
+
+void @(function_prefix)__assign_function__@(message.structure.namespaced_type.name)__@(member.name)(
+  void * untyped_member, size_t index, const void * untyped_value)
+{
+  uint8_t * item =
+    ((uint8_t *)
+    @(function_prefix)__get_function__@(message.structure.namespaced_type.name)__@(member.name)(untyped_member, index));
+  const uint8_t * value = (const uint8_t *)(untyped_value);
+  *item = *value;
+}
+
+bool @(function_prefix)__resize_function__@(message.structure.namespaced_type.name)__@(member.name)(
+  void * untyped_member, size_t size)
+{
+  @(idl_type_to_c(member.type)) * member =
+    (@(idl_type_to_c(member.type)) *)(untyped_member);
+  if (member->is_rosidl_buffer) {
+    rosidl_buffer_uint8_throw_if_not_cpu((const void *)member->data);
+  }
+  @(idl_type_to_c(member.type))__fini(member);
+  return @(idl_type_to_c(member.type))__init(member, size);
+}
+
+@[    else]@
+size_t @(function_prefix)__size_function__@(message.structure.namespaced_type.name)__@(member.name)(
+  const void * untyped_member)
+{
+@[      if isinstance(member.type, Array)]@
+  (void)untyped_member;
+  return @(member.type.size);
+@[      else]@
+  const @(idl_type_to_c(member.type)) * member =
+    (const @(idl_type_to_c(member.type)) *)(untyped_member);
+  return member->size;
+@[      end if]@
+}
+
+const void * @(function_prefix)__get_const_function__@(message.structure.namespaced_type.name)__@(member.name)(
+  const void * untyped_member, size_t index)
+{
+@[      if isinstance(member.type, Array)]@
+  const @(basetype_to_c(member.type.value_type)) * member =
+    (const @(basetype_to_c(member.type.value_type)) *)(untyped_member);
+  return &member[index];
+@[      else]@
+  const @(idl_type_to_c(member.type)) * member =
+    (const @(idl_type_to_c(member.type)) *)(untyped_member);
+  return &member->data[index];
+@[      end if]@
+}
+
+void * @(function_prefix)__get_function__@(message.structure.namespaced_type.name)__@(member.name)(
+  void * untyped_member, size_t index)
+{
+@[      if isinstance(member.type, Array)]@
   @(basetype_to_c(member.type.value_type)) * member =
     (@(basetype_to_c(member.type.value_type)) *)(untyped_member);
   return &member[index];
-@[    else]@
+@[      else]@
   @(idl_type_to_c(member.type)) * member =
     (@(idl_type_to_c(member.type)) *)(untyped_member);
   return &member->data[index];
-@[    end if]@
+@[      end if]@
 }
 
 void @(function_prefix)__fetch_function__@(message.structure.namespaced_type.name)__@(member.name)(
@@ -184,7 +266,7 @@ void @(function_prefix)__assign_function__@(message.structure.namespaced_type.na
   *item = *value;
 }
 
-@[    if isinstance(member.type, AbstractSequence)]@
+@[      if isinstance(member.type, AbstractSequence)]@
 bool @(function_prefix)__resize_function__@(message.structure.namespaced_type.name)__@(member.name)(
   void * untyped_member, size_t size)
 {
@@ -194,6 +276,7 @@ bool @(function_prefix)__resize_function__@(message.structure.namespaced_type.na
   return @(idl_type_to_c(member.type))__init(member, size);
 }
 
+@[      end if]@
 @[    end if]@
 @[  end if]@
 @[end for]@
@@ -234,6 +317,8 @@ for index, member in enumerate(message.structure.members):
         print('    0,  // upper bound of string')
         # const rosidl_message_type_support_t * members_
         print('    NULL,  // members of sub message (initialized later)')
+    # bool is_key_
+    print('    %s,  // is key' % ('true' if member.has_annotation('key') else 'false'))
     # bool is_array_
     print('    %s,  // is array' % ('true' if isinstance(member.type, AbstractNestedType) else 'false'))
     # size_t array_size_
@@ -258,7 +343,9 @@ for index, member in enumerate(message.structure.members):
     # void(void *, size_t, const void *) assign_function
     print('    %s,  // assign(index, value) function pointer' % ('%s__assign_function__%s' % (function_prefix, function_suffix) if function_suffix else 'NULL'))
     # void(void *, size_t) resize_function
-    print('    %s  // resize(index) function pointer' % ('%s__resize_function__%s' % (function_prefix, function_suffix) if function_suffix and isinstance(member.type, AbstractSequence) else 'NULL'))
+    print('    %s,  // resize(index) function pointer' % ('%s__resize_function__%s' % (function_prefix, function_suffix) if function_suffix and isinstance(member.type, AbstractSequence) else 'NULL'))
+    # bool is_rosidl_buffer_
+    print('    %s  // is_rosidl_buffer' % ('true' if member.name in buffer_field_names else 'false'))
 
     if index < len(message.structure.members) - 1:
         print('  },')
@@ -272,6 +359,11 @@ static const rosidl_typesupport_introspection_c__MessageMembers @(function_prefi
   "@(message.structure.namespaced_type.name)",  // message name
   @(len(message.structure.members)),  // number of fields
   sizeof(@('__'.join([package_name] + list(interface_path.parents[0].parts) + [message.structure.namespaced_type.name]))),
+@[  if message.structure.has_any_member_with_annotation('key') ]@
+  true,  // has_any_key_member_
+@[  else]@
+  false,  // has_any_key_member_
+@[  end if]@
   @(function_prefix)__@(message.structure.namespaced_type.name)_message_member_array,  // message members
   @(function_prefix)__@(message.structure.namespaced_type.name)_init_function,  // function to initialize message memory (memory has to be allocated)
   @(function_prefix)__@(message.structure.namespaced_type.name)_fini_function  // function to terminate message instance (will not free memory)
@@ -283,6 +375,9 @@ static rosidl_message_type_support_t @(function_prefix)__@(message.structure.nam
   0,
   &@(function_prefix)__@(message.structure.namespaced_type.name)_message_members,
   get_message_typesupport_handle_function,
+  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_HASH_FUNC),
+  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_DESCRIPTION_FUNC),
+  &@(idl_structure_type_to_c_typename(message.structure.namespaced_type))__@(GET_SOURCES_FUNC),
 };
 
 ROSIDL_TYPESUPPORT_INTROSPECTION_C_EXPORT_@(package_name)
