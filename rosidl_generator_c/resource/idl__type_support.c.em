@@ -16,19 +16,16 @@ include_parts = [package_name] + list(interface_path.parents[0].parts) + [
     'detail', convert_camel_case_to_lower_case_underscore(interface_path.stem)]
 include_base = '/'.join(include_parts)
 
-top_level_includes = [
+include_directives = {
   'rosidl_typesupport_interface/macros.h',
   include_base + '__type_support.h',
   include_base + '__struct.h',
-  include_base + '__functions.h']
-
-include_directives = set(top_level_includes)
-
+  include_base + '__functions.h'}
 }@
 
 #include <string.h>
 
-@[for header_file in top_level_includes]@
+@[for header_file in include_directives]@
 #include "@(header_file)"
 @[end for]@
 

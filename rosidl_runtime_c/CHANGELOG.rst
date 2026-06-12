@@ -2,75 +2,47 @@
 Changelog for package rosidl_runtime_c
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.2.1 (2026-06-05)
+4.6.9 (2026-06-12)
 ------------------
-* Add integer overflow guards to rosidl sequence init and copy functions (`#970 <https://github.com/ros2/rosidl/issues/970>`_)
-* Contributors: Michael Carroll
+* Merge pull request `#972 <https://github.com/ros2/rosidl/issues/972>`_ from ros2/guard_sequence_overflow_jazzy
+  Add integer overflow guards to rosidl sequence init and copy functions
+* Add integer overflow guards to rosidl sequence init and copy functions
+  Check that target size multiplied by item size does not overflow SIZE_MAX.
+  This prevents undersized heap allocations when sequence length inputs are malicious or overflow.
+* Contributors: Michael Carroll, Skyler Medeiros
 
-5.2.0 (2026-04-24)
-------------------
-
-5.1.5 (2026-04-24)
-------------------
-
-5.1.4 (2026-04-09)
-------------------
-* Update rosidl cpp path to emit rosidl::Buffer for uint8[] type (`#942 <https://github.com/ros2/rosidl/issues/942>`_)
-* Contributors: CY Chen
-
-5.1.3 (2026-03-24)
+4.6.8 (2026-06-02)
 ------------------
 
-5.1.2 (2025-12-09)
+4.6.7 (2025-12-09)
+------------------
+* Fix copy/paste errors in type support docs (backport `#906 <https://github.com/ros2/rosidl/issues/906>`_) (`#908 <https://github.com/ros2/rosidl/issues/908>`_)
+* Contributors: mergify[bot]
+
+4.6.6 (2025-08-05)
+------------------
+* Add an ament_cmake_gtest dependency to rosidl_runtime_c. (`#865 <https://github.com/ros2/rosidl/issues/865>`_) (`#873 <https://github.com/ros2/rosidl/issues/873>`_)
+  This was found while testing out a fix to colcon-core
+  which will reduce the scope of test_depend.  Regardless,
+  this package actually does depend on ament_cmake_gtest
+  so the dependency should be there.
+  (cherry picked from commit 95fa106fce55eb62a8e4954b5f5f4004af125315)
+  Co-authored-by: Chris Lalancette <clalancette@gmail.com>
+* Contributors: mergify[bot]
+
+4.6.5 (2024-12-18)
 ------------------
 
-5.1.1 (2025-11-11)
+4.6.4 (2024-09-06)
 ------------------
 
-5.1.0 (2025-10-05)
-------------------
-* Fix copy/paste errors in type support docs (`#906 <https://github.com/ros2/rosidl/issues/906>`_)
-* Contributors: Christophe Bedard
-
-5.0.1 (2025-07-29)
+4.6.3 (2024-06-27)
 ------------------
 
-5.0.0 (2025-07-01)
-------------------
-* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
-* Add an ament_cmake_gtest dependency to rosidl_runtime_c. (`#865 <https://github.com/ros2/rosidl/issues/865>`_)
-* Contributors: Chris Lalancette, mosfet80
-
-4.10.0 (2025-04-24)
--------------------
-
-4.9.4 (2025-04-18)
-------------------
-* Switch to ament_cmake_ros_core package (`#856 <https://github.com/ros2/rosidl/issues/856>`_)
-* Contributors: Michael Carroll
-
-4.9.3 (2024-12-20)
+4.6.2 (2024-05-13)
 ------------------
 
-4.9.2 (2024-11-25)
-------------------
-
-4.9.1 (2024-11-20)
-------------------
-
-4.9.0 (2024-10-03)
-------------------
-
-4.8.1 (2024-06-25)
-------------------
-
-4.8.0 (2024-06-17)
-------------------
-* Implement `resize` function for String (`#806 <https://github.com/ros2/rosidl/issues/806>`_)
-* Fix u16 docs and improve docs formatting (`#805 <https://github.com/ros2/rosidl/issues/805>`_)
-* Contributors: Christophe Bedard, WATANABE Aoi
-
-4.7.0 (2024-04-26)
+4.6.1 (2024-04-24)
 ------------------
 
 4.6.0 (2024-04-16)

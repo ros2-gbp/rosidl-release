@@ -13,9 +13,8 @@
 # limitations under the License.
 
 import argparse
-from pathlib import Path
+import pathlib
 import sys
-from typing import Callable, List, Literal, TYPE_CHECKING
 
 from catkin_pkg.package import package_exists_at
 from catkin_pkg.package import parse_package
@@ -27,18 +26,8 @@ from rosidl_adapter.srv import convert_srv_to_idl
 from rosidl_cli.command.helpers import interface_path_as_tuple
 from rosidl_cli.command.translate.extensions import TranslateCommandExtension
 
-if TYPE_CHECKING:
-    from typing_extensions import TypeAlias
 
-    ConversionFunctionType: TypeAlias = Callable[[Path, str, Path, Path], Path]
-
-
-def convert_files_to_idl(
-    extension: Literal['.msg', '.srv', '.action'],
-    conversion_function: 'ConversionFunctionType',
-    argv: List[str] = sys.argv[1:]
-) -> None:
-
+def convert_files_to_idl(extension, conversion_function, argv=sys.argv[1:]):
     parser = argparse.ArgumentParser(
         description=f'Convert {extension} files to .idl')
     parser.add_argument(
@@ -47,7 +36,7 @@ def convert_files_to_idl(
     args = parser.parse_args(argv)
 
     for interface_file in args.interface_files:
-        interface_file = Path(interface_file)
+        interface_file = pathlib.Path(interface_file)
         package_dir = interface_file.parent.absolute()
         while (
             len(package_dir.parents) and
@@ -59,7 +48,8 @@ def convert_files_to_idl(
                 f"Could not find package for '{interface_file}'",
                 file=sys.stderr)
             continue
-        pkg = parse_package(package_dir, warnings=[])
+        warnings = []
+        pkg = parse_package(package_dir, warnings=warnings)
 
         conversion_function(
             package_dir, pkg.name,
@@ -69,23 +59,18 @@ def convert_files_to_idl(
 
 class TranslateToIDL(TranslateCommandExtension):
 
-    if TYPE_CHECKING:
-
-        @property
-        def conversion_function(self) -> 'ConversionFunctionType': ...
-
     output_format = 'idl'
 
     def translate(
         self,
-        package_name: str,
-        interface_files: List[str],
-        include_paths: List[str],
-        output_path: Path
-    ) -> List[str]:
-        translated_interface_files: list[str] = []
-        for interface_file_str in interface_files:
-            prefix, interface_file = interface_path_as_tuple(interface_file_str)
+        package_name,
+        interface_files,
+        include_paths,
+        output_path
+    ):
+        translated_interface_files = []
+        for interface_file in interface_files:
+            prefix, interface_file = interface_path_as_tuple(interface_file)
             output_dir = output_path / interface_file.parent
             translated_interface_file = self.conversion_function(
                 prefix, package_name, interface_file, output_dir)
@@ -102,7 +87,7 @@ class TranslateMsgToIDL(TranslateToIDL):
     input_format = 'msg'
 
     @property
-    def conversion_function(self) -> 'ConversionFunctionType':
+    def conversion_function(self):
         return convert_msg_to_idl
 
 
@@ -111,7 +96,7 @@ class TranslateSrvToIDL(TranslateToIDL):
     input_format = 'srv'
 
     @property
-    def conversion_function(self) -> 'ConversionFunctionType':
+    def conversion_function(self):
         return convert_srv_to_idl
 
 
@@ -119,5 +104,5 @@ class TranslateActionToIDL(TranslateToIDL):
     input_format = 'action'
 
     @property
-    def conversion_function(self) -> 'ConversionFunctionType':
+    def conversion_function(self):
         return convert_action_to_idl

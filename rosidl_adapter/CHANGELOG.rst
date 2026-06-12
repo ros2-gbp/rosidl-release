@@ -2,73 +2,35 @@
 Changelog for package rosidl_adapter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.2.1 (2026-06-05)
+4.6.9 (2026-06-12)
 ------------------
 
-5.2.0 (2026-04-24)
+4.6.8 (2026-06-02)
 ------------------
 
-5.1.5 (2026-04-24)
+4.6.7 (2025-12-09)
 ------------------
 
-5.1.4 (2026-04-09)
+4.6.6 (2025-08-05)
 ------------------
 
-5.1.3 (2026-03-24)
+4.6.5 (2024-12-18)
 ------------------
-* Fix future regressions on flake8 (`#936 <https://github.com/ros2/rosidl//issues/936>`_)
-* Contributors: Michael Carlstrom
+* Support empy3 and empy4 (`#821 <https://github.com/ros2/rosidl/issues/821>`_) (`#837 <https://github.com/ros2/rosidl/issues/837>`_)
+  (cherry picked from commit e25750db3d7735947cad24f630d135ba02db5e59)
+  Co-authored-by: Alejandro Hernández Cordero <ahcorde@gmail.com>
+* Contributors: mergify[bot]
 
-5.1.2 (2025-12-09)
-------------------
-
-5.1.1 (2025-11-11)
-------------------
-
-5.1.0 (2025-10-05)
-------------------
-* Fix @optional for string literals (`#905 <https://github.com/ros2/rosidl/issues/905>`_)
-* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
-* Add Optional Parsing (`#883 <https://github.com/ros2/rosidl/issues/883>`_)
-* Contributors: Michael Carlstrom
-
-5.0.1 (2025-07-29)
-------------------
-* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
-* Contributors: mosfet80
-
-5.0.0 (2025-07-01)
+4.6.4 (2024-09-06)
 ------------------
 
-4.10.0 (2025-04-24)
--------------------
-
-4.9.4 (2025-04-18)
+4.6.3 (2024-06-27)
 ------------------
 
-4.9.3 (2024-12-20)
+4.6.2 (2024-05-13)
 ------------------
 
-4.9.2 (2024-11-25)
-------------------
-
-4.9.1 (2024-11-20)
-------------------
-* Types for rosidl_adapter (`#828 <https://github.com/ros2/rosidl/issues/828>`_)
-* Contributors: Michael Carlstrom
-
-4.9.0 (2024-10-03)
-------------------
-* Support empy3 and empy4 (`#821 <https://github.com/ros2/rosidl/issues/821>`_)
-* Contributors: Alejandro Hernández Cordero
-
-4.8.1 (2024-06-25)
-------------------
-
-4.8.0 (2024-06-17)
-------------------
-
-4.7.0 (2024-04-26)
+4.6.1 (2024-04-24)
 ------------------
 
 4.6.0 (2024-04-16)

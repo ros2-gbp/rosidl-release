@@ -29,17 +29,11 @@ include_directives = set()
 
 #include <stdint.h>
 
-#include <array>
-#include <cstddef>
 #include <sstream>
 #include <string>
-#include <string_view>
-#include <tuple>
 #include <type_traits>
-#include <utility>
 
 #include "@(include_base)__struct.hpp"
-#include "rosidl_runtime_cpp/buffer__traits.hpp"
 #include "rosidl_runtime_cpp/traits.hpp"
 
 @#######################################################################
