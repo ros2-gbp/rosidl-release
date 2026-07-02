@@ -1,3 +1,43 @@
+## rosidl (kilted) - 4.9.7-1
+
+The packages in the `rosidl` repository were released into the `kilted` distro by running `/usr/bin/bloom-release --rosdistro kilted --track kilted rosidl` on `Thu, 02 Jul 2026 09:06:17 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cli`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_generator_type_description`
+- `rosidl_parser`
+- `rosidl_pycommon`
+- `rosidl_runtime_c`
+- `rosidl_runtime_cpp`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+These packages were explicitly ignored:
+- `rosidl_generator_tests`
+- `rosidl_typesupport_introspection_tests`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: https://github.com/ros2-gbp/rosidl-release.git
+- rosdistro version: `4.9.6-1`
+- old version: `4.9.6-1`
+- new version: `4.9.7-1`
+
+Versions of tools used:
+
+- bloom version: `0.14.3`
+- catkin_pkg version: `1.1.0`
+- rosdep version: `0.26.0`
+- rosdistro version: `1.0.1`
+- vcstools version: `0.1.42`
+
+
 ## rosidl (jazzy) - 4.6.9-1
 
 The packages in the `rosidl` repository were released into the `jazzy` distro by running `/home/marcogg/.local/bin/bloom-release --track jazzy --rosdistro jazzy rosidl` on `Fri, 12 Jun 2026 04:22:42 -0000`
