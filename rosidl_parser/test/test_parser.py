@@ -1,0 +1,609 @@
+# Copyright 2018 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import pathlib
+import time
+
+import pytest
+from rosidl_parser.definition import Action
+from rosidl_parser.definition import Array
+from rosidl_parser.definition import BasicType
+from rosidl_parser.definition import BoundedSequence
+from rosidl_parser.definition import BoundedString
+from rosidl_parser.definition import BoundedWString
+from rosidl_parser.definition import IdlFile
+from rosidl_parser.definition import IdlLocator
+from rosidl_parser.definition import Include
+from rosidl_parser.definition import Message
+from rosidl_parser.definition import NamespacedType
+from rosidl_parser.definition import Service
+from rosidl_parser.definition import SERVICE_EVENT_MESSAGE_SUFFIX
+from rosidl_parser.definition import UnboundedSequence
+from rosidl_parser.definition import UnboundedString
+from rosidl_parser.definition import UnboundedWString
+from rosidl_parser.parser import clear_ast_cache
+from rosidl_parser.parser import get_ast_from_idl_string
+from rosidl_parser.parser import get_string_literals_value
+from rosidl_parser.parser import parse_idl_file
+from rosidl_parser.parser import parse_idl_string
+
+MESSAGE_IDL_LOCATOR = IdlLocator(
+    pathlib.Path(__file__).parent, pathlib.Path('msg') / 'MyMessage.idl')
+SERVICE_IDL_LOCATOR = IdlLocator(
+    pathlib.Path(__file__).parent, pathlib.Path('srv') / 'MyService.idl')
+ACTION_IDL_LOCATOR = IdlLocator(
+    pathlib.Path(__file__).parent, pathlib.Path('action') / 'MyAction.idl')
+
+
+@pytest.fixture(scope='module')
+def message_idl_file() -> IdlFile:
+    return parse_idl_file(MESSAGE_IDL_LOCATOR)
+
+
+def test_whitespace_at_start_of_string() -> None:
+    # Repeat to check ros2/rosidl#676
+    for _ in range(10):
+        ast = get_ast_from_idl_string('const string foo = " e";')
+        token = next(ast.find_pred(lambda t: 'string_literals' == t.data))
+        assert ' e' == get_string_literals_value(token)
+
+
+def test_whitespace_at_start_of_wide_string() -> None:
+    # Repeat to check ros2/rosidl#676
+    for _ in range(10):
+        ast = get_ast_from_idl_string('const wstring foo = L" e";')
+        token = next(ast.find_pred(lambda t: 'wide_string_literals' == t.data))
+        assert ' e' == get_string_literals_value(token, allow_unicode=True)
+
+
+def test_whitespace_at_end_of_string() -> None:
+    # Repeat to check ros2/rosidl#676
+    for _ in range(10):
+        ast = get_ast_from_idl_string('const string foo = "e ";')
+        token = next(ast.find_pred(lambda t: 'string_literals' == t.data))
+        assert 'e ' == get_string_literals_value(token)
+
+
+def test_whitespace_at_end_of_wide_string() -> None:
+    # Repeat to check ros2/rosidl#676
+    for _ in range(10):
+        ast = get_ast_from_idl_string('const wstring foo = L"e ";')
+        token = next(ast.find_pred(lambda t: 'wide_string_literals' == t.data))
+        assert 'e ' == get_string_literals_value(token, allow_unicode=True)
+
+
+def test_message_parser(message_idl_file: IdlFile) -> None:
+    messages = message_idl_file.content.get_elements_of_type(Message)
+    assert len(messages) == 1
+
+
+def test_message_parser_includes(message_idl_file: IdlFile) -> None:
+    includes = message_idl_file.content.get_elements_of_type(Include)
+    assert len(includes) == 2
+    assert includes[0].locator == 'OtherMessage.idl'
+    assert includes[1].locator == 'pkgname/msg/OtherMessage.idl'
+
+
+def test_message_parser_structure(message_idl_file: IdlFile) -> None:
+    messages = message_idl_file.content.get_elements_of_type(Message)
+    assert len(messages) == 1
+
+    constants = messages[0].constants
+    assert len(constants) == 7
+
+    assert constants[0].name == 'SHORT_CONSTANT'
+    assert isinstance(constants[0].type, BasicType)
+    assert constants[0].type.typename == 'int16'
+    assert constants[0].value == -23
+
+    assert constants[1].name == 'UNSIGNED_LONG_CONSTANT'
+    assert isinstance(constants[1].type, BasicType)
+    assert constants[1].type.typename == 'uint32'
+    assert constants[1].value == 42
+
+    assert constants[2].name == 'FLOAT_CONSTANT'
+    assert isinstance(constants[2].type, BasicType)
+    assert constants[2].type.typename == 'float'
+    assert constants[2].value == 1.25
+
+    assert constants[3].name == 'BOOLEAN_CONSTANT'
+    assert isinstance(constants[3].type, BasicType)
+    assert constants[3].type.typename == 'boolean'
+    assert constants[3].value is True
+
+    assert constants[4].name == 'STRING_CONSTANT'
+    assert isinstance(constants[4].type, BoundedString)
+    assert constants[4].value == 'string_value'
+
+    assert constants[5].name == 'WSTRING_CONSTANT'
+    assert isinstance(constants[5].type, BoundedWString)
+    assert constants[5].value == 'wstring_value_\\u2122'
+
+    assert constants[6].name == 'EMPTY_STRING_CONSTANT'
+    assert isinstance(constants[6].type, BoundedString)
+    assert constants[6].value == ''
+
+    structure = messages[0].structure
+    assert structure.namespaced_type.namespaces == ['rosidl_parser', 'msg']
+    assert structure.namespaced_type.name == 'MyMessage'
+    assert len(structure.members) == 46
+
+    assert isinstance(structure.members[0].type, BasicType)
+    assert structure.members[0].type.typename == 'int16'
+    assert structure.members[0].name == 'short_value'
+    assert isinstance(structure.members[1].type, BasicType)
+    assert structure.members[1].type.typename == 'int16'
+    assert structure.members[1].name == 'short_value2'
+
+    assert isinstance(structure.members[22].type, UnboundedString)
+    assert structure.members[22].name == 'string_value'
+    assert isinstance(structure.members[23].type, BoundedString)
+    assert structure.members[23].type.maximum_size == 5
+    assert structure.members[23].name == 'bounded_string_value'
+
+    assert isinstance(structure.members[24].type, UnboundedWString)
+    assert structure.members[24].name == 'wstring_value'
+    assert isinstance(structure.members[25].type, BoundedWString)
+    assert structure.members[25].type.maximum_size == 23
+    assert structure.members[25].name == 'bounded_wstring_value'
+    assert isinstance(structure.members[26].type, BoundedWString)
+    assert structure.members[26].type.maximum_size == 'UNSIGNED_LONG_CONSTANT'
+    assert structure.members[26].name == 'constant_bounded_wstring_value'
+
+    assert isinstance(structure.members[27].type, UnboundedSequence)
+    assert isinstance(structure.members[27].type.value_type, BasicType)
+    assert structure.members[27].type.value_type.typename == 'int16'
+    assert structure.members[27].name == 'unbounded_short_values'
+    assert isinstance(structure.members[28].type, BoundedSequence)
+    assert isinstance(structure.members[28].type.value_type, BasicType)
+    assert structure.members[28].type.value_type.typename == 'int16'
+    assert structure.members[28].type.maximum_size == 5
+    assert structure.members[28].name == 'bounded_short_values'
+
+    assert isinstance(structure.members[29].type, UnboundedSequence)
+    assert isinstance(structure.members[29].type.value_type, BoundedString)
+    assert structure.members[29].type.value_type.maximum_size == 3
+    assert structure.members[29].name == 'unbounded_values_of_bounded_strings'
+
+    assert isinstance(structure.members[30].type, BoundedSequence)
+    assert isinstance(structure.members[30].type.value_type, BoundedString)
+    assert structure.members[30].type.value_type.maximum_size == 3
+    assert structure.members[30].type.maximum_size == 4
+    assert structure.members[30].name == 'bounded_values_of_bounded_strings'
+
+    assert isinstance(structure.members[31].type, Array)
+    assert isinstance(structure.members[31].type.value_type, BasicType)
+    assert structure.members[31].type.value_type.typename == 'int16'
+    assert structure.members[31].type.size == 23
+    assert structure.members[31].name == 'array_short_values'
+
+
+def test_message_parser_annotations(message_idl_file: IdlFile) -> None:
+    messages = message_idl_file.content.get_elements_of_type(Message)
+    assert len(messages) == 1
+    structure = messages[0].structure
+
+    assert len(structure.annotations) == 2
+    assert structure.annotations[0].name == 'verbatim'
+    assert len(structure.annotations[0].value) == 2  # type: ignore[arg-type]
+    assert 'language' in structure.annotations[0].value  # type: ignore[operator]
+    assert structure.annotations[0].value['language'] == 'comment'  # type: ignore[index]
+    assert 'text' in structure.annotations[0].value  # type: ignore[operator]
+    text = structure.annotations[0].value['text']  # type: ignore[index]
+    assert text == 'Documentation of MyMessage.Adjacent string literal.'
+
+    assert structure.annotations[1].name == 'transfer_mode'
+    assert structure.annotations[1].value == 'SHMEM_REF'
+
+    assert len(structure.members[2].annotations) == 1
+    assert structure.has_any_member_with_annotation('autoid') is False
+
+    assert structure.members[2].annotations[0].name == 'default'
+    assert len(structure.members[2].annotations[0].value) == 1  # type: ignore[arg-type]
+    assert 'value' in structure.members[2].annotations[0].value    # type: ignore[operator]
+    assert structure.members[2].annotations[0].value['value'] == 123  # type: ignore[index]
+    assert structure.has_any_member_with_annotation('default')
+
+    assert len(structure.members[3].annotations) == 2
+
+    assert structure.members[3].annotations[0].name == 'key'
+    assert structure.members[3].annotations[0].value is None
+    assert structure.has_any_member_with_annotation('key')
+
+    assert structure.members[3].annotations[1].name == 'range'
+    assert len(structure.members[3].annotations[1].value) == 2  # type: ignore[arg-type]
+    assert 'min' in structure.members[3].annotations[1].value  # type: ignore[operator]
+    assert structure.members[3].annotations[1].value['min'] == -10    # type: ignore[index]
+    assert 'max' in structure.members[3].annotations[1].value  # type: ignore[operator]
+    assert structure.members[3].annotations[1].value['max'] == 10    # type: ignore[index]
+    assert structure.has_any_member_with_annotation('range')
+
+    assert isinstance(structure.members[32].type, BasicType)
+    assert structure.members[32].type.typename == 'float'
+    assert structure.members[32].name == 'int_and_frac_with_positive_scientific'
+    assert len(structure.members[32].annotations) == 1
+    assert structure.members[32].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[33].type, BasicType)
+    assert structure.members[33].type.typename == 'float'
+    assert structure.members[33].name == 'int_and_frac_with_explicit_positive_scientific'
+    assert len(structure.members[33].annotations) == 1
+    assert structure.members[33].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[34].type, BasicType)
+    assert structure.members[34].type.typename == 'float'
+    assert structure.members[34].name == 'int_and_frac_with_negative_scientific'
+    assert len(structure.members[34].annotations) == 1
+    assert structure.members[34].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[35].type, BasicType)
+    assert structure.members[35].type.typename == 'float'
+    assert structure.members[35].name == 'int_and_frac'
+    assert len(structure.members[35].annotations) == 1
+    assert structure.members[35].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[36].type, BasicType)
+    assert structure.members[36].type.typename == 'float'
+    assert structure.members[36].name == 'int_with_empty_frac'
+    assert len(structure.members[36].annotations) == 1
+    assert structure.members[36].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[37].type, BasicType)
+    assert structure.members[37].type.typename == 'float'
+    assert structure.members[37].name == 'frac_only'
+    assert len(structure.members[37].annotations) == 1
+    assert structure.members[37].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[38].type, BasicType)
+    assert structure.members[38].type.typename == 'float'
+    assert structure.members[38].name == 'int_with_positive_scientific'
+    assert len(structure.members[38].annotations) == 1
+    assert structure.members[38].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[39].type, BasicType)
+    assert structure.members[39].type.typename == 'float'
+    assert structure.members[39].name == 'int_with_explicit_positive_scientific'
+    assert len(structure.members[39].annotations) == 1
+    assert structure.members[39].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[40].type, BasicType)
+    assert structure.members[40].type.typename == 'float'
+    assert structure.members[40].name == 'int_with_negative_scientific'
+    assert len(structure.members[40].annotations) == 1
+    assert structure.members[40].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[41].type, BasicType)
+    assert structure.members[41].type.typename == 'float'
+    assert structure.members[41].name == 'fixed_int_and_frac'
+    assert len(structure.members[41].annotations) == 1
+    assert structure.members[41].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[42].type, BasicType)
+    assert structure.members[42].type.typename == 'float'
+    assert structure.members[42].name == 'fixed_int_with_dot_only'
+    assert len(structure.members[42].annotations) == 1
+    assert structure.members[42].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[43].type, BasicType)
+    assert structure.members[43].type.typename == 'float'
+    assert structure.members[43].name == 'fixed_frac_only'
+    assert len(structure.members[43].annotations) == 1
+    assert structure.members[43].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[44].type, BasicType)
+    assert structure.members[44].type.typename == 'float'
+    assert structure.members[44].name == 'fixed_int_only'
+    assert len(structure.members[44].annotations) == 1
+    assert structure.members[44].annotations[0].name == 'default'
+
+    assert isinstance(structure.members[45].type, BasicType)
+    assert structure.members[45].type.typename == 'int32'
+    assert structure.members[45].name == 'optional_int'
+    assert len(structure.members[45].annotations) == 1
+    assert structure.members[45].annotations[0].name == 'optional'
+
+
+@pytest.fixture(scope='module')
+def service_idl_file() -> IdlFile:
+    return parse_idl_file(SERVICE_IDL_LOCATOR)
+
+
+def test_service_parser(service_idl_file: IdlFile) -> None:
+    services = service_idl_file.content.get_elements_of_type(Service)
+    assert len(services) == 1
+
+    srv = services[0]
+    assert isinstance(srv, Service)
+    assert srv.namespaced_type.namespaces == ['rosidl_parser', 'srv']
+    assert srv.namespaced_type.name == 'MyService'
+    assert len(srv.request_message.structure.members) == 2
+    assert len(srv.response_message.structure.members) == 1
+    assert (srv.event_message.structure.namespaced_type.name ==
+           'MyService' + SERVICE_EVENT_MESSAGE_SUFFIX)
+
+    event_message_members = [i.name for i in srv.event_message.structure.members]
+    assert 'request' in event_message_members
+    assert 'response' in event_message_members
+    assert 'info' in event_message_members
+
+    constants = srv.request_message.constants
+    assert len(constants) == 1
+
+    assert constants[0].name == 'SHORT_CONSTANT'
+    assert isinstance(constants[0].type, BasicType)
+    assert constants[0].type.typename == 'int16'
+    assert constants[0].value == -23
+
+    constants = srv.response_message.constants
+    assert len(constants) == 1
+
+    assert constants[0].name == 'UNSIGNED_LONG_CONSTANT'
+    assert isinstance(constants[0].type, BasicType)
+    assert constants[0].type.typename == 'uint32'
+    assert constants[0].value == 42
+
+
+@pytest.fixture(scope='module')
+def action_idl_file() -> IdlFile:
+    return parse_idl_file(ACTION_IDL_LOCATOR)
+
+
+def test_action_parser(action_idl_file: IdlFile) -> None:
+    actions = action_idl_file.content.get_elements_of_type(Action)
+    assert len(actions) == 1
+
+    action = actions[0]
+    assert isinstance(action, Action)
+    assert action.namespaced_type.namespaces == ['rosidl_parser', 'action']
+    assert action.namespaced_type.name == 'MyAction'
+
+    # check messages defined in the idl file
+    constants = action.goal.constants
+    assert len(constants) == 1
+    assert constants[0].name == 'SHORT_CONSTANT'
+    assert isinstance(constants[0].type, BasicType)
+    assert constants[0].type.typename == 'int16'
+    assert constants[0].value == -23
+
+    structure = action.goal.structure
+    assert structure.namespaced_type.namespaces == ['rosidl_parser', 'action']
+    assert structure.namespaced_type.name == 'MyAction_Goal'
+    assert len(structure.members) == 1
+    assert isinstance(structure.members[0].type, BasicType)
+    assert structure.members[0].type.typename == 'int32'
+    assert structure.members[0].name == 'input_value'
+
+    constants = action.result.constants
+    assert len(constants) == 1
+    assert constants[0].name == 'UNSIGNED_LONG_CONSTANT'
+    assert isinstance(constants[0].type, BasicType)
+    assert constants[0].type.typename == 'uint32'
+    assert constants[0].value == 42
+
+    structure = action.result.structure
+    assert structure.namespaced_type.namespaces == ['rosidl_parser', 'action']
+    assert structure.namespaced_type.name == 'MyAction_Result'
+    assert len(structure.members) == 1
+    assert isinstance(structure.members[0].type, BasicType)
+    assert structure.members[0].type.typename == 'uint32'
+    assert structure.members[0].name == 'output_value'
+
+    constants = action.feedback.constants
+    assert len(constants) == 1
+    assert constants[0].name == 'FLOAT_CONSTANT'
+    assert isinstance(constants[0].type, BasicType)
+    assert constants[0].type.typename == 'float'
+    assert constants[0].value == 1.25
+
+    structure = action.feedback.structure
+    assert structure.namespaced_type.namespaces == ['rosidl_parser', 'action']
+    assert structure.namespaced_type.name == 'MyAction_Feedback'
+    assert len(structure.members) == 1
+    assert isinstance(structure.members[0].type, BasicType)
+    assert structure.members[0].type.typename == 'float'
+    assert structure.members[0].name == 'progress_value'
+
+    # check derived goal service
+    namespaced_type = action.send_goal_service.namespaced_type
+    assert namespaced_type.namespaces == ['rosidl_parser', 'action']
+    assert namespaced_type.name == 'MyAction_SendGoal'
+
+    structure = action.send_goal_service.request_message.structure
+    assert len(structure.members) == 2
+
+    assert isinstance(structure.members[0].type, NamespacedType)
+    assert structure.members[0].type.namespaces == [
+        'unique_identifier_msgs', 'msg']
+    assert structure.members[0].type.name == 'UUID'
+    assert structure.members[0].name == 'goal_id'
+
+    assert isinstance(structure.members[1].type, NamespacedType)
+    assert structure.members[1].type.namespaces == \
+        action.goal.structure.namespaced_type.namespaces
+    assert structure.members[1].type.name == \
+        action.goal.structure.namespaced_type.name
+
+    structure = action.send_goal_service.response_message.structure
+    assert len(structure.members) == 2
+
+    assert isinstance(structure.members[0].type, BasicType)
+    assert structure.members[0].type.typename == 'boolean'
+    assert structure.members[0].name == 'accepted'
+
+    assert isinstance(structure.members[1].type, NamespacedType)
+    assert structure.members[1].type.namespaces == [
+        'builtin_interfaces', 'msg']
+    assert structure.members[1].type.name == 'Time'
+    assert structure.members[1].name == 'stamp'
+
+    # check derived result service
+    namespaced_type = action.get_result_service.namespaced_type
+    assert namespaced_type.namespaces == ['rosidl_parser', 'action']
+    assert namespaced_type.name == 'MyAction_GetResult'
+
+    structure = action.get_result_service.request_message.structure
+    assert len(structure.members) == 1
+
+    assert isinstance(structure.members[0].type, NamespacedType)
+    assert structure.members[0].type.namespaces == [
+        'unique_identifier_msgs', 'msg']
+    assert structure.members[0].type.name == 'UUID'
+    assert structure.members[0].name == 'goal_id'
+
+    structure = action.get_result_service.response_message.structure
+    assert len(structure.members) == 2
+
+    assert isinstance(structure.members[0].type, BasicType)
+    assert structure.members[0].type.typename == 'int8'
+    assert structure.members[0].name == 'status'
+
+    assert isinstance(structure.members[1].type, NamespacedType)
+    assert structure.members[1].type.namespaces == \
+        action.result.structure.namespaced_type.namespaces
+    assert structure.members[1].type.name == \
+        action.result.structure.namespaced_type.name
+
+    # check derived feedback message
+    structure = action.feedback_message.structure
+    assert structure.namespaced_type.namespaces == ['rosidl_parser', 'action']
+    assert structure.namespaced_type.name == 'MyAction_FeedbackMessage'
+
+    assert len(structure.members) == 2
+
+    assert isinstance(structure.members[0].type, NamespacedType)
+    assert structure.members[0].type.namespaces == [
+        'unique_identifier_msgs', 'msg']
+    assert structure.members[0].type.name == 'UUID'
+    assert structure.members[0].name == 'goal_id'
+
+    assert isinstance(structure.members[1].type, NamespacedType)
+    assert structure.members[1].type.namespaces == \
+        action.feedback.structure.namespaced_type.namespaces
+    assert structure.members[1].type.name == \
+        action.feedback.structure.namespaced_type.name
+
+
+def test_parse_idl_file_memoization(tmp_path: pathlib.Path) -> None:
+    clear_ast_cache()
+    # Create temporary IDL file
+    test_idl = tmp_path / 'TestMsg.idl'
+    test_idl.write_text("""
+module test_pkg {
+  module msg {
+    struct TestMsg {
+      int32 data;
+    };
+  };
+};
+""", encoding='utf-8')
+    locator = IdlLocator(tmp_path, pathlib.Path('TestMsg.idl'))
+
+    # First parse
+    ast1 = parse_idl_file(locator)
+    # Second parse - should return cached instance
+    ast2 = parse_idl_file(locator)
+    assert ast1 is ast2
+
+    # Clear cache - should return new instance
+    clear_ast_cache()
+    ast3 = parse_idl_file(locator)
+    assert ast3 is not ast1
+    elem3 = ast3.content.elements[0]
+    assert isinstance(elem3, Message)
+    assert elem3.structure.namespaced_type.name == 'TestMsg'
+
+    # Modify file mtime/content - should invalidate cache
+    time.sleep(0.01)
+    test_idl.write_text("""
+module test_pkg {
+  module msg {
+    struct TestMsg {
+      int64 modified_data;
+    };
+  };
+};
+""", encoding='utf-8')
+    ast4 = parse_idl_file(locator)
+    assert ast4 is not ast3
+    elem4 = ast4.content.elements[0]
+    assert isinstance(elem4, Message)
+    struct = elem4.structure
+    assert struct.members[0].name == 'modified_data'
+
+
+def test_parse_idl_string_memoization() -> None:
+    clear_ast_cache()
+    idl_str = 'module test { module msg { struct Foo { int32 x; }; }; };'
+    ast1 = parse_idl_string(idl_str)
+    ast2 = parse_idl_string(idl_str)
+    assert ast1 is ast2
+
+    clear_ast_cache()
+    ast3 = parse_idl_string(idl_str)
+    assert ast3 is not ast1
+
+
+def test_grammar_cache_available() -> None:
+    import rosidl_parser.parser as p
+
+    cache_file = p._find_grammar_cache_file()
+    assert cache_file is not None and cache_file.is_file()
+
+
+def test_grammar_cache_dynamic_parity() -> None:
+    from lark import Lark
+    import rosidl_parser.parser as p
+
+    cache_file = p._find_grammar_cache_file()
+    assert cache_file is not None and cache_file.is_file()
+
+    grammar_path = pathlib.Path(__file__).parent.parent / 'rosidl_parser' / 'grammar.lark'
+    dynamic_parser = Lark(
+        grammar_path.read_text(encoding='utf-8'),
+        parser='lalr',
+        start=['specification'],
+        lexer='contextual',
+        maybe_placeholders=False,
+    )
+    with open(cache_file, 'rb') as h_bin:
+        cached_parser = Lark.load(h_bin)
+
+    sample_idls = [
+        'module test { module msg { struct Foo { int32 x; }; }; };',
+        'const string FOO = "bar";',
+        'const wstring FOO = L"bar";',
+        'module m { struct S { sequence<string<3>> nested; }; };',
+        'module m { struct S { @default(value=42) int32 x; }; };',
+    ]
+
+    for idl in sample_idls:
+        t_dynamic = dynamic_parser.parse(idl)
+        t_cached = cached_parser.parse(idl)
+        assert t_dynamic.pretty() == t_cached.pretty(), f'AST mismatch on: {idl}'
+
+
+def test_dynamic_lark_fallback(monkeypatch: pytest.MonkeyPatch) -> None:
+    import rosidl_parser.parser as p
+    # Simulate pre-compiled grammar cache being unavailable
+    monkeypatch.setattr(p, '_find_grammar_cache_file', lambda: None)
+    monkeypatch.setattr(p, '_parser', None)
+
+    idl_str = 'module test { module msg { struct Foo { int32 x; }; }; };'
+    tree = p.get_ast_from_idl_string(idl_str)
+    assert tree.data == 'specification'
+    content = p.extract_content_from_ast(tree)
+    assert len(content.elements) == 1
+    elem = content.elements[0]
+    assert isinstance(elem, Message)
+    assert elem.structure.namespaced_type.name == 'Foo'
