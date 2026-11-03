@@ -2,22 +2,58 @@
 Changelog for package rosidl_generator_type_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.8 (2026-07-13)
+5.3.2 (2026-11-03)
+------------------
+* Use rosidl_find_package_idl() to find .idl file paths (`#1013 <https://github.com/ros2/rosidl/issues/1013>`_)
+* Use the SPDX identifier Apache-2.0 in license declarations (`#1003 <https://github.com/ros2/rosidl/issues/1003>`_)
+* Skip redundant find_package(Python3) in generator extensions (`#984 <https://github.com/ros2/rosidl/issues/984>`_)
+* Contributors: Michael Carroll, Nathan Wiebe Neufeldt
+
+5.3.1 (2026-06-05)
 ------------------
 
-4.9.7 (2026-07-02)
+5.3.0 (2026-05-06)
 ------------------
 
-4.9.6 (2025-12-09)
+5.2.0 (2026-04-24)
 ------------------
-* Add missing dependency on ament_cmake_pytest (`#914 <https://github.com/ros2/rosidl/issues/914>`_) (`#915 <https://github.com/ros2/rosidl/issues/915>`_)
-* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_) (`#879 <https://github.com/ros2/rosidl/issues/879>`_)
-* Contributors: mergify[bot]
 
-4.9.5 (2025-07-07)
+5.1.5 (2026-04-24)
 ------------------
-* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#866 <https://github.com/ros2/rosidl/issues/866>`_)
-* Contributors: Christophe Bedard, Francisco Rossi, Michel Hidalgo
+
+5.1.4 (2026-04-09)
+------------------
+
+5.1.3 (2026-03-24)
+------------------
+* Add DEPENDS_EXPLICIT_ONLY to remove implicit dependencies (`#910 <https://github.com/ros2/rosidl//issues/910>`_)
+* Contributors: Anthony Welte
+
+5.1.2 (2025-12-09)
+------------------
+* Add missing dependency on ament_cmake_pytest (`#914 <https://github.com/ros2/rosidl/issues/914>`_)
+* Contributors: Scott K Logan
+
+5.1.1 (2025-11-11)
+------------------
+
+5.1.0 (2025-10-05)
+------------------
+* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
+* Contributors: Michael Carlstrom
+
+5.0.1 (2025-07-29)
+------------------
+* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
+* Contributors: mosfet80
+
+5.0.0 (2025-07-01)
+------------------
+* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_)
+* Contributors: Francisco Rossi
+
+4.10.0 (2025-04-24)
+-------------------
 
 4.9.4 (2025-04-18)
 ------------------

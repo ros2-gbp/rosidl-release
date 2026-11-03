@@ -5,13 +5,9 @@ find_package(ament_cmake REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
+  find_package(ament_cmake_ros_core REQUIRED)
   ament_lint_auto_find_test_dependencies()
 
-  # Default to C++17
-  if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 17)
-    set(CMAKE_CXX_STANDARD_REQUIRED ON)
-  endif()
   if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
   endif()
@@ -41,6 +37,7 @@ if(BUILD_TESTING)
     SKIP_INSTALL
   )
 
+  find_package(rosidl_buffer REQUIRED)
   find_package(rcutils REQUIRED)
   find_package(rcpputils REQUIRED)
   find_package(rosidl_typesupport_interface REQUIRED)
@@ -48,12 +45,14 @@ if(BUILD_TESTING)
   add_library(${PROJECT_NAME}_library INTERFACE)
   target_include_directories(${PROJECT_NAME}_library INTERFACE include/)
   target_link_libraries(${PROJECT_NAME}_library INTERFACE
+    rosidl_buffer::rosidl_buffer
     rcutils::rcutils
     rcpputils::rcpputils
     rosidl_typesupport_interface::rosidl_typesupport_interface
     rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
-    rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp)
-  target_compile_features(${PROJECT_NAME}_library INTERFACE cxx_std_17)
+    rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp
+    # Use the ROS default C++ standard (C++20)
+    ament_cmake_ros_core::ament_ros_cxx_standard)
 
   find_package(ament_cmake_gtest REQUIRED)
   file(GLOB test_files test/test_*.cpp)

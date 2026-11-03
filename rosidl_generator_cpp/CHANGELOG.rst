@@ -2,22 +2,64 @@
 Changelog for package rosidl_generator_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.8 (2026-07-13)
+5.3.2 (2026-11-03)
+------------------
+* Remove custom ament_cppcheck usage. (`#1022 <https://github.com/ros2/rosidl/issues/1022>`_)
+* Use the SPDX identifier Apache-2.0 in license declarations (`#1003 <https://github.com/ros2/rosidl/issues/1003>`_)
+* Skip redundant find_package(Python3) in generator extensions (`#984 <https://github.com/ros2/rosidl/issues/984>`_)
+* Optimize include headers (`#982 <https://github.com/ros2/rosidl/issues/982>`_)
+* Contributors: Alejandro Hernández Cordero, Chris Lalancette, Michael Carroll
+
+5.3.1 (2026-06-05)
 ------------------
 
-4.9.7 (2026-07-02)
+5.3.0 (2026-05-06)
 ------------------
 
-4.9.6 (2025-12-09)
+5.2.0 (2026-04-24)
 ------------------
-* Add missing cstdint include (`#864 <https://github.com/ros2/rosidl/issues/864>`_) (`#899 <https://github.com/ros2/rosidl/issues/899>`_)
-* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_) (`#879 <https://github.com/ros2/rosidl/issues/879>`_)
-* Contributors: mergify[bot]
 
-4.9.5 (2025-07-07)
+5.1.5 (2026-04-24)
 ------------------
-* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_) (`#866 <https://github.com/ros2/rosidl/issues/866>`_)
-* Contributors: Christophe Bedard, Francisco Rossi, Michel Hidalgo
+
+5.1.4 (2026-04-09)
+------------------
+* Update rosidl cpp path to emit rosidl::Buffer for uint8[] type (`#942 <https://github.com/ros2/rosidl/issues/942>`_)
+* Contributors: CY Chen
+
+5.1.3 (2026-03-24)
+------------------
+* Use IWYU pragma export to avoid clangd warnings for generated headers (`#902 <https://github.com/ros2/rosidl//issues/902>`_)
+* rosidl_generator_cpp: constexpr message traits and to_tuple_ref for generated structs (`#928 <https://github.com/ros2/rosidl//issues/928>`_)
+* Make `data_type` and `name` traits constexpr (`#929 <https://github.com/ros2/rosidl//issues/929>`_)
+* Contributors: Adam Leeper, Michael Carlstrom, Øystein Sture
+
+5.1.2 (2025-12-09)
+------------------
+
+5.1.1 (2025-11-11)
+------------------
+
+5.1.0 (2025-10-05)
+------------------
+* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
+* Add static_cast (`#884 <https://github.com/ros2/rosidl/issues/884>`_)
+* Contributors: Michael Carlstrom
+
+5.0.1 (2025-07-29)
+------------------
+* Uniform cmake minVersion (`#849 <https://github.com/ros2/rosidl/issues/849>`_)
+* Contributors: mosfet80
+
+5.0.0 (2025-07-01)
+------------------
+* rosidl_cli: Add type description support (`#857 <https://github.com/ros2/rosidl/issues/857>`_)
+* Add missing cstdint include (`#864 <https://github.com/ros2/rosidl/issues/864>`_)
+* Removed deprecated methods (`#863 <https://github.com/ros2/rosidl/issues/863>`_)
+* Contributors: Alejandro Hernández Cordero, Francisco Rossi, Øystein Sture
+
+4.10.0 (2025-04-24)
+-------------------
 
 4.9.4 (2025-04-18)
 ------------------

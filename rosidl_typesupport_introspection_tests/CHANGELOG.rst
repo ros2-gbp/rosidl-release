@@ -2,19 +2,52 @@
 Changelog for package rosidl_typesupport_introspection_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.8 (2026-07-13)
+5.3.2 (2026-11-03)
+------------------
+* Use the SPDX identifier Apache-2.0 in license declarations (`#1003 <https://github.com/ros2/rosidl/issues/1003>`_)
+* use C++ 20 in default. (`#976 <https://github.com/ros2/rosidl/issues/976>`_)
+* Contributors: Michael Carroll, Tomoya Fujita
+
+5.3.1 (2026-06-05)
 ------------------
 
-4.9.7 (2026-07-02)
+5.3.0 (2026-05-06)
 ------------------
 
-4.9.6 (2025-12-09)
+5.2.0 (2026-04-24)
 ------------------
 
-4.9.5 (2025-07-07)
+5.1.5 (2026-04-24)
 ------------------
-* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
-* Contributors: mosfet80
+
+5.1.4 (2026-04-09)
+------------------
+* Update rosidl cpp path to emit rosidl::Buffer for uint8[] type (`#942 <https://github.com/ros2/rosidl/issues/942>`_)
+* Contributors: CY Chen
+
+5.1.3 (2026-03-24)
+------------------
+
+5.1.2 (2025-12-09)
+------------------
+
+5.1.1 (2025-11-11)
+------------------
+
+5.1.0 (2025-10-05)
+------------------
+
+5.0.1 (2025-07-29)
+------------------
+
+5.0.0 (2025-07-01)
+------------------
+* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
+* Disable test failing in coverage jobs, see `#812 <https://github.com/ros2/rosidl/issues/812>`_ (`#853 <https://github.com/ros2/rosidl/issues/853>`_)
+* Contributors: Jorge J. Perez, mosfet80
+
+4.10.0 (2025-04-24)
+-------------------
 
 4.9.4 (2025-04-18)
 ------------------

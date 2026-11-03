@@ -20,13 +20,24 @@ from rosidl_parser.definition import AbstractNestedType
 from rosidl_parser.definition import AbstractSequence
 from rosidl_parser.definition import AbstractString
 from rosidl_parser.definition import AbstractWString
+from rosidl_parser.definition import Action
 from rosidl_parser.definition import Array
 from rosidl_parser.definition import BasicType
 from rosidl_parser.definition import BoundedSequence
 from rosidl_parser.definition import FLOATING_POINT_TYPES
+from rosidl_parser.definition import Message
 from rosidl_parser.definition import NamespacedType
+from rosidl_parser.definition import Service
 from rosidl_parser.definition import UnboundedSequence
 from rosidl_pycommon import generate_files
+
+# cpplint's 'build/include_what_you_use' check assumes that any '<name>(' is a
+# call to the STL algorithm of that name, so a member called e.g. 'transform'
+# makes it ask for <algorithm> even though the generated code only initializes
+# a member and declares a setter. Emit <algorithm> for those member names to
+# keep the generated headers lint clean.
+CPPLINT_ALGORITHM_NAMES = (
+    'copy', 'max', 'min', 'min_element', 'sort', 'transform')
 
 
 def generate_cpp(generator_arguments_file) -> List[str]:
@@ -53,10 +64,36 @@ def prefix_with_bom_if_necessary(content: str) -> str:
     return content
 
 
+def get_all_messages(content) -> List[Message]:
+    """
+    Return every message defined by an IDL file.
+
+    This includes the messages implicitly defined by services (request,
+    response and event) and by actions (goal, result, feedback, feedback
+    message and the messages of the two implicit services), which mirrors the
+    set of structures the templates generate code for.
+
+    @param content: the content of an IDL file
+    @type content: rosidl_parser.definition.IdlContent
+    """
+    messages = list(content.get_elements_of_type(Message))
+    services = list(content.get_elements_of_type(Service))
+    for action in content.get_elements_of_type(Action):
+        messages += [
+            action.goal, action.result, action.feedback,
+            action.feedback_message]
+        services += [action.send_goal_service, action.get_result_service]
+    for service in services:
+        messages += [
+            service.request_message, service.response_message,
+            service.event_message]
+    return messages
+
+
 MSG_TYPE_TO_CPP = {
     'boolean': 'bool',
     'octet': 'unsigned char',  # TODO change to std::byte with C++17
-    'char': 'unsigned char',
+    'char': 'unsigned char',  # TODO change to char8_t with C++20
     'wchar': 'char16_t',
     'float': 'float',
     'double': 'double',
@@ -118,9 +155,17 @@ def msg_type_to_cpp(type_):
 
     if isinstance(type_, AbstractNestedType):
         if isinstance(type_, UnboundedSequence):
-            return \
-                ('std::vector<%s, typename std::allocator_traits<ContainerAllocator>::template ' +
-                 'rebind_alloc<%s>>') % (cpp_type, cpp_type)
+            # Only use Buffer for uint8[] - all other unbounded sequences remain as std::vector
+            if isinstance(type_.value_type, BasicType) and type_.value_type.typename == 'uint8':
+                return \
+                    ('rosidl::Buffer<%s, typename std::allocator_traits' +
+                     '<ContainerAllocator>::template rebind_alloc<%s>>') % (
+                        cpp_type, cpp_type)
+            else:
+                return \
+                    ('std::vector<%s, typename std::allocator_traits' +
+                     '<ContainerAllocator>::template rebind_alloc<%s>>') % (
+                        cpp_type, cpp_type)
         elif isinstance(type_, BoundedSequence):
             return \
                 ('rosidl_runtime_cpp::BoundedVector<%s, %u, typename std::allocator_traits' +
@@ -197,10 +242,14 @@ def primitive_value_to_cpp(type_, value):
         return 'true' if value else 'false'
 
     if type_.typename in [
+        'char', 'octet'
+    ]:
+        return f'static_cast<unsigned char>({value})'
+
+    if type_.typename in [
         'short', 'unsigned short',
-        'char', 'wchar',
+        'wchar',
         'double', 'long double',
-        'octet',
         'int8', 'uint8',
         'int16', 'uint16',
     ]:
@@ -343,3 +392,44 @@ def create_init_alloc_and_member_lists(message):
                 member_list.append(commonset)
 
     return init_list, alloc_list, member_list
+
+
+def generate_default_string(membset: list) -> list[str]:
+    strlist: list[str] = []
+    for member in membset.members:
+        if member.default_value is not None:
+            if member.num_prealloc > 0:
+                strlist.append('this->%s.resize(%d);' % (member.name, member.num_prealloc))
+            if isinstance(member.default_value, list):
+                if all(v == member.default_value[0] for v in member.default_value):
+                    strlist.append(
+                        'std::fill(this->%s.begin(), this->%s.end(), %s);' % (
+                            member.name,
+                            member.name,
+                            member.default_value[0]
+                            )
+                        )
+                else:
+                    for index, val in enumerate(member.default_value):
+                        strlist.append('this->%s[%d] = %s;' % (member.name, index, val))
+            else:
+                strlist.append('this->%s = %s;' % (member.name, member.default_value))
+
+    return strlist
+
+
+def generate_zero_string(membset: list, fill_args: str) -> list[str]:
+    strlist: list[str] = []
+    for member in membset.members:
+        if isinstance(member.zero_value, list):
+            if member.num_prealloc > 0:
+                strlist.append('this->%s.resize(%d);' % (member.name, member.num_prealloc))
+            if member.zero_need_array_override:
+                strlist.append('this->%s.fill(%s{%s});' % (
+                    member.name, msg_type_only_to_cpp(member.type), fill_args))
+            else:
+                strlist.append('std::fill(this->%s.begin(), this->%s.end(), %s);' % (
+                    member.name, member.name, member.zero_value[0]))
+        else:
+            strlist.append('this->%s = %s;' % (member.name, member.zero_value))
+    return strlist

@@ -18,7 +18,19 @@ import sys
 import textwrap
 from typing import Final, Iterable, List, Optional, Tuple, TYPE_CHECKING, TypedDict, Union
 
+if TYPE_CHECKING:
+    from typing_extensions import TypeAlias
+
+    PrimitiveType: TypeAlias = Union[bool, float, int, str]
+
+    class Annotations(TypedDict, total=False):
+        comment: List[str]
+        unit: str
+        optional: bool
+
 PACKAGE_NAME_MESSAGE_TYPE_SEPARATOR: Final = '/'
+ANNOTATION_DELIMITER: Final = '@'
+OPTIONAL_ANNOTATION: Final = ANNOTATION_DELIMITER + 'optional'
 COMMENT_DELIMITER: Final = '#'
 CONSTANT_SEPARATOR: Final = '='
 ARRAY_UPPER_BOUND_TOKEN: Final = '<='
@@ -75,15 +87,6 @@ VALID_MESSAGE_NAME_PATTERN: Final = re.compile('^[A-Z][A-Za-z0-9]*$')
 # VALID_MESSAGE_NAME_PATTERN = re.compile('^[A-Za-z][A-Za-z0-9]*$')
 VALID_CONSTANT_NAME_PATTERN: Final = re.compile('^[A-Z]([A-Z0-9_]?[A-Z0-9]+)*$')
 
-if TYPE_CHECKING:
-    from typing_extensions import TypeAlias
-
-    PrimitiveType: TypeAlias = Union[bool, float, int, str]
-
-    class Annotations(TypedDict, total=False):
-        comment: List[str]
-        unit: str
-
 
 class InvalidSpecification(Exception):
     pass
@@ -106,6 +109,10 @@ class InvalidFieldDefinition(InvalidSpecification):
 
 
 class UnknownMessageType(InvalidSpecification):
+    pass
+
+
+class MultipleOptionalAnnotations(InvalidSpecification):
     pass
 
 
@@ -408,7 +415,7 @@ class MessageSpecification:
         self.msg_name = msg_name
         self.annotations: 'Annotations' = {}
 
-        self.fields = []
+        self.fields: list[Field] = []
         for index, field in enumerate(fields):
             if not isinstance(field, Field):
                 raise TypeError("field %u must be a 'Field' instance" % index)
@@ -422,7 +429,7 @@ class MessageSpecification:
                 'the fields iterable contains duplicate names: %s' %
                 ', '.join(sorted(duplicate_field_names)))
 
-        self.constants = []
+        self.constants: list[Constant] = []
         for index, constant in enumerate(constants):
             if not isinstance(constant, Constant):
                 raise TypeError("constant %u must be a 'Constant' instance" %
@@ -485,10 +492,11 @@ def parse_message_string(pkg_name: str, msg_name: str,
     fields: List[Field] = []
     constants: List[Constant] = []
     last_element: Union[Field, Constant, None] = None  # either a field or a constant
+    is_optional = False
     # replace tabs with spaces
     message_string = message_string.replace('\t', ' ')
 
-    current_comments = []
+    current_comments: list[str] = []
     message_comments, lines = extract_file_level_comments(message_string)
     for line in lines:
         line = line.rstrip()
@@ -519,6 +527,17 @@ def parse_message_string(pkg_name: str, msg_name: str,
             current_comments.append(comment)
 
             line = line.rstrip()
+            if not line:
+                continue
+
+        if line.startswith(OPTIONAL_ANNOTATION):
+            if is_optional:
+                raise MultipleOptionalAnnotations(
+                    f'Already declared @optional. Error detected with {line}.')
+
+            line = line[len(OPTIONAL_ANNOTATION):].lstrip()
+            is_optional = True
+
             if not line:
                 continue
 
@@ -555,6 +574,9 @@ def parse_message_string(pkg_name: str, msg_name: str,
             last_element = constants[-1]
 
         # add "unused" comments to the field / constant
+        if is_optional:
+            last_element.annotations['optional'] = is_optional
+        is_optional = False
         comment_lines = last_element.annotations.setdefault(
             'comment', [])
         comment_lines += current_comments
@@ -823,10 +845,7 @@ def validate_field_types(spec: Union[MessageSpecification,
         fields = spec.request.fields + spec.response.fields
     elif isinstance(spec, ActionSpecification):
         spec_type = 'Action'
-        fields = []
-        for service in [spec.goal_service, spec.result_service]:
-            fields += service.request.fields
-            fields += service.response.fields
+        fields = spec.goal.fields + spec.result.fields + spec.feedback.fields
     else:
         assert False, 'Unknown specification type: %s' % type(spec)
     for field in fields:
@@ -893,9 +912,6 @@ def parse_service_string(pkg_name: str, srv_name: str,
 
 
 class ActionSpecification:
-
-    goal_service: ServiceSpecification
-    result_service: ServiceSpecification
 
     def __init__(self, pkg_name: str, action_name: str, goal: MessageSpecification,
                  result: MessageSpecification, feedback: MessageSpecification) -> None:

@@ -2,19 +2,57 @@
 Changelog for package rosidl_pycommon
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.8 (2026-07-13)
+5.3.2 (2026-11-03)
+------------------
+* Use the SPDX identifier Apache-2.0 in license declarations (`#1003 <https://github.com/ros2/rosidl/issues/1003>`_)
+* Contributors: Michael Carroll
+
+5.3.1 (2026-06-05)
 ------------------
 
-4.9.7 (2026-07-02)
+5.3.0 (2026-05-06)
 ------------------
 
-4.9.6 (2025-12-09)
+5.2.0 (2026-04-24)
 ------------------
-* fix setuptools deprecation (`#880 <https://github.com/ros2/rosidl/issues/880>`_) (`#892 <https://github.com/ros2/rosidl/issues/892>`_)
-* Contributors: mergify[bot]
 
-4.9.5 (2025-07-07)
+5.1.5 (2026-04-24)
 ------------------
+
+5.1.4 (2026-04-09)
+------------------
+* fix regressions (`#951 <https://github.com/ros2/rosidl/issues/951>`_)
+* Contributors: Michael Carlstrom
+
+5.1.3 (2026-03-24)
+------------------
+* Fix future regressions on flake8 (`#936 <https://github.com/ros2/rosidl//issues/936>`_)
+* Contributors: Michael Carlstrom
+
+5.1.2 (2025-12-09)
+------------------
+
+5.1.1 (2025-11-11)
+------------------
+* Add BaseImpl (`#912 <https://github.com/ros2/rosidl/issues/912>`_)
+* Contributors: Michael Carlstrom
+
+5.1.0 (2025-10-05)
+------------------
+* Export typing Information (`#903 <https://github.com/ros2/rosidl/issues/903>`_)
+* Provide base classes in `rosidl_pycommon` (`#887 <https://github.com/ros2/rosidl/issues/887>`_)
+* Contributors: Michael Carlstrom
+
+5.0.1 (2025-07-29)
+------------------
+* fix setuptools deprecation (`#880 <https://github.com/ros2/rosidl/issues/880>`_)
+* Contributors: mosfet80
+
+5.0.0 (2025-07-01)
+------------------
+
+4.10.0 (2025-04-24)
+-------------------
 
 4.9.4 (2025-04-18)
 ------------------

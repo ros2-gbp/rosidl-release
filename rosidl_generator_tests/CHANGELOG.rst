@@ -2,19 +2,54 @@
 Changelog for package rosidl_generator_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.9.8 (2026-07-13)
+5.3.2 (2026-11-03)
+------------------
+* Handle comment delimiters in generated C headers (`#995 <https://github.com/ros2/rosidl/issues/995>`_)
+* use C++ 20 in default. (`#976 <https://github.com/ros2/rosidl/issues/976>`_)
+* Contributors: Miko Parkkinen, Tomoya Fujita
+
+5.3.1 (2026-06-05)
 ------------------
 
-4.9.7 (2026-07-02)
+5.3.0 (2026-05-06)
 ------------------
 
-4.9.6 (2025-12-09)
+5.2.0 (2026-04-24)
 ------------------
 
-4.9.5 (2025-07-07)
+5.1.5 (2026-04-24)
 ------------------
-* Fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_) (`#876 <https://github.com/ros2/rosidl/issues/876>`_)
+
+5.1.4 (2026-04-09)
+------------------
+* Use new aggregate rosidl target instead of _TARGETS (`#952 <https://github.com/ros2/rosidl/issues/952>`_)
+* Contributors: Alexis Tsogias
+
+5.1.3 (2026-03-24)
+------------------
+* rosidl_generator_cpp: constexpr message traits and to_tuple_ref for generated structs (`#928 <https://github.com/ros2/rosidl//issues/928>`_)
+* Make `data_type` and `name` traits constexpr (`#929 <https://github.com/ros2/rosidl//issues/929>`_)
+* Contributors: Michael Carlstrom, Øystein Sture
+
+5.1.2 (2025-12-09)
+------------------
+
+5.1.1 (2025-11-11)
+------------------
+
+5.1.0 (2025-10-05)
+------------------
+
+5.0.1 (2025-07-29)
+------------------
+
+5.0.0 (2025-07-01)
+------------------
+* fix cmake <3.10 deprecation (`#875 <https://github.com/ros2/rosidl/issues/875>`_)
 * Contributors: mosfet80
+
+4.10.0 (2025-04-24)
+-------------------
 
 4.9.4 (2025-04-18)
 ------------------
