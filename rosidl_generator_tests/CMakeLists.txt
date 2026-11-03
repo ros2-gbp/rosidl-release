@@ -1,11 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(rosidl_generator_tests)
 
-# Default to C++17
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 17)
-endif()
-
 # Default to C11
 if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 11)
@@ -20,6 +15,7 @@ find_package(ament_cmake REQUIRED)
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   find_package(ament_cmake_pytest REQUIRED)
+  find_package(ament_cmake_ros_core REQUIRED)
   find_package(ament_lint_auto REQUIRED)
   find_package(rosidl_cmake REQUIRED)
   find_package(rosidl_generator_cpp REQUIRED)
@@ -35,6 +31,7 @@ if(BUILD_TESTING)
     ${test_interface_files_MSG_FILES}
     ${test_interface_files_SRV_FILES}
     msg/BasicIdl.idl
+    msg/Comments.msg
     msg/SmallConstant.msg
     ADD_LINTER_TESTS
     SKIP_INSTALL
@@ -49,6 +46,8 @@ if(BUILD_TESTING)
       target_link_libraries(${test_name}
         ${cpp_generator_target}
         rosidl_runtime_cpp::rosidl_runtime_cpp
+        # Use the ROS default C++ standard (C++20)
+        ament_cmake_ros_core::ament_ros_cxx_standard
       )
     endif()
   endmacro()
@@ -89,6 +88,9 @@ if(BUILD_TESTING)
     ${c_generator_target}
     rosidl_runtime_c::rosidl_runtime_c
   )
+  if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(test_compilation_c PRIVATE -Wall -Wextra -Werror -Wpedantic)
+  endif()
 
   add_executable(test_interfaces_c test/rosidl_generator_c/test_interfaces.c)
   ament_add_test(
