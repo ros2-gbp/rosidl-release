@@ -1,0 +1,42 @@
+ros-rolling-rosidl-buffer-backend-registry (5.3.2-1resolute) resolute; urgency=high
+
+  * Use the SPDX identifier Apache-2.0 in license declarations (#1003 <https://github.com/ros2/rosidl/issues/1003>)
+  * use C++ 20 in default. (#976 <https://github.com/ros2/rosidl/issues/976>)
+  * Contributors: Michael Carroll, Tomoya Fujita
+
+ -- "CY Chen" <cyc@nvidia.com>  Mon, 02 Nov 2026 23:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend-registry (5.3.1-1resolute) resolute; urgency=high
+
+
+
+ -- "CY Chen" <cyc@nvidia.com>  Thu, 04 Jun 2026 22:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend-registry (5.3.0-1resolute) resolute; urgency=high
+
+
+
+ -- "CY Chen" <cyc@nvidia.com>  Tue, 05 May 2026 22:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend-registry (5.2.0-1resolute) resolute; urgency=high
+
+
+
+ -- "CY Chen" <cyc@nvidia.com>  Thu, 23 Apr 2026 22:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend-registry (5.1.5-1resolute) resolute; urgency=high
+
+  * Add missing ament_cmake_gtest dep (#960 <https://github.com/ros2/rosidl/issues/960>)
+  * Contributors: Scott K Logan
+
+ -- "CY Chen" <cyc@nvidia.com>  Thu, 23 Apr 2026 22:00:00 -0000
+
+ros-rolling-rosidl-buffer-backend-registry (5.1.4-1resolute) resolute; urgency=high
+
+  * Bump rosidl_buffer min CMake version (#956 <https://github.com/ros2/rosidl/issues/956>)
+  * Add rosidl_buffer_backend_registry (#944 <https://github.com/ros2/rosidl/issues/944>)
+  * Contributors: CY Chen, Shane Loretz
+
+ -- "CY Chen" <cyc@nvidia.com>  Wed, 08 Apr 2026 22:00:00 -0000
+
+
