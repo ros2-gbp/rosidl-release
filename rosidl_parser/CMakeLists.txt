@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.5)
 
 project(rosidl_parser NONE)
 
@@ -9,7 +9,6 @@ ament_python_install_package(${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  find_package(ament_cmake_mypy REQUIRED)
   ament_lint_auto_find_test_dependencies()
 endif()
 

@@ -17,13 +17,12 @@ import json
 import os
 import pathlib
 import sys
-from typing import List
 
 
 from rosidl_adapter import convert_to_idl
 
 
-def main(argv: List[str] = sys.argv[1:]) -> None:
+def main(argv=sys.argv[1:]):
     parser = argparse.ArgumentParser(
         description='Convert interface files to .idl')
     parser.add_argument(

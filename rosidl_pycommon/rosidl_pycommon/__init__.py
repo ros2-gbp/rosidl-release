@@ -18,7 +18,6 @@ import os
 import pathlib
 import re
 import sys
-from typing import Any, Callable, Dict, List, Optional
 
 import em
 
@@ -32,7 +31,7 @@ from rosidl_parser.definition import IdlLocator
 from rosidl_parser.parser import parse_idl_file
 
 
-def convert_camel_case_to_lower_case_underscore(value: str) -> str:
+def convert_camel_case_to_lower_case_underscore(value):
     # insert an underscore before any upper case letter
     # which is followed by a lower case letter
     value = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', value)
@@ -42,14 +41,12 @@ def convert_camel_case_to_lower_case_underscore(value: str) -> str:
     return value.lower()
 
 
-def read_generator_arguments(input_file: str) -> Any:
+def read_generator_arguments(input_file):
     with open(input_file, mode='r', encoding='utf-8') as h:
         return json.load(h)
 
 
-def get_newest_modification_time(
-    target_dependencies: List[str]
-) -> Optional[float]:
+def get_newest_modification_time(target_dependencies):
     newest_timestamp = None
     for dep in target_dependencies:
         ts = os.path.getmtime(dep)
@@ -59,10 +56,9 @@ def get_newest_modification_time(
 
 
 def generate_files(
-    generator_arguments_file: str, mapping: Dict[str, str],
-    additional_context: Optional[Dict[str, bool]] = None,
-    keep_case: bool = False, post_process_callback: Optional[Callable[[str], str]] = None
-) -> List[str]:
+    generator_arguments_file, mapping, additional_context=None,
+    keep_case=False, post_process_callback=None
+):
     args = read_generator_arguments(generator_arguments_file)
 
     template_basepath = pathlib.Path(args['template_dir'])
@@ -71,7 +67,7 @@ def generate_files(
             'Could not find template: ' + template_filename
 
     latest_target_timestamp = get_newest_modification_time(args['target_dependencies'])
-    generated_files: List[str] = []
+    generated_files = []
 
     type_description_files = {}
     for description_tuple in args.get('type_description_tuples', []):
@@ -132,10 +128,10 @@ def generate_files(
     return generated_files
 
 
-template_prefix_path: List[pathlib.Path] = []
+template_prefix_path = []
 
 
-def get_template_path(template_name: str) -> pathlib.Path:
+def get_template_path(template_name):
     global template_prefix_path
     for basepath in template_prefix_path:
         template_path = basepath / template_name
@@ -148,16 +144,14 @@ interpreter = None
 
 
 def expand_template(
-    template_name: str, data: Dict[str, Any], output_file: str,
-    minimum_timestamp: Optional[float] = None,
-    template_basepath: Optional[pathlib.Path] = None,
-    post_process_callback: Optional[Callable[[str], str]] = None
-) -> None:
+    template_name, data, output_file, minimum_timestamp=None,
+    template_basepath=None, post_process_callback=None
+):
     # in the legacy API the first argument was the path to the template
     if template_basepath is None:
-        template_path = pathlib.Path(template_name)
-        template_basepath = template_path.parent
-        template_name = template_path.name
+        template_name = pathlib.Path(template_name)
+        template_basepath = template_name.parent
+        template_name = template_name.name
 
     global template_prefix_path
     template_prefix_path.append(template_basepath)
@@ -232,17 +226,14 @@ def expand_template(
         h.write(content)
 
 
-def _add_helper_functions(data: Dict[str, Any]) -> None:
+def _add_helper_functions(data):
     data['TEMPLATE'] = _expand_template
 
 
-def _expand_template(template_name: str, **kwargs: Any) -> None:
+def _expand_template(template_name, **kwargs):
     global interpreter
     template_path = get_template_path(template_name)
     _add_helper_functions(kwargs)
-    if interpreter is None:
-        raise RuntimeError('_expand_template called before expand_template')
-
     with template_path.open('r') as h:
         interpreter.invoke(
             'beforeInclude', name=str(template_path), file=h, locals=kwargs)
