@@ -845,7 +845,10 @@ def validate_field_types(spec: Union[MessageSpecification,
         fields = spec.request.fields + spec.response.fields
     elif isinstance(spec, ActionSpecification):
         spec_type = 'Action'
-        fields = spec.goal.fields + spec.result.fields + spec.feedback.fields
+        fields = []
+        for service in [spec.goal_service, spec.result_service]:
+            fields += service.request.fields
+            fields += service.response.fields
     else:
         assert False, 'Unknown specification type: %s' % type(spec)
     for field in fields:
@@ -912,6 +915,9 @@ def parse_service_string(pkg_name: str, srv_name: str,
 
 
 class ActionSpecification:
+
+    goal_service: ServiceSpecification
+    result_service: ServiceSpecification
 
     def __init__(self, pkg_name: str, action_name: str, goal: MessageSpecification,
                  result: MessageSpecification, feedback: MessageSpecification) -> None:
