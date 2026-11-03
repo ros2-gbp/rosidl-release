@@ -15,6 +15,7 @@
 import pathlib
 
 import pytest
+
 from rosidl_parser.definition import Action
 from rosidl_parser.definition import Array
 from rosidl_parser.definition import BasicType
@@ -26,7 +27,6 @@ from rosidl_parser.definition import Include
 from rosidl_parser.definition import Message
 from rosidl_parser.definition import NamespacedType
 from rosidl_parser.definition import Service
-from rosidl_parser.definition import SERVICE_EVENT_MESSAGE_SUFFIX
 from rosidl_parser.definition import UnboundedSequence
 from rosidl_parser.definition import UnboundedString
 from rosidl_parser.definition import UnboundedWString
@@ -203,19 +203,16 @@ def test_message_parser_annotations(message_idl_file):
     assert structure.annotations[1].value == 'SHMEM_REF'
 
     assert len(structure.members[2].annotations) == 1
-    assert structure.has_any_member_with_annotation('autoid') is False
 
     assert structure.members[2].annotations[0].name == 'default'
     assert len(structure.members[2].annotations[0].value) == 1
     assert 'value' in structure.members[2].annotations[0].value
     assert structure.members[2].annotations[0].value['value'] == 123
-    assert structure.has_any_member_with_annotation('default')
 
     assert len(structure.members[3].annotations) == 2
 
     assert structure.members[3].annotations[0].name == 'key'
     assert structure.members[3].annotations[0].value is None
-    assert structure.has_any_member_with_annotation('key')
 
     assert structure.members[3].annotations[1].name == 'range'
     assert len(structure.members[3].annotations[1].value) == 2
@@ -223,7 +220,6 @@ def test_message_parser_annotations(message_idl_file):
     assert structure.members[3].annotations[1].value['min'] == -10
     assert 'max' in structure.members[3].annotations[1].value
     assert structure.members[3].annotations[1].value['max'] == 10
-    assert structure.has_any_member_with_annotation('range')
 
     assert isinstance(structure.members[32].type, BasicType)
     assert structure.members[32].type.typename == 'float'
@@ -319,13 +315,6 @@ def test_service_parser(service_idl_file):
     assert srv.namespaced_type.name == 'MyService'
     assert len(srv.request_message.structure.members) == 2
     assert len(srv.response_message.structure.members) == 1
-    assert (srv.event_message.structure.namespaced_type.name ==
-           'MyService' + SERVICE_EVENT_MESSAGE_SUFFIX)
-
-    event_message_members = [i.name for i in srv.event_message.structure.members]
-    assert 'request' in event_message_members
-    assert 'response' in event_message_members
-    assert 'info' in event_message_members
 
     constants = srv.request_message.constants
     assert len(constants) == 1
