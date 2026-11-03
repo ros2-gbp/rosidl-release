@@ -22,7 +22,6 @@ import yaml  # type: ignore[import]
 
 if TYPE_CHECKING:
     from typing import TypedDict
-
     from typing_extensions import NotRequired
 
     class LoadExtensionsArg(TypedDict):

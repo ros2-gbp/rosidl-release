@@ -5,14 +5,13 @@ package_name = 'rosidl_pycommon'
 
 setup(
     name=package_name,
-    version='5.3.2',
+    version='4.9.9',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    package_data={'': ['py.typed']},
     install_requires=['setuptools'],
     zip_safe=True,
     author='Jacob Perron',
@@ -20,7 +19,7 @@ setup(
     maintainer='Aditya Pande, Brandon Ong, Dharini Dutia, Shane Loretz',
     maintainer_email='aditya.pande@openrobotics.org, brandon@openrobotics.org, dharini@openrobotics.org, sloretz@openrobotics.org',  # noqa: E501
     description='Common Python functions used by rosidl packages.',
-    license='Apache-2.0',
+    license='Apache License, Version 2.0',
     extras_require={
         'test': [
             'pytest',

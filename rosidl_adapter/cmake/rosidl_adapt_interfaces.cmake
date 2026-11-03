@@ -37,9 +37,7 @@ function(rosidl_adapt_interfaces idl_var arguments_file)
       "arguments: ${ARG_UNPARSED_ARGUMENTS}")
   endif()
 
-  if(NOT TARGET Python3::Interpreter)
-    find_package(Python3 REQUIRED COMPONENTS Interpreter)
-  endif()
+  find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
   set(idl_output "${CMAKE_CURRENT_BINARY_DIR}/rosidl_adapter/${ARG_TARGET}.idls")
   set(cmd

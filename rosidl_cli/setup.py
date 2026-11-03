@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='rosidl_cli',
-    version='5.3.2',
+    version='4.9.9',
     packages=find_packages(exclude=['test']),
     extras_require={
         'completion': ['argcomplete'],
@@ -24,7 +24,6 @@ setup(
             'completion/rosidl-argcomplete.zsh'
         ]),
     ],
-    package_data={'': ['py.typed']},
     zip_safe=False,
     author='Michel Hidalgo',
     author_email='michel@ekumenlabs.com',
@@ -41,7 +40,7 @@ setup(
     description='Command line tools for ROS interface generation.',
     long_description="""\
 The tooling provides a single command line script for ROS interface source code generation.""",
-    license='Apache-2.0',
+    license='Apache License, Version 2.0',
     entry_points={
         'console_scripts': [
             'rosidl = rosidl_cli.cli:main',

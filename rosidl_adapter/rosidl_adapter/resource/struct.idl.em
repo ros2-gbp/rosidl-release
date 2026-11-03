@@ -50,9 +50,6 @@ else:
 @[      end for]@
 )
 @[    end if]@
-@[    if 'optional' in constant.annotations]@
-      @@optional
-@[    end if]@
       const @(get_idl_type(constant.type)) @(constant.name) = @(to_idl_literal(get_idl_type(constant.type), constant.value));
 @[  end for]@
     };
@@ -83,9 +80,6 @@ else:
 @[        end if]@
 @[      end for]@
 )
-@[    end if]@
-@[    if 'optional' in field.annotations]@
-      @@optional
 @[    end if]@
 @[    if field.default_value is not None]@
       @@default (value=@(to_idl_literal(get_idl_type(field.type), field.default_value)))
