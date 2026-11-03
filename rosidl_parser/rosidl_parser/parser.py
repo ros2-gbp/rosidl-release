@@ -14,6 +14,7 @@
 
 import codecs
 import os
+import pathlib
 import re
 import sys
 from typing import Any
@@ -24,6 +25,7 @@ from typing import Literal
 from typing import Match
 from typing import Optional
 from typing import Pattern
+from typing import Tuple
 from typing import TYPE_CHECKING
 from typing import Union
 
@@ -32,6 +34,7 @@ from lark.lexer import Token
 from lark.tree import pydot__tree_to_png
 from lark.tree import Tree
 
+import rosidl_parser
 from rosidl_parser.definition import AbstractNestableType
 from rosidl_parser.definition import AbstractNestedType
 from rosidl_parser.definition import AbstractType
@@ -78,24 +81,59 @@ if TYPE_CHECKING:
 
 AbstractTypeAlias = Union[AbstractNestableType, BasicType, BoundedSequence, UnboundedSequence]
 
-grammar_file = os.path.join(os.path.dirname(__file__), 'grammar.lark')
-with open(grammar_file, mode='r', encoding='utf-8') as h:
-    grammar = h.read()
-
 _parser: Optional[Lark] = None
+_idl_file_cache: Dict[Tuple[str, int], IdlFile] = {}
+_idl_string_cache: Dict[str, IdlContent] = {}
+
+
+def _find_grammar_cache_file() -> Optional[pathlib.Path]:
+    """Locate the pre-compiled grammar.lark.bin file across rosidl_parser.__path__."""
+    search_dirs = list(getattr(rosidl_parser, '__path__', []))
+    module_dir = os.path.dirname(__file__)
+    if module_dir not in search_dirs:
+        search_dirs.append(module_dir)
+    for directory in search_dirs:
+        candidate = pathlib.Path(directory) / 'grammar.lark.bin'
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def clear_ast_cache() -> None:
+    """Clear the in-process AST cache."""
+    _idl_file_cache.clear()
+    _idl_string_cache.clear()
 
 
 def parse_idl_file(locator: IdlLocator, png_file: Optional[str] = None) -> IdlFile:
-    string = locator.get_absolute_path().read_text(encoding='utf-8')
+    abs_path = locator.get_absolute_path()
+    if png_file is None:
+        try:
+            mtime_ns = abs_path.stat().st_mtime_ns
+            cache_key = (str(abs_path), mtime_ns)
+            if cache_key in _idl_file_cache:
+                return _idl_file_cache[cache_key]
+        except OSError:
+            cache_key = None
+    else:
+        cache_key = None
+
+    string = abs_path.read_text(encoding='utf-8')
     try:
         content = parse_idl_string(string, png_file=png_file)
     except Exception as e:
-        print(str(e), str(locator.get_absolute_path()), file=sys.stderr)
+        print(str(e), str(abs_path), file=sys.stderr)
         raise
-    return IdlFile(locator, content)
+    idl_file = IdlFile(locator, content)
+    if cache_key is not None:
+        _idl_file_cache[cache_key] = idl_file
+    return idl_file
 
 
 def parse_idl_string(idl_string: str, png_file: Optional[str] = None) -> IdlContent:
+    if png_file is None and idl_string in _idl_string_cache:
+        return _idl_string_cache[idl_string]
+
     tree = get_ast_from_idl_string(idl_string)
     content = extract_content_from_ast(tree)
 
@@ -105,6 +143,8 @@ def parse_idl_string(idl_string: str, png_file: Optional[str] = None) -> IdlCont
             pydot__tree_to_png(tree, png_file)
         except ImportError:
             pass
+    elif png_file is None:
+        _idl_string_cache[idl_string] = content
 
     return content
 
@@ -112,7 +152,24 @@ def parse_idl_string(idl_string: str, png_file: Optional[str] = None) -> IdlCont
 def get_ast_from_idl_string(idl_string: str) -> 'ParseTree':
     global _parser
     if _parser is None:
-        _parser = Lark(grammar, start='specification', maybe_placeholders=False)
+        cache_file = _find_grammar_cache_file()
+        if cache_file is not None:
+            try:
+                with open(cache_file, 'rb') as h_bin:
+                    _parser = Lark.load(h_bin)
+            except Exception:
+                _parser = None
+        if _parser is None:
+            grammar_file = os.path.join(os.path.dirname(__file__), 'grammar.lark')
+            with open(grammar_file, mode='r', encoding='utf-8') as h:
+                grammar = h.read()
+            _parser = Lark(
+                grammar,
+                parser='lalr',
+                start=['specification'],
+                lexer='contextual',
+                maybe_placeholders=False,
+            )
     return _parser.parse(idl_string)
 
 
