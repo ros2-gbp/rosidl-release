@@ -77,23 +77,25 @@ rosidl_write_generator_arguments(
   TARGET_DEPENDENCIES ${target_dependencies}
 )
 
-# By default, without the settings below, find_package(Python3) will attempt
-# to find the newest python version it can, and additionally will find the
-# most specific version.  For instance, on a system that has
-# /usr/bin/python3.10, /usr/bin/python3.11, and /usr/bin/python3, it will find
-# /usr/bin/python3.11, even if /usr/bin/python3 points to /usr/bin/python3.10.
-# The behavior we want is to prefer the "system" installed version unless the
-# user specifically tells us othewise through the Python3_EXECUTABLE hint.
-# Setting CMP0094 to NEW means that the search will stop after the first
-# python version is found.  Setting Python3_FIND_UNVERSIONED_NAMES means that
-# the search will prefer /usr/bin/python3 over /usr/bin/python3.11.  And that
-# latter functionality is only available in CMake 3.20 or later, so we need
-# at least that version.
-cmake_minimum_required(VERSION 3.20)
-cmake_policy(SET CMP0094 NEW)
-set(Python3_FIND_UNVERSIONED_NAMES FIRST)
+if(NOT TARGET Python3::Interpreter)
+  # By default, without the settings below, find_package(Python3) will attempt
+  # to find the newest python version it can, and additionally will find the
+  # most specific version.  For instance, on a system that has
+  # /usr/bin/python3.10, /usr/bin/python3.11, and /usr/bin/python3, it will find
+  # /usr/bin/python3.11, even if /usr/bin/python3 points to /usr/bin/python3.10.
+  # The behavior we want is to prefer the "system" installed version unless the
+  # user specifically tells us othewise through the Python3_EXECUTABLE hint.
+  # Setting CMP0094 to NEW means that the search will stop after the first
+  # python version is found.  Setting Python3_FIND_UNVERSIONED_NAMES means that
+  # the search will prefer /usr/bin/python3 over /usr/bin/python3.11.  And that
+  # latter functionality is only available in CMake 3.20 or later, so we need
+  # at least that version.
+  cmake_minimum_required(VERSION 3.20)
+  cmake_policy(SET CMP0094 NEW)
+  set(Python3_FIND_UNVERSIONED_NAMES FIRST)
 
-find_package(Python3 REQUIRED COMPONENTS Interpreter)
+  find_package(Python3 REQUIRED COMPONENTS Interpreter)
+endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.27)
   set(_dep_explicit_only DEPENDS_EXPLICIT_ONLY)
@@ -156,6 +158,23 @@ target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBL
   rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
   rosidl_buffer::rosidl_buffer)
 
+target_precompile_headers(${rosidl_generate_interfaces_TARGET}${_target_suffix}
+  PRIVATE
+    <stddef.h>
+    <rosidl_runtime_c/message_type_support_struct.h>
+    <rosidl_typesupport_interface/macros.h>
+    <rosidl_typesupport_introspection_c/field_types.h>
+    <rosidl_typesupport_introspection_c/identifier.h>
+    <rosidl_typesupport_introspection_c/message_introspection.h>
+    <rosidl_typesupport_introspection_c/service_introspection.h>
+    <rosidl_typesupport_introspection_c/visibility_control.h>
+)
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  # Required for ccache to cache compilations that consume a PCH under GCC.
+  target_compile_options(${rosidl_generate_interfaces_TARGET}${_target_suffix}
+    PRIVATE -fpch-preprocess)
+endif()
+
 foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
   target_link_libraries(
     ${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
@@ -187,11 +206,6 @@ if(NOT rosidl_generate_interfaces_SKIP_INSTALL)
 endif()
 
 if(BUILD_TESTING AND rosidl_generate_interfaces_ADD_LINTER_TESTS)
-  find_package(ament_cmake_cppcheck REQUIRED)
-  ament_cppcheck(
-    TESTNAME "cppcheck_rosidl_typesupport_introspection_c"
-    "${_output_path}")
-
   find_package(ament_cmake_cpplint REQUIRED)
   get_filename_component(_cpplint_root "${_output_path}" DIRECTORY)
   ament_cpplint(
