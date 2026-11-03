@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="2">
   <name>rosidl_parser</name>
-  <version>5.2.2</version>
+  <version>5.3.2</version>
   <description>The parser for `.idl` ROS interface files.</description>
 
   <maintainer email="aditya.pande@openrobotics.org">Aditya Pande</maintainer>
@@ -10,13 +10,14 @@
   <maintainer email="dharini@openrobotics.org">Dharini Dutia</maintainer>
   <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
 
-  <license>Apache License 2.0</license>
+  <license>Apache-2.0</license>
 
   <author email="clalancette@openrobotics.org">Chris Lalancette</author>
   <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
   <author email="michel@ekumenlabs.com">Michel Hidalgo</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>python3-lark-parser</buildtool_depend>
 
   <exec_depend>python3-lark-parser</exec_depend>
   <exec_depend>rosidl_adapter</exec_depend> <!-- TODO(dirk-thomas) only for backward compatibilty -->

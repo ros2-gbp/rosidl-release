@@ -2,10 +2,20 @@
 Changelog for package rosidl_typesupport_introspection_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.2.2 (2026-11-03)
+5.3.2 (2026-11-03)
+------------------
+* Remove custom ament_cppcheck usage. (`#1022 <https://github.com/ros2/rosidl/issues/1022>`_)
+* rosidl: add precompiled headers (PCH) for generated C/C++ interface targets (`#988 <https://github.com/ros2/rosidl/issues/988>`_)
+* Remove ament_export_include_directories and ament_export_libraries calls (`#1011 <https://github.com/ros2/rosidl/issues/1011>`_)
+* Use the SPDX identifier Apache-2.0 in license declarations (`#1003 <https://github.com/ros2/rosidl/issues/1003>`_)
+* Skip redundant find_package(Python3) in generator extensions (`#984 <https://github.com/ros2/rosidl/issues/984>`_)
+* use C++ 20 in default. (`#976 <https://github.com/ros2/rosidl/issues/976>`_)
+* Contributors: AADITYA007x, Chris Lalancette, Michael Carroll, Tomoya Fujita, William Woodall
+
+5.3.1 (2026-06-05)
 ------------------
 
-5.2.1 (2026-06-05)
+5.3.0 (2026-05-06)
 ------------------
 
 5.2.0 (2026-04-24)

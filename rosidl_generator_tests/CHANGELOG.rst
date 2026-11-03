@@ -2,10 +2,16 @@
 Changelog for package rosidl_generator_tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-5.2.2 (2026-11-03)
+5.3.2 (2026-11-03)
+------------------
+* Handle comment delimiters in generated C headers (`#995 <https://github.com/ros2/rosidl/issues/995>`_)
+* use C++ 20 in default. (`#976 <https://github.com/ros2/rosidl/issues/976>`_)
+* Contributors: Miko Parkkinen, Tomoya Fujita
+
+5.3.1 (2026-06-05)
 ------------------
 
-5.2.1 (2026-06-05)
+5.3.0 (2026-05-06)
 ------------------
 
 5.2.0 (2026-04-24)
