@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import pathlib
+import time
 
 import pytest
 from rosidl_parser.definition import Action
@@ -31,9 +32,11 @@ from rosidl_parser.definition import SERVICE_EVENT_MESSAGE_SUFFIX
 from rosidl_parser.definition import UnboundedSequence
 from rosidl_parser.definition import UnboundedString
 from rosidl_parser.definition import UnboundedWString
+from rosidl_parser.parser import clear_ast_cache
 from rosidl_parser.parser import get_ast_from_idl_string
 from rosidl_parser.parser import get_string_literals_value
 from rosidl_parser.parser import parse_idl_file
+from rosidl_parser.parser import parse_idl_string
 
 MESSAGE_IDL_LOCATOR = IdlLocator(
     pathlib.Path(__file__).parent, pathlib.Path('msg') / 'MyMessage.idl')
@@ -489,3 +492,118 @@ def test_action_parser(action_idl_file: IdlFile) -> None:
         action.feedback.structure.namespaced_type.namespaces
     assert structure.members[1].type.name == \
         action.feedback.structure.namespaced_type.name
+
+
+def test_parse_idl_file_memoization(tmp_path: pathlib.Path) -> None:
+    clear_ast_cache()
+    # Create temporary IDL file
+    test_idl = tmp_path / 'TestMsg.idl'
+    test_idl.write_text("""
+module test_pkg {
+  module msg {
+    struct TestMsg {
+      int32 data;
+    };
+  };
+};
+""", encoding='utf-8')
+    locator = IdlLocator(tmp_path, pathlib.Path('TestMsg.idl'))
+
+    # First parse
+    ast1 = parse_idl_file(locator)
+    # Second parse - should return cached instance
+    ast2 = parse_idl_file(locator)
+    assert ast1 is ast2
+
+    # Clear cache - should return new instance
+    clear_ast_cache()
+    ast3 = parse_idl_file(locator)
+    assert ast3 is not ast1
+    elem3 = ast3.content.elements[0]
+    assert isinstance(elem3, Message)
+    assert elem3.structure.namespaced_type.name == 'TestMsg'
+
+    # Modify file mtime/content - should invalidate cache
+    time.sleep(0.01)
+    test_idl.write_text("""
+module test_pkg {
+  module msg {
+    struct TestMsg {
+      int64 modified_data;
+    };
+  };
+};
+""", encoding='utf-8')
+    ast4 = parse_idl_file(locator)
+    assert ast4 is not ast3
+    elem4 = ast4.content.elements[0]
+    assert isinstance(elem4, Message)
+    struct = elem4.structure
+    assert struct.members[0].name == 'modified_data'
+
+
+def test_parse_idl_string_memoization() -> None:
+    clear_ast_cache()
+    idl_str = 'module test { module msg { struct Foo { int32 x; }; }; };'
+    ast1 = parse_idl_string(idl_str)
+    ast2 = parse_idl_string(idl_str)
+    assert ast1 is ast2
+
+    clear_ast_cache()
+    ast3 = parse_idl_string(idl_str)
+    assert ast3 is not ast1
+
+
+def test_grammar_cache_available() -> None:
+    import rosidl_parser.parser as p
+
+    cache_file = p._find_grammar_cache_file()
+    assert cache_file is not None and cache_file.is_file()
+
+
+def test_grammar_cache_dynamic_parity() -> None:
+    from lark import Lark
+    import rosidl_parser.parser as p
+
+    cache_file = p._find_grammar_cache_file()
+    assert cache_file is not None and cache_file.is_file()
+
+    grammar_path = pathlib.Path(__file__).parent.parent / 'rosidl_parser' / 'grammar.lark'
+    dynamic_parser = Lark(
+        grammar_path.read_text(encoding='utf-8'),
+        parser='lalr',
+        start=['specification'],
+        lexer='contextual',
+        maybe_placeholders=False,
+    )
+    with open(cache_file, 'rb') as h_bin:
+        cached_parser = Lark.load(h_bin)
+
+    sample_idls = [
+        'module test { module msg { struct Foo { int32 x; }; }; };',
+        'const string FOO = "bar";',
+        'const wstring FOO = L"bar";',
+        'module m { struct S { sequence<string<3>> nested; }; };',
+        'module m { struct S { @default(value=42) int32 x; }; };',
+    ]
+
+    for idl in sample_idls:
+        t_dynamic = dynamic_parser.parse(idl)
+        t_cached = cached_parser.parse(idl)
+        assert t_dynamic.pretty() == t_cached.pretty(), f'AST mismatch on: {idl}'
+
+
+def test_dynamic_lark_fallback(monkeypatch: pytest.MonkeyPatch) -> None:
+    import rosidl_parser.parser as p
+    # Simulate pre-compiled grammar cache being unavailable
+    monkeypatch.setattr(p, '_find_grammar_cache_file', lambda: None)
+    monkeypatch.setattr(p, '_parser', None)
+
+    idl_str = 'module test { module msg { struct Foo { int32 x; }; }; };'
+    tree = p.get_ast_from_idl_string(idl_str)
+    assert tree.data == 'specification'
+    content = p.extract_content_from_ast(tree)
+    assert len(content.elements) == 1
+    elem = content.elements[0]
+    assert isinstance(elem, Message)
+    assert elem.structure.namespaced_type.name == 'Foo'
