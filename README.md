@@ -1,3 +1,43 @@
+## rosidl (kilted) - 4.9.9-1
+
+The packages in the `rosidl` repository were released into the `kilted` distro by running `/usr/bin/bloom-release --rosdistro kilted --track kilted rosidl` on `Tue, 03 Nov 2026 12:31:36 -0000`
+
+These packages were released:
+- `rosidl_adapter`
+- `rosidl_cli`
+- `rosidl_cmake`
+- `rosidl_generator_c`
+- `rosidl_generator_cpp`
+- `rosidl_generator_type_description`
+- `rosidl_parser`
+- `rosidl_pycommon`
+- `rosidl_runtime_c`
+- `rosidl_runtime_cpp`
+- `rosidl_typesupport_interface`
+- `rosidl_typesupport_introspection_c`
+- `rosidl_typesupport_introspection_cpp`
+
+These packages were explicitly ignored:
+- `rosidl_generator_tests`
+- `rosidl_typesupport_introspection_tests`
+
+Version of package(s) in repository `rosidl`:
+
+- upstream repository: https://github.com/ros2/rosidl.git
+- release repository: https://github.com/ros2-gbp/rosidl-release.git
+- rosdistro version: `4.9.8-1`
+- old version: `4.9.8-1`
+- new version: `4.9.9-1`
+
+Versions of tools used:
+
+- bloom version: `0.14.4`
+- catkin_pkg version: `1.1.1`
+- rosdep version: `0.27.0`
+- rosdistro version: `1.1.0`
+- vcstools version: `0.1.42`
+
+
 ## rosidl (rolling) - 5.3.2-2
 
 The packages in the `rosidl` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling --track rolling rosidl` on `Tue, 03 Nov 2026 12:28:41 -0000`
